@@ -1,8 +1,13 @@
 import { createBrowserRouter } from "react-router";
 
-
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
+import AllLoans from "../pages/Loans/AllLoans";
+import About from "../pages/AboutUs/About";
+import Contact from "../pages/Contact/Contact";
+import AuthLayout from "../layout/AuthLayout";
+import Login from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
 
 
 const router = createBrowserRouter([
@@ -11,11 +16,36 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <div>Error Page</div>,
     children: [
+      { index: true, element: <Home /> },
+      { path: "all-loans", element: <AllLoans /> },
+      { path: "about", element: <About /> },
+      { path: "contact", element: <Contact /> },
+    ],
+  },
+
+  // // Dashboard (Private)
+  // {
+  //   path: "/dashboard",
+  //   element: <DashboardLayout />,
+  //   children: [
+  //     { index: true, element: <DashboardHome /> },
+  //     { path: "my-loans", element: <MyLoans /> },
+  //     { path: "loan-requests", element: <LoanRequests /> },
+  //   ],
+  // },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      // Auth pages (public)
       {
-        index: true,
-        element: <Home />,
+        path: "/auth/login",
+        element: <Login />,
       },
-     
+      {
+        path: "/auth/register",
+        element: <Register />,
+      },
     ],
   },
 ]);
