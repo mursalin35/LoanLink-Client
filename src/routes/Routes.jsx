@@ -8,7 +8,8 @@ import Contact from "../pages/Contact/Contact";
 import AuthLayout from "../layout/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-
+import LoanDetails from "../pages/Loans/LoanDetails";
+import ApplyLoan from "../pages/Loans/ApplyLoan";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,14 @@ const router = createBrowserRouter([
       { path: "all-loans", element: <AllLoans /> },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
+      {
+        path: "all-loans/:id",
+        element: <LoanDetails />,
+      },
+      {
+        path: "/apply-loan/:id",
+        element: <ApplyLoan />,
+      },
     ],
   },
 

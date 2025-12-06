@@ -55,7 +55,7 @@ const AllLoans = () => {
               Max Loan: ${loan.maxLoanLimit}
             </p>
             <button
-              onClick={() => navigate(`/loan-details/${loan._id}`)}
+              onClick={() => navigate(`/all-loans/${loan._id}`)}
               className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition-colors"
             >
               View Details
