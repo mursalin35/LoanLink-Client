@@ -1,55 +1,203 @@
-import React from 'react';
+import { GoHomeFill } from "react-icons/go";
+import { IoLogIn, IoLogOut } from "react-icons/io5";
+import { TbTransformFilled } from "react-icons/tb";
+import { MdTransferWithinAStation } from "react-icons/md";
+import { BiSolidReport } from "react-icons/bi";
+import { useContext, useEffect, useState } from "react";
+import { Link, NavLink } from "react-router";
+import { FaUser } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthContext";
 
-const Navbar = () => {
-    return (
-      <div className="navbar bg-base-100 shadow-sm">
-  <div className="flex-1">
-    <a className="btn btn-ghost text-xl">daisyUI</a>
-  </div>
-  <div className="flex-none">
-    <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-        <div className="indicator">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /> </svg>
-          <span className="badge badge-sm indicator-item">8</span>
-        </div>
+const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  // LocalStorage / System Theme detect
+  const getInitialTheme = () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) return savedTheme;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    return prefersDark ? "dark" : "light";
+  };
+
+  // Initial state set
+  const [theme, setTheme] = useState(getInitialTheme);
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // System Theme change auto update
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e) => {
+      setTheme(e.matches ? "dark" : "light");
+    };
+    mediaQuery.addEventListener("change", handleChange); // listen for system changes
+    return () => mediaQuery.removeEventListener("change", handleChange); // cleanup
+  }, []);
+
+  // Toggle handler (manual switch)
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light");
+  };
+
+  // Nav Links
+  const navLinks = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+          className="flex items-center gap-1"
+          onClick={() => document.activeElement.blur()} // dropdown auto close
+        >
+          <GoHomeFill /> Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/all-loans"
+          onClick={() => document.activeElement.blur()}
+        >
+          <TbTransformFilled /> All Loans
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/contact"
+          onClick={() => document.activeElement.blur()}
+        >
+          <MdTransferWithinAStation /> Contact
+        </NavLink>
+      </li>
+      
+    </>
+  );
+
+  // Profile dropdown + toggle button
+  const profileLinks = (
+    <>
+      <li>
+        <NavLink
+          to="/dashboard"
+          className="flex items-center gap-1"
+          onClick={() => document.activeElement.blur()}
+        >
+          <FaUser /> Dashboard
+        </NavLink>
+      </li>
+
+      {/* Theme toggle */}
+      <div className="flex items-center gap-2 mt-3 px-2">
+        <span className="text-sm">{theme === "dark" ? "🌙" : "☀️"}</span>
+        <input
+          type="checkbox"
+          className="toggle"
+          checked={theme === "dark"}
+          onChange={(e) => handleTheme(e.target.checked)}
+        />
       </div>
-      <div
-        tabIndex={0}
-        className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
-        <div className="card-body">
-          <span className="text-lg font-bold">8 Items</span>
-          <span className="text-info">Subtotal: $999</span>
-          <div className="card-actions">
-            <button className="btn btn-primary btn-block">View cart</button>
+    </>
+  );
+
+  return (
+    <div className="navbar backdrop-blur-lg border border-white/20 shadow-md px-4 md:px-8 h-18 mx-auto glass-card bg-[#E8FAF7] dark:bg-[#1a1c25] sticky top-0 z-10">
+      {/* Navbar Start */}
+      <div className="navbar-start">
+        {/* Mobile Dropdown */}
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
           </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[9999] p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            {navLinks}
+          </ul>
         </div>
-      </div>
-    </div>
-    <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
+
+        {/* Brand Logo */}
+        <Link to="/" className="flex items-center gap-2 text-xl font-bold w-34">
           <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        </div>
+            src="https://i.ibb.co.com/0yDRJgjJ/finans-logo.png"
+            alt="FinEase Logo"
+            className="h-10 "
+          />
+        </Link>
       </div>
-      <ul
-        tabIndex="-1"
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
-        </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
-      </ul>
+
+      {/* Navbar Center */}
+      <div className="navbar-center hidden md:flex">
+        <ul className="menu menu-horizontal gap-8">{navLinks}</ul>
+      </div>
+
+      {/* Navbar End */}
+      <div className="navbar-end gap-3">
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-9 border-2 border-gray-300 rounded-full overflow-hidden">
+                <img
+                  src={
+                    user.photoURL ||
+                    "https://img.icons8.com/?size=100&id=0prbldgxVuTl&format=png&color=000000"
+                  }
+                  alt="User"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content min-w-48 w-auto mt-3 z-50 p-2 shadow bg-base-100 rounded-box"
+            >
+              <div className="pb-3 border-b border-b-gray-200">
+                <li className="text-sm font-bold">{user.displayName}</li>
+                <li className="text-xs">{user.email}</li>
+              </div>
+              {profileLinks}
+              <li>
+                <button
+                  onClick={logOut}
+                  className="btn btn-sm mt-3 text-white border-none bg-gradient-to-r from-[#632ee3] to-[#00b8b0] hover:opacity-90"
+                >
+                  <IoLogOut /> Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <Link
+            to="/auth/login"
+            className="btn text-[#555565] btn-sm rounded-full text-white border-none bg-gradient-to-r from-[#632ee3] to-[#00b8b0] hover:opacity-90"
+          >
+            <IoLogIn /> Login
+          </Link>
+        )}
+      </div>
     </div>
-  </div>
-</div>
-    );
+  );
 };
 
-export default Navbar;
+export default NavBar;

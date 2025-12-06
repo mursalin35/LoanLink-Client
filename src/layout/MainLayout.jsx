@@ -3,15 +3,21 @@ import React from "react";
 import Navbar from "../components/Shared/Navbar";
 import Footer from "../components/Shared/Footer";
 import { Outlet } from "react-router-dom";
+import ScrollToTop from "../components/ScrollToTop";
+import { Toaster } from "react-hot-toast";
 
 const MainLayout = () => {
   return (
-    <div>
-      <Navbar />
-      <main className=" bg-orange-300">
-        <Outlet />
-      </main>
-      <Footer />
+  <div className="bg-gradient-to-br from-[#F6FCFA] to-[#EAF9F8] dark:from-[#0D0D16] dark:to-[#1A1A2E] min-h-screen transition-colors">
+      <ScrollToTop />
+      <div>
+        <Navbar />
+        <div>
+          <Outlet />
+        </div>
+        <Footer />
+      </div>
+      <Toaster/>
     </div>
   );
 };

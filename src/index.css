@@ -2,11 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-.nav-item {
-  @apply text-gray-700 dark:text-gray-200 hover:text-blue-600 transition;
+.navbar .active {
+  color: #632ee3; 
+  font-weight: 600;
+  border: 1px solid rgba(99, 46, 227, 0.3);
+  border-radius: 9999px; 
+  background: rgba(99, 46, 227, 0.08); 
+  padding: 6px 12px;
+  transition: all 0.3s ease;
 }
 
-.nav-item.active {
-  @apply text-blue-600 font-semibold;
+.navbar .active:hover {
+  background: linear-gradient(to right, #632ee3, #00b8b0);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 10px rgba(99, 46, 227, 0.3);
 }
-
