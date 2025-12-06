@@ -4,7 +4,7 @@ import AvailableLoans from "../../components/Home/AvailableLoans";
 import HowItWorks from "../../components/Home/HowItWorks";
 import CustomerFeedback from "../../components/Home/CustomerFeedback";
 import TrustBar from "../../components/Home/TrustBar";
-import FAQ from "../../components/Home/FAQ";
+import FAQSection from "../../components/Home/FAQSection";
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
       <HowItWorks />
       <CustomerFeedback />
       <TrustBar />
-      <FAQ />
+      <FAQSection />
     </div>
   );
 };
