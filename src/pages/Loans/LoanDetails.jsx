@@ -10,7 +10,11 @@ const LoanDetails = () => {
   const navigate = useNavigate();
 
   // Fetch loan details
-  const { data: loan, isLoading, isError } = useQuery({
+  const {
+    data: loan,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["loanDetails", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/loans/${id}`);
@@ -26,7 +30,7 @@ const LoanDetails = () => {
 
   const handleApply = () => {
     // Redirect to loan application form
-    navigate(`/apply-loan/${loan._id}`);
+    navigate(`/application/${loan._id}`);
   };
 
   return (
@@ -52,7 +56,7 @@ const LoanDetails = () => {
             <strong>Interest Rate:</strong> {loan.interest}%
           </p>
           <p>
-            <strong>Max Loan:</strong> ${loan.maxLoanLimit}
+            <strong>Max Loan:</strong> ${loan.maxLimit}
           </p>
           <p>
             <strong>Available EMI Plans:</strong>{" "}
@@ -72,4 +76,3 @@ const LoanDetails = () => {
 };
 
 export default LoanDetails;
-

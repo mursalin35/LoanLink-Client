@@ -9,7 +9,10 @@ import AuthLayout from "../layout/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import LoanDetails from "../pages/Loans/LoanDetails";
-import ApplyLoan from "../pages/Loans/ApplyLoan";
+import DashboardLayout from "../layout/DashboardLayout";
+import MyLoans from "../pages/Dashboard/User/MyLoans";
+import PendingApplications from "../pages/Dashboard/Manager/PendingApplications";
+import Application from "../pages/Loans/ApplyLoan";
 
 const router = createBrowserRouter([
   {
@@ -26,22 +29,21 @@ const router = createBrowserRouter([
         element: <LoanDetails />,
       },
       {
-        path: "/apply-loan/:id",
-        element: <ApplyLoan />,
+        path: "/application/:id",
+        element: <Application />,
       },
     ],
   },
 
-  // // Dashboard (Private)
-  // {
-  //   path: "/dashboard",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     { index: true, element: <DashboardHome /> },
-  //     { path: "my-loans", element: <MyLoans /> },
-  //     { path: "loan-requests", element: <LoanRequests /> },
-  //   ],
-  // },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      { path: "my-loans", element: <MyLoans /> },
+      { path: "pending-applications", element: <PendingApplications /> }, // Manager only
+    ],
+  },
+
   {
     path: "/auth",
     element: <AuthLayout />,

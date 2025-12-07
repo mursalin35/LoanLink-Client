@@ -52,7 +52,7 @@ const AllLoans = () => {
               {loan.description?.slice(0, 100)}...
             </p>
             <p className="text-gray-800 font-medium mb-2">
-              Max Loan: ${loan.maxLoanLimit}
+              Max Loan: ${loan.maxLimit}
             </p>
             <button
               onClick={() => navigate(`/all-loans/${loan._id}`)}

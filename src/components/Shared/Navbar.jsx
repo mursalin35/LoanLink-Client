@@ -67,6 +67,14 @@ const NavBar = () => {
 
       <li>
         <NavLink
+          to="/about"
+          onClick={() => document.activeElement.blur()}
+        >
+          <MdTransferWithinAStation /> About Us
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/contact"
           onClick={() => document.activeElement.blur()}
         >

@@ -5,25 +5,25 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 
-const ApplyLoan = () => {
+const Application = () => {
   const { id } = useParams();
-  const { user } = useAuth(); // logged-in user
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Private route: Only logged-in borrowers
   if (!user) {
     navigate("/auth/login");
     return null;
   }
+
   if (user.role === "admin" || user.role === "manager") {
     toast.error("Only borrowers can apply for loans");
     navigate("/");
     return null;
   }
 
-  // Fetch loan data
+  // Fetch loan info
   const { data: loan, isLoading } = useQuery({
     queryKey: ["loanDetails", id],
     queryFn: async () => {
@@ -47,12 +47,12 @@ const ApplyLoan = () => {
 
   const mutation = useMutation({
     mutationFn: async (data) => {
-      const res = await axiosSecure.post("/loan-applications", data);
+      const res = await axiosSecure.post("/applications", data);
       return res.data;
     },
     onSuccess: () => {
       toast.success("Loan application submitted!");
-      queryClient.invalidateQueries(["myLoans"]); // refresh My Loans
+      queryClient.invalidateQueries(["myLoans"]);
       navigate("/dashboard/my-loans");
     },
     onError: () => {
@@ -66,14 +66,16 @@ const ApplyLoan = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const applicationData = {
-      ...formData,
-      userEmail: user.email,
+      loanId: id,
       loanTitle: loan.title,
       interestRate: loan.interest,
-      status: "Pending",
-      applicationFeeStatus: "Unpaid",
+      userEmail: user.email,
+      ...formData,
+      appliedAt: new Date(),
     };
+
     mutation.mutate(applicationData);
   };
 
@@ -89,127 +91,32 @@ const ApplyLoan = () => {
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-lg p-8 flex flex-col gap-4"
       >
-        {/* Auto-filled read-only fields */}
-        <input
-          type="email"
-          value={user.email}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
-        <input
-          type="text"
-          value={loan.title}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
-        <input
-          type="text"
-          value={loan.interest + "%"}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
+        {/* Read-only auto fields */}
+        <input type="email" value={user.email} readOnly className="border p-2 rounded bg-gray-100" />
+        <input type="text" value={loan.title} readOnly className="border p-2 rounded bg-gray-100" />
+        <input type="text" value={loan.interest + "%"} readOnly className="border p-2 rounded bg-gray-100" />
 
         {/* User input fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-            className="border p-2 rounded"
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-            className="border p-2 rounded"
-          />
+          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required className="border p-2 rounded" />
+          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required className="border p-2 rounded" />
         </div>
 
-        <input
-          type="text"
-          name="contactNumber"
-          placeholder="Contact Number"
-          value={formData.contactNumber}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
+        <input type="text" name="contactNumber" placeholder="Contact Number" value={formData.contactNumber} onChange={handleChange} required className="border p-2 rounded" />
 
-        <input
-          type="text"
-          name="nationalID"
-          placeholder="National ID / Passport Number"
-          value={formData.nationalID}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
+        <input type="text" name="nationalID" placeholder="National ID / Passport Number" value={formData.nationalID} onChange={handleChange} required className="border p-2 rounded" />
 
-        <input
-          type="text"
-          name="incomeSource"
-          placeholder="Income Source"
-          value={formData.incomeSource}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
+        <input type="text" name="incomeSource" placeholder="Income Source" value={formData.incomeSource} onChange={handleChange} required className="border p-2 rounded" />
 
-        <input
-          type="number"
-          name="monthlyIncome"
-          placeholder="Monthly Income"
-          value={formData.monthlyIncome}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-          min={0}
-        />
+        <input type="number" name="monthlyIncome" placeholder="Monthly Income" value={formData.monthlyIncome} onChange={handleChange} required className="border p-2 rounded" />
 
-        <input
-          type="number"
-          name="loanAmount"
-          placeholder="Loan Amount"
-          value={formData.loanAmount}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-          min={0}
-        />
+        <input type="number" name="loanAmount" placeholder="Loan Amount" value={formData.loanAmount} onChange={handleChange} required className="border p-2 rounded" />
 
-        <input
-          type="text"
-          name="reason"
-          placeholder="Reason for Loan"
-          value={formData.reason}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
+        <input type="text" name="reason" placeholder="Reason for Loan" value={formData.reason} onChange={handleChange} required className="border p-2 rounded" />
 
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={formData.address}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
+        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required className="border p-2 rounded" />
 
-        <textarea
-          name="extraNotes"
-          placeholder="Extra Notes"
-          value={formData.extraNotes}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
+        <textarea name="extraNotes" placeholder="Extra Notes" value={formData.extraNotes} onChange={handleChange} className="border p-2 rounded" />
 
         <button
           type="submit"
@@ -225,4 +132,4 @@ const ApplyLoan = () => {
   );
 };
 
-export default ApplyLoan;
+export default Application;
