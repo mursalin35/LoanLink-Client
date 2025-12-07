@@ -13,6 +13,10 @@ import DashboardLayout from "../layout/DashboardLayout";
 import MyLoans from "../pages/Dashboard/User/MyLoans";
 import PendingApplications from "../pages/Dashboard/Manager/PendingApplications";
 import Application from "../pages/Loans/ApplyLoan";
+import Profile from "../pages/Dashboard/Manager/MyProfile";
+import ApprovedApplications from "../pages/Dashboard/Manager/ApprovedApplications";
+import ManageLoans from "../pages/Dashboard/Manager/ManageLoans";
+import AddLoan from "../pages/Dashboard/Manager/AddLoan";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +44,19 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       { path: "my-loans", element: <MyLoans /> },
-      { path: "pending-applications", element: <PendingApplications /> }, // Manager only
+      // { path: "pending-applications", element: <PendingApplications /> }, // Manager only
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      { path: "add-loan", element: <AddLoan /> }, // manager
+      { path: "manage-loans", element: <ManageLoans /> }, // manager
+      { path: "pending-loans", element: <PendingApplications /> }, // manager
+      { path: "approved-loans", element: <ApprovedApplications /> }, // manager
+      { path: "profile", element: <Profile /> },
+      // ... other admin routes
     ],
   },
 
