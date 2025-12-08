@@ -17,6 +17,9 @@ import Profile from "../pages/Dashboard/Manager/MyProfile";
 import ApprovedApplications from "../pages/Dashboard/Manager/ApprovedApplications";
 import ManageLoans from "../pages/Dashboard/Manager/ManageLoans";
 import AddLoan from "../pages/Dashboard/Manager/AddLoan";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import AdminAllLoans from "../pages/Dashboard/Admin/AllLoan";
+import LoanApplications from "../pages/Dashboard/Admin/LoanApplications";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +60,39 @@ const router = createBrowserRouter([
       { path: "approved-loans", element: <ApprovedApplications /> }, // manager
       { path: "profile", element: <Profile /> },
       // ... other admin routes
+    ],
+  },
+  // Example: inside dashboard children routes
+  {
+    path: "dashboard",
+    element: <DashboardLayout />,
+    children: [
+      // other dashboard routes...
+      {
+        path: "manage-users",
+        element: (
+          // <AdminRoute> 
+            <ManageUsers />
+          // </AdminRoute> 
+        ),
+      },
+      {
+        path: "all-loan",
+        element: (
+         // <AdminRoute> 
+            <AdminAllLoans />
+         // </AdminRoute> 
+        ),
+      },
+      {
+        path: "loan-applications",
+        element: (
+        //  <AdminRoute> 
+            <LoanApplications />
+        //  </AdminRoute> 
+        ),
+      },
+      // ...
     ],
   },
 
