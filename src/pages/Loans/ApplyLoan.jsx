@@ -13,7 +13,7 @@ const Application = () => {
   const queryClient = useQueryClient();
 
   if (!user) {
-    navigate("/auth/login");
+    navigate("/login");
     return null;
   }
 

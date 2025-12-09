@@ -1,13 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+/* them:  */
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* LIGHT THEME */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-primary: #632ee3;
+  --color-secondary: #00b8b0;
+  --color-accent: #6f4ef2;
+  --color-neutral: #1c1c28;
+
+  --color-base-100: #f9f9fc;
+  --color-base-200: #eef0f5;
+  --color-base-300: #d9dce3;
+}
+
+/* DARK THEME */
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary: #7a5efc;
+  --color-secondary: #23e3d3;
+  --color-accent: #b388ff;
+  --color-neutral: #e5e7eb;
+
+  --color-base-100: #12141b;
+  --color-base-200: #1a1c25;
+  --color-base-300: #22232f;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
 .navbar .active {
-  color: #632ee3; 
+  color: #632ee3;
   font-weight: 600;
   border: 1px solid rgba(99, 46, 227, 0.3);
-  border-radius: 9999px; 
-  background: rgba(99, 46, 227, 0.08); 
+  border-radius: 9999px;
+  background: rgba(99, 46, 227, 0.08);
   padding: 6px 12px;
   transition: all 0.3s ease;
 }

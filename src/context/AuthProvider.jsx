@@ -13,7 +13,6 @@ import {
 } from "firebase/auth";
 import { AuthContext } from "./AuthContext";
 
-
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -23,33 +22,39 @@ const AuthProvider = ({ children }) => {
 
   // Create user
   const createUser = (email, password) => {
+    // setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // Login
   const login = (email, password) => {
+    // setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // Logout
   const logOut = () => {
+    // setLoading(true);
     return signOut(auth);
   };
 
   // Update user info
-  const updateUser = (updatedData) => {
-    return updateProfile(auth.currentUser, updatedData).then(() => {
+  const updateUserProfile = (profile) => {
+    // setLoading(true);
+    return updateProfile(auth.currentUser, profile).then(() => {
       setUser({ ...auth.currentUser });
     });
   };
 
   // Google Sign-In
   const signInWithGoogle = () => {
+    // setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
   // Password Reset (NEW)
   const resetPassword = (email) => {
+    // setLoading(true);
     return sendPasswordResetEmail(auth, email);
   };
 
@@ -57,6 +62,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser || null);
+      // setUser(currentUser);
       setLoading(false);
     });
 
@@ -70,7 +76,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     login,
     logOut,
-    updateUser,
+    updateUserProfile,
     signInWithGoogle,
     resetPassword,
   };
@@ -83,5 +89,3 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
-
-

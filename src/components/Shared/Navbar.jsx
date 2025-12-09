@@ -197,7 +197,7 @@ const NavBar = () => {
           </div>
         ) : (
           <Link
-            to="/auth/login"
+            to="/login"
             className="btn text-[#555565] btn-sm rounded-full text-white border-none bg-gradient-to-r from-[#632ee3] to-[#00b8b0] hover:opacity-90"
           >
             <IoLogIn /> Login

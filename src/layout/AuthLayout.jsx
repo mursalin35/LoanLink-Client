@@ -9,9 +9,7 @@ const AuthLayout = () => {
     <div className="bg-gradient-to-br from-[#F6FCFA]  to-[#EAF9F8] dark:from-[#0D0D16] dark:to-[#1A1A2E] min-h-screen transition-colors">
       <ScrollToTop />
       <Navbar />
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
       <Footer />
     </div>
   );

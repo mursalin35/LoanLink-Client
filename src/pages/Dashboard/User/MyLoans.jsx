@@ -13,7 +13,7 @@ const MyLoans = () => {
   // Redirect if user not logged in
   if (!user) {
     toast.error("Please login first");
-    navigate("/auth/login");
+    navigate("/login");
     return null;
   }
 

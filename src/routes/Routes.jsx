@@ -20,6 +20,7 @@ import AddLoan from "../pages/Dashboard/Manager/AddLoan";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AdminAllLoans from "../pages/Dashboard/Admin/AllLoan";
 import LoanApplications from "../pages/Dashboard/Admin/LoanApplications";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,14 @@ const router = createBrowserRouter([
     errorElement: <div>Error Page</div>,
     children: [
       { index: true, element: <Home /> },
-      { path: "all-loans", element: <AllLoans /> },
+      {
+        path: "all-loans",
+        element: (
+          <PrivateRoute>
+            <AllLoans />
+          </PrivateRoute>
+        ),
+      },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       {
@@ -41,15 +49,42 @@ const router = createBrowserRouter([
       },
     ],
   },
+// -----------------------------------------------------------------------------
+  {
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      // Auth pages (public)
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+// -----------------------------------------------------------------------------
+
 
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute> <DashboardLayout /> </PrivateRoute>,
     children: [
       { path: "my-loans", element: <MyLoans /> },
       // { path: "pending-applications", element: <PendingApplications /> }, // Manager only
     ],
   },
+
+
+
+
+
+
+
+
+  
   {
     path: "/dashboard",
     element: <DashboardLayout />,
@@ -71,44 +106,28 @@ const router = createBrowserRouter([
       {
         path: "manage-users",
         element: (
-          // <AdminRoute> 
-            <ManageUsers />
-          // </AdminRoute> 
+          // <AdminRoute>
+          <ManageUsers />
+          // </AdminRoute>
         ),
       },
       {
         path: "all-loan",
         element: (
-         // <AdminRoute> 
-            <AdminAllLoans />
-         // </AdminRoute> 
+          // <AdminRoute>
+          <AdminAllLoans />
+          // </AdminRoute>
         ),
       },
       {
         path: "loan-applications",
         element: (
-        //  <AdminRoute> 
-            <LoanApplications />
-        //  </AdminRoute> 
+          //  <AdminRoute>
+          <LoanApplications />
+          //  </AdminRoute>
         ),
       },
       // ...
-    ],
-  },
-
-  {
-    path: "/auth",
-    element: <AuthLayout />,
-    children: [
-      // Auth pages (public)
-      {
-        path: "/auth/login",
-        element: <Login />,
-      },
-      {
-        path: "/auth/register",
-        element: <Register />,
-      },
     ],
   },
 ]);

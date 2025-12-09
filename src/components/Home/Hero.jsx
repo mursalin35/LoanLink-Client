@@ -15,7 +15,7 @@ const Hero = () => (
         <p className="mt-4 text-gray-600">Apply quickly, get verified, repay easily with transparent EMI plans.</p>
         <div className="mt-6 flex gap-4">
           <Link to="/all-loans" className="btn btn-primary">Explore Loans</Link>
-          <Link to="/auth/register" className="btn btn-outline">Apply for Loan</Link>
+          <Link to="/register" className="btn btn-outline">Apply for Loan</Link>
         </div>
       </motion.div>
 
