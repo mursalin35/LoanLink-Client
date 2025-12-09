@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { FaBars, FaTimes, FaHome, FaUser, FaMoneyCheck, FaList, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaUser,
+  FaMoneyCheck,
+  FaList,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
@@ -12,7 +20,8 @@ const DashboardLayout = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth < 768) setOpen(false); // collapse sidebar on small screens
+      if (window.innerWidth < 768)
+        setOpen(false); // collapse sidebar on small screens
       else setOpen(true); // full sidebar on large screens
     };
     handleResize();
@@ -22,13 +31,17 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      
       {/* Sidebar */}
-      <div className={`${open ? "w-64" : "w-16"} bg-white shadow-lg transition-all duration-300 relative`}>
-        
+      <div
+        className={`${
+          open ? "w-64" : "w-16"
+        } bg-white shadow-lg transition-all duration-300 relative`}
+      >
         {/* Top logo & toggle */}
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className={`${open ? "text-xl font-bold" : "hidden"} text-blue-600`}>
+          <h2
+            className={`${open ? "text-xl font-bold" : "hidden"} text-blue-600`}
+          >
             LoanLink
           </h2>
           {isMobile && (
@@ -52,14 +65,77 @@ const DashboardLayout = () => {
           </li>
           <li>
             <Link to="/dashboard/my-loans" className="flex items-center gap-3">
-              <FaList /> {open && "My Loan Applications"}
+              <FaList /> {open && "My Loans"}
+            </Link>
+          </li>
+        
+
+          {/* Manager Router  */}
+          {/* ===================================================================== */}
+          <li>
+            <Link
+              to="/dashboard/add-loan"
+              className="flex items-center gap-3 border-t-2 border-orange-500"
+            >
+              <FaMoneyCheck /> {open && "M- Add Loan"}
             </Link>
           </li>
           <li>
-            <Link to="/dashboard/apply-loan" className="flex items-center gap-3">
-              <FaMoneyCheck /> {open && "Apply for Loan"}
+            <Link
+              to="/dashboard/manage-loans"
+              className="flex items-center gap-3"
+            >
+              <FaMoneyCheck /> {open && "M- Manager Loans"}
             </Link>
           </li>
+          <li>
+            <Link
+              to="/dashboard/pending-loans"
+              className="flex items-center gap-3"
+            >
+              <FaMoneyCheck /> {open && "M- Pending Applications"}
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/dashboard/approved-loans"
+              className="flex items-center gap-3"
+            >
+              <FaMoneyCheck /> {open && "M- Approved Applications"}
+            </Link>
+          </li>
+         
+          {/* =====================================================================  */}
+
+           {/* Admin Router  */}
+          {/* ===================================================================== */}
+          <li>
+            <Link
+              to="/dashboard/manage-users"
+              className="flex items-center gap-3 border-t-2 border-orange-500"
+            >
+              <FaMoneyCheck /> {open && "A- Manage Users"}
+            </Link>
+          </li>
+          
+          <li>
+            <Link
+              to="/dashboard/all-loan"
+              className="flex items-center gap-3"
+            >
+              <FaMoneyCheck /> {open && "A- All Loan"}
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/dashboard/loan-applications"
+              className="flex items-center gap-3"
+            >
+              <FaMoneyCheck /> {open && "A- Loan Applications"}
+            </Link>
+          </li>
+         
+          {/* =====================================================================  */}
         </ul>
 
         {/* Logout */}
@@ -75,7 +151,6 @@ const DashboardLayout = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        
         {/* Top navbar */}
         <div className="w-full bg-white shadow px-6 py-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Dashboard</h2>
@@ -93,7 +168,6 @@ const DashboardLayout = () => {
         <div className="p-6">
           <Outlet />
         </div>
-
       </div>
     </div>
   );

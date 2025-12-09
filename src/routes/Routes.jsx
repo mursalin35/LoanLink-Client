@@ -67,12 +67,13 @@ const router = createBrowserRouter([
   },
 // -----------------------------------------------------------------------------
 
-
+// User Profile 
   {
     path: "/dashboard",
     element: <PrivateRoute> <DashboardLayout /> </PrivateRoute>,
     children: [
       { path: "my-loans", element: <MyLoans /> },
+      { path: "profile", element: <Profile /> },
       // { path: "pending-applications", element: <PendingApplications /> }, // Manager only
     ],
   },
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
 
 
 
-  
+// manager route
   {
     path: "/dashboard",
     element: <DashboardLayout />,
@@ -93,11 +94,11 @@ const router = createBrowserRouter([
       { path: "manage-loans", element: <ManageLoans /> }, // manager
       { path: "pending-loans", element: <PendingApplications /> }, // manager
       { path: "approved-loans", element: <ApprovedApplications /> }, // manager
-      { path: "profile", element: <Profile /> },
-      // ... other admin routes
+     
+     
     ],
   },
-  // Example: inside dashboard children routes
+  // Admin router
   {
     path: "dashboard",
     element: <DashboardLayout />,
@@ -127,7 +128,7 @@ const router = createBrowserRouter([
           //  </AdminRoute>
         ),
       },
-      // ...
+      
     ],
   },
 ]);
