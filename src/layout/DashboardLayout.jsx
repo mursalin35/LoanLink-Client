@@ -1,138 +1,102 @@
+import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { FaBars, FaTimes, FaHome, FaUser, FaMoneyCheck, FaList, FaSignOutAlt } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
+  const [open, setOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const { user, logOut } = useAuth();
+
+  // Check screen width for responsiveness
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) setOpen(false); // collapse sidebar on small screens
+      else setOpen(true); // full sidebar on large screens
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
+    <div className="flex min-h-screen bg-gray-100">
+      
+      {/* Sidebar */}
+      <div className={`${open ? "w-64" : "w-16"} bg-white shadow-lg transition-all duration-300 relative`}>
+        
+        {/* Top logo & toggle */}
+        <div className="flex items-center justify-between p-4 border-b">
+          <h2 className={`${open ? "text-xl font-bold" : "hidden"} text-blue-600`}>
+            LoanLink
+          </h2>
+          {isMobile && (
+            <button onClick={() => setOpen(!open)}>
+              {open ? <FaTimes /> : <FaBars />}
+            </button>
+          )}
+        </div>
+
+        {/* Menu */}
+        <ul className="menu p-4 space-y-2 text-gray-700">
+          <li>
+            <Link to="/dashboard" className="flex items-center gap-3">
+              <FaHome /> {open && "Dashboard"}
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/profile" className="flex items-center gap-3">
+              <FaUser /> {open && "My Profile"}
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/my-loans" className="flex items-center gap-3">
+              <FaList /> {open && "My Loan Applications"}
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/apply-loan" className="flex items-center gap-3">
+              <FaMoneyCheck /> {open && "Apply for Loan"}
+            </Link>
+          </li>
+        </ul>
+
+        {/* Logout */}
+        <div className="absolute bottom-4 w-full px-4">
+          <button
+            onClick={logOut}
+            className="flex items-center gap-3 text-red-600 w-full"
           >
-            {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4"
-            >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
-          </label>
-          <div className="px-4">Navbar Title</div>
-        </nav>
-        {/* Page content here */}
-        <Outlet/>
-        <div className="p-4">Page Content</div>
+            <FaSignOutAlt /> {open && "Logout"}
+          </button>
+        </div>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
-            {/* List item */}
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
-              >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </button>
-            </li>
-
-            {/* List item */}
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
-              >
-                {/* Settings icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M20 7h-9"></path>
-                  <path d="M14 17H5"></path>
-                  <circle cx="17" cy="17" r="3"></circle>
-                  <circle cx="7" cy="7" r="3"></circle>
-                </svg>
-                <span className="is-drawer-close:hidden">Settings</span>
-              </button>
-            </li>
-          </ul>
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        
+        {/* Top navbar */}
+        <div className="w-full bg-white shadow px-6 py-4 flex justify-between items-center">
+          <h2 className="text-xl font-semibold">Dashboard</h2>
+          <div className="flex items-center gap-3">
+            <img
+              src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"}
+              className="w-10 h-10 rounded-full border"
+              alt="User"
+            />
+            <p className="font-medium">{user?.displayName || "User"}</p>
+          </div>
         </div>
+
+        {/* Dynamic page */}
+        <div className="p-6">
+          <Outlet />
+        </div>
+
       </div>
     </div>
   );
 };
 
 export default DashboardLayout;
-
-{
-  /* Sidebar
-      <div className="w-64 bg-white shadow-md p-6 space-y-4">
-        <h2 className="text-xl font-bold mb-4">Dashboard</h2>
-
-        <Link to="/dashboard" className="block hover:text-primary">
-          Overview
-        </Link>
-
-        <Link to="/dashboard/my-loans" className="block hover:text-primary">
-          My Loans
-        </Link>
-
-         Manager only 
-        {user?.role === "manager" && (
-          <Link to="/dashboard/pending-loans" className="block hover:text-primary">
-            Pending Loans
-          </Link>
-        )}
-
-        <Link to="/dashboard/profile" className="block hover:text-primary">
-          Profile
-        </Link>
-      </div>
-
-      Main Content 
-      <div className="flex-1 p-8">
-        <Outlet />
-      </div>
-    </div> */
-}
