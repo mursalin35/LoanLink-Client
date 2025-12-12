@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import useAuth from "../../../hooks/useAuth";
 
 const AddLoan = () => {
+  const {user} = useAuth()
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    category: "",
-    interest: "",
-    maxLimit: "",
-    emiPlans: "",
-    image: "",
-    showOnHome: false,
-  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const mutation = useMutation({
     mutationFn: async (loanData) => {
@@ -26,42 +25,27 @@ const AddLoan = () => {
     onSuccess: () => {
       toast.success("Loan added successfully!");
       queryClient.invalidateQueries(["loans"]);
-      setForm({
-        title: "",
-        description: "",
-        category: "",
-        interest: "",
-        maxLimit: "",
-        emiPlans: "",
-        image: "",
-        showOnHome: false,
-      });
+      reset();
     },
     onError: () => toast.error("Failed to add loan"),
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const onSubmit = (data) => {
     const payload = {
-      title: form.title,
-      description: form.description,
-      category: form.category,
-      interest: Number(form.interest),
-      maxLimit: Number(form.maxLimit),
-      emiPlans: form.emiPlans
-        ? form.emiPlans.split(",").map((v) => Number(v.trim()))
+      title: data.title,
+      description: data.description,
+      category: data.category,
+      interest: Number(data.interest),
+      maxLimit: Number(data.maxLimit),
+
+      // EMI: convert "3,6,9" ⇒ [3,6,9]
+      emiPlans: data.emiPlans
+        ? data.emiPlans.split(",").map((v) => Number(v.trim()))
         : [],
-      image: form.image,
-      showOnHome: form.showOnHome,
+
+      image: data.image,
+      showOnHome: data.showOnHome || false,
+      createdBy: `Manager - ${user?.displayName || "Unknown"}`,
     };
 
     mutation.mutate(payload);
@@ -71,78 +55,61 @@ const AddLoan = () => {
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Add Loan</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+
         <input
-          name="title"
-          value={form.title}
-          onChange={handleChange}
+          {...register("title", { required: true })}
           placeholder="Title"
           className="w-full border p-2 rounded"
-          required
         />
+        {errors.title && <p className="text-red-500">Title is required</p>}
 
         <textarea
-          name="description"
-          value={form.description}
-          onChange={handleChange}
+          {...register("description", { required: true })}
           placeholder="Description"
           className="w-full border p-2 rounded"
           rows={4}
-          required
         />
+        {errors.description && (
+          <p className="text-red-500">Description is required</p>
+        )}
 
         <input
-          name="category"
-          value={form.category}
-          onChange={handleChange}
+          {...register("category")}
           placeholder="Category"
           className="w-full border p-2 rounded"
         />
 
         <div className="grid grid-cols-2 gap-3">
           <input
-            name="interest"
-            value={form.interest}
-            onChange={handleChange}
+            {...register("interest", { required: true })}
             placeholder="Interest (%)"
             type="number"
             className="border p-2 rounded"
-            required
           />
+
           <input
-            name="maxLimit"
-            value={form.maxLimit}
-            onChange={handleChange}
+            {...register("maxLimit", { required: true })}
             placeholder="Max Limit"
             type="number"
             className="border p-2 rounded"
-            required
           />
         </div>
 
         <input
-          name="emiPlans"
-          value={form.emiPlans}
-          onChange={handleChange}
+          {...register("emiPlans")}
           placeholder="EMI Plans (3,6,9,12)"
           className="w-full border p-2 rounded"
         />
 
         <input
-          name="image"
-          value={form.image}
-          onChange={handleChange}
+          {...register("image")}
           placeholder="Image URL"
           className="w-full border p-2 rounded"
         />
 
         <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            name="showOnHome"
-            checked={form.showOnHome}
-            onChange={handleChange}
-          />
+          <input type="checkbox" {...register("showOnHome")} />
           <span>Show on Home</span>
         </label>
 

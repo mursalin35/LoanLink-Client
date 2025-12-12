@@ -80,7 +80,7 @@ const AdminAllLoans = () => {
                 <td className="p-2">{loan.title}</td>
                 <td className="p-2">{loan.interest}%</td>
                 <td className="p-2">{loan.category}</td>
-                <td className="p-2">{loan.createdBy || "—"}</td>
+                <td className="p-2">{loan.createdBy}</td>
                 <td className="p-2">
                   <input
                     type="checkbox"
