@@ -171,7 +171,7 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
       interest: loan.interest,
       maxLimit: loan.maxLimit,
       image: loan.image,
-      emiPlansText: loan.emiPlans?.join(",") || "",
+      emiPlansText: loan.emiPlans?.join(", ") || "",
     },
   });
 
@@ -185,8 +185,7 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
 
       emiPlans: data.emiPlansText
         .split(",")
-        .map((v) => Number(v.trim()))
-        .filter((v) => !isNaN(v)),
+        .map((v) => (v.trim())),
 
       image: data.image,
       showOnHome: !!loan.showOnHome,
@@ -237,7 +236,7 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
           <input
             {...register("emiPlansText")}
             className="w-full p-2 mb-2 border rounded"
-            placeholder="EMI Plans (3,6,9,12)"
+            placeholder="EMI Plans (3 month, 5 month, 7 month)"
           />
 
           <input

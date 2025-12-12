@@ -38,9 +38,13 @@ const AddLoan = () => {
       interest: Number(data.interest),
       maxLimit: Number(data.maxLimit),
 
+       requiredDocuments: data.requiredDocuments
+    ? data.requiredDocuments.split(",").map((v) => v.trim())
+    : [],
+
       // EMI: convert "3,6,9" ⇒ [3,6,9]
       emiPlans: data.emiPlans
-        ? data.emiPlans.split(",").map((v) => Number(v.trim()))
+        ? data.emiPlans.split(",").map((v) => v.trim())
         : [],
 
       image: data.image,
@@ -98,9 +102,16 @@ const AddLoan = () => {
 
         <input
           {...register("emiPlans")}
-          placeholder="EMI Plans (3,6,9,12)"
+          placeholder="EMI Plans (3 month, 5 month, 7 month)"
           className="w-full border p-2 rounded"
         />
+
+        <textarea
+  {...register("requiredDocuments")}
+  placeholder="Required Documents (comma separated)"
+  className="w-full border p-2 rounded"
+  
+/>
 
         <input
           {...register("image")}
