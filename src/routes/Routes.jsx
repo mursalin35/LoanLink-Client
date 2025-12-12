@@ -35,13 +35,16 @@ const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       {
         path: "all-loans",
+        element: <AllLoans />,
+      },
+      {
+        path: "all-loans/:id",
         element: (
           <PrivateRoute>
-            <AllLoans />
+            <LoanDetails />
           </PrivateRoute>
         ),
       },
-      { path: "all-loans/:id", element: <LoanDetails /> },
       { path: "application/:id", element: <Application /> },
     ],
   },
@@ -67,8 +70,8 @@ const router = createBrowserRouter([
     children: [
       // user routes
       { path: "", element: <MyLoans /> }, // /dashboard
-      { path: "my-loans", element: <MyLoans /> },
       { path: "profile", element: <Profile /> },
+      { path: "my-loans", element: <MyLoans /> },
 
       // manager routes (protected inside ManagerRoute)
       {
