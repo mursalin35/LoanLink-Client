@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const LoanDetails = () => {
+  const { user, role } = useAuth();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -63,12 +65,14 @@ const LoanDetails = () => {
             {loan.emiPlans?.join(", ") || "N/A"}
           </p>
 
-          <button
-            onClick={handleApply}
-            className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
-          >
-            Apply Now
-          </button>
+          {role === "user" && (
+            <button
+              onClick={handleApply}
+              className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+            >
+              Apply Now
+            </button>
+          )}
         </div>
       </div>
     </div>

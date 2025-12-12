@@ -52,13 +52,19 @@ const AllLoans = () => {
               {loan.description?.slice(0, 100)}...
             </p>
             <p className="text-gray-800 font-medium mb-2">
+              Category: {loan.category}
+            </p>
+            <p className="text-gray-800 font-medium mb-2">
+              Interest Rate: {loan.interest}%
+            </p>
+            <p className="text-gray-800 font-medium mb-2">
               Max Loan: ${loan.maxLimit}
             </p>
             <button
               onClick={() => navigate(`/all-loans/${loan._id}`)}
               className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition-colors"
             >
-              View Details
+              View Details  
             </button>
           </div>
         ))}
