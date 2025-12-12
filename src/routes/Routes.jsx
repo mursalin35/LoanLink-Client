@@ -13,7 +13,7 @@ import DashboardLayout from "../layout/DashboardLayout";
 import MyLoans from "../pages/Dashboard/User/MyLoans";
 import PendingApplications from "../pages/Dashboard/Manager/PendingApplications";
 import Application from "../pages/Loans/ApplyLoan";
-import Profile from "../pages/Dashboard/Manager/MyProfile";
+import Profile from "../pages/Dashboard/MyProfile";
 import ApprovedApplications from "../pages/Dashboard/Manager/ApprovedApplications";
 import ManageLoans from "../pages/Dashboard/Manager/ManageLoans";
 import AddLoan from "../pages/Dashboard/Manager/AddLoan";
@@ -71,15 +71,64 @@ const router = createBrowserRouter([
       { path: "profile", element: <Profile /> },
 
       // manager routes (protected inside ManagerRoute)
-      { path: "add-loan", element: <ManagerRoute><AddLoan /></ManagerRoute> },
-      { path: "manage-loans", element: <ManagerRoute><ManageLoans /></ManagerRoute> },
-      { path: "pending-loans", element: <ManagerRoute><PendingApplications /></ManagerRoute> },
-      { path: "approved-loans", element: <ManagerRoute><ApprovedApplications /></ManagerRoute> },
+      {
+        path: "add-loan",
+        element: (
+          <ManagerRoute>
+            <AddLoan />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "manage-loans",
+        element: (
+          <ManagerRoute>
+            <ManageLoans />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "pending-loans",
+        element: (
+          <ManagerRoute>
+            <PendingApplications />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "approved-loans",
+        element: (
+          <ManagerRoute>
+            <ApprovedApplications />
+          </ManagerRoute>
+        ),
+      },
 
       // admin routes
-      { path: "manage-users", element: <AdminRoute><ManageUsers /></AdminRoute> },
-      { path: "all-loan", element: <AdminRoute><AdminAllLoans /></AdminRoute> },
-      { path: "loan-applications", element: <AdminRoute><LoanApplications /></AdminRoute> },
+      {
+        path: "manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "all-loan",
+        element: (
+          <AdminRoute>
+            <AdminAllLoans />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "loan-applications",
+        element: (
+          <AdminRoute>
+            <LoanApplications />
+          </AdminRoute>
+        ),
+      },
 
       // admin routes
       // { path: "manage-users", element: <ManageUsers /> },

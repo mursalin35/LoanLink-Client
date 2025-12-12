@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 
 const Profile = () => {
@@ -54,7 +54,10 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      const res = await axiosSecure.patch(`/users/profile/${user.email}`, profile);
+      const res = await axiosSecure.patch(
+        `/users/profile/${user.email}`,
+        profile
+      );
       setProfile(res.data);
       toast.success("Profile updated successfully");
     } catch (err) {
