@@ -18,7 +18,7 @@ const Application = () => {
   }
 
   if (user.role === "admin" || user.role === "manager") {
-    toast.error("Only borrowers can apply for loans");
+    toast.error("Only users can apply for loans");
     navigate("/");
     return null;
   }
@@ -92,37 +92,132 @@ const Application = () => {
         className="bg-white shadow-lg rounded-lg p-8 flex flex-col gap-4"
       >
         {/* Read-only auto fields */}
-        <input type="email" value={user.email} readOnly className="border p-2 rounded bg-gray-100" />
-        <input type="text" value={loan.title} readOnly className="border p-2 rounded bg-gray-100" />
-        <input type="text" value={loan.interest + "%"} readOnly className="border p-2 rounded bg-gray-100" />
+        <input
+          type="email"
+          value={user.email}
+          readOnly
+          className="border p-2 rounded bg-gray-100"
+        />
+        <input
+          type="text"
+          value={loan.title}
+          readOnly
+          className="border p-2 rounded bg-gray-100"
+        />
+        <input
+          type="text"
+          value={loan.interest + "%"}
+          readOnly
+          className="border p-2 rounded bg-gray-100"
+        />
 
         {/* User input fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required className="border p-2 rounded" />
-          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required className="border p-2 rounded" />
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
+          />
         </div>
 
-        <input type="text" name="contactNumber" placeholder="Contact Number" value={formData.contactNumber} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="text"
+          name="contactNumber"
+          placeholder="Contact Number"
+          value={formData.contactNumber}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <input type="text" name="nationalID" placeholder="National ID / Passport Number" value={formData.nationalID} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="text"
+          name="nationalID"
+          placeholder="National ID / Passport Number"
+          value={formData.nationalID}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <input type="text" name="incomeSource" placeholder="Income Source" value={formData.incomeSource} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="text"
+          name="incomeSource"
+          placeholder="Income Source"
+          value={formData.incomeSource}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <input type="number" name="monthlyIncome" placeholder="Monthly Income" value={formData.monthlyIncome} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="number"
+          name="monthlyIncome"
+          placeholder="Monthly Income"
+          value={formData.monthlyIncome}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <input type="number" name="loanAmount" placeholder="Loan Amount" value={formData.loanAmount} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="number"
+          name="loanAmount"
+          placeholder="Loan Amount"
+          value={formData.loanAmount}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <input type="text" name="reason" placeholder="Reason for Loan" value={formData.reason} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="text"
+          name="reason"
+          placeholder="Reason for Loan"
+          value={formData.reason}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required className="border p-2 rounded" />
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={formData.address}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
 
-        <textarea name="extraNotes" placeholder="Extra Notes" value={formData.extraNotes} onChange={handleChange} className="border p-2 rounded" />
+        <textarea
+          name="extraNotes"
+          placeholder="Extra Notes"
+          value={formData.extraNotes}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        />
 
         <button
           type="submit"
           disabled={mutation.isLoading}
           className={`${
-            mutation.isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+            mutation.isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-green-600 hover:bg-green-700"
           } text-white py-3 rounded transition-all duration-300 mt-4`}
         >
           {mutation.isLoading ? "Submitting..." : "Submit Application"}

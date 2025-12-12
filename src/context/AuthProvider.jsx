@@ -11,7 +11,7 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -19,73 +19,109 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null); // 'user' | 'manager' | 'admin'
+  const [suspended, setSuspended] = useState(false);
+  const [suspendReason, setSuspendReason] = useState("");
 
-  // Create user
-  const createUser = (email, password) => {
-    // setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+  // -------------------------
+  // Auth helper functions
+  // -------------------------
+  const createUser = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password);
+
+  const login = (email, password) =>
+    signInWithEmailAndPassword(auth, email, password);
+
+  const logOut = async () => {
+    await signOut(auth);
+    setRole(null);
+    setSuspended(false);
+    setSuspendReason("");
   };
 
-  // Login
-  const login = (email, password) => {
-    // setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+  const updateUserProfile = async (profile) => {
+    await updateProfile(auth.currentUser, profile);
+    setUser({ ...auth.currentUser });
   };
 
-  // Logout
-  const logOut = () => {
-    // setLoading(true);
-    return signOut(auth);
+  const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+
+  const resetPassword = (email) => sendPasswordResetEmail(auth, email);
+
+  const getIdToken = async () => {
+    if (!auth.currentUser) return null;
+    return auth.currentUser.getIdToken(true); // force refresh
   };
 
-  // Update user info
-  const updateUserProfile = (profile) => {
-    // setLoading(true);
-    return updateProfile(auth.currentUser, profile).then(() => {
-      setUser({ ...auth.currentUser });
-    });
+  // -------------------------
+  // Fetch user role from backend
+  // -------------------------
+  const fetchUserRole = async (currentUser) => {
+    try {
+      if (!currentUser?.email) return;
+
+      const token = await currentUser.getIdToken();
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${currentUser.email}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch role");
+
+      const data = await res.json();
+      setRole(data.role || "user");
+      setSuspended(!!data.suspended);
+      setSuspendReason(data.suspendReason || "");
+    } catch (err) {
+      console.error("fetchUserRole error:", err);
+      // fallback defaults
+      setRole("user");
+      setSuspended(false);
+      setSuspendReason("");
+      console.log("Current Role User Data: ",setRole)
+    }
   };
 
-  // Google Sign-In
-  const signInWithGoogle = () => {
-    // setLoading(true);
-    return signInWithPopup(auth, googleProvider);
-  };
-
-  // Password Reset (NEW)
-  const resetPassword = (email) => {
-    // setLoading(true);
-    return sendPasswordResetEmail(auth, email);
-  };
-
-  // Observer for user state
+  // -------------------------
+  // Observe Firebase Auth state
+  // -------------------------
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser || null);
-      // setUser(currentUser);
+      if (currentUser) {
+        await fetchUserRole(currentUser);
+      } else {
+        setRole(null);
+        setSuspended(false);
+        setSuspendReason("");
+      }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
+  // -------------------------
+  // Auth context value
+  // -------------------------
   const authData = {
     user,
     loading,
-    setUser,
     createUser,
     login,
     logOut,
     updateUserProfile,
     signInWithGoogle,
     resetPassword,
+    role,
+    suspended,
+    suspendReason,
+    getIdToken,
   };
 
-  return (
-    <AuthContext.Provider value={authData}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

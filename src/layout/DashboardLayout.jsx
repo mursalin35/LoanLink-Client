@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import {
   FaBars,
   FaTimes,
@@ -14,15 +14,13 @@ import useAuth from "../hooks/useAuth";
 const DashboardLayout = () => {
   const [open, setOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const { user, logOut } = useAuth();
+  const { user, logOut, role } = useAuth();
 
-  // Check screen width for responsiveness
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth < 768)
-        setOpen(false); // collapse sidebar on small screens
-      else setOpen(true); // full sidebar on large screens
+      if (window.innerWidth < 768) setOpen(false);
+      else setOpen(true);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -31,140 +29,60 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div
-        className={`${
-          open ? "w-64" : "w-16"
-        } bg-white shadow-lg transition-all duration-300 relative`}
-      >
-        {/* Top logo & toggle */}
+      <div className={`${open ? "w-64" : "w-16"} bg-white shadow-lg transition-all duration-300 relative`}>
         <div className="flex items-center justify-between p-4 border-b">
-          <h2
-            className={`${open ? "text-xl font-bold" : "hidden"} text-blue-600`}
-          >
-            LoanLink
-          </h2>
-          {isMobile && (
-            <button onClick={() => setOpen(!open)}>
-              {open ? <FaTimes /> : <FaBars />}
-            </button>
-          )}
+          <h2 className={`${open ? "text-xl font-bold" : "hidden"} text-blue-600`}>LoanLink</h2>
+          {isMobile && <button onClick={() => setOpen(!open)}>{open ? <FaTimes /> : <FaBars />}</button>}
         </div>
 
-        {/* Menu */}
         <ul className="menu p-4 space-y-2 text-gray-700">
-          <li>
-            <Link to="/dashboard" className="flex items-center gap-3">
-              <FaHome /> {open && "Dashboard"}
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard/profile" className="flex items-center gap-3">
-              <FaUser /> {open && "My Profile"}
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard/my-loans" className="flex items-center gap-3">
-              <FaList /> {open && "My Loans"}
-            </Link>
-          </li>
-        
+          {/* Common */}
+          <li><NavLink to="/" className="flex items-center gap-3"><FaHome /> {open && "Dashboard"}</NavLink></li>
 
-          {/* Manager Router  */}
-          {/* ===================================================================== */}
-          <li>
-            <Link
-              to="/dashboard/add-loan"
-              className="flex items-center gap-3 border-t-2 border-orange-500"
-            >
-              <FaMoneyCheck /> {open && "M- Add Loan"}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/dashboard/manage-loans"
-              className="flex items-center gap-3"
-            >
-              <FaMoneyCheck /> {open && "M- Manager Loans"}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/dashboard/pending-loans"
-              className="flex items-center gap-3"
-            >
-              <FaMoneyCheck /> {open && "M- Pending Applications"}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/dashboard/approved-loans"
-              className="flex items-center gap-3"
-            >
-              <FaMoneyCheck /> {open && "M- Approved Applications"}
-            </Link>
-          </li>
-         
-          {/* =====================================================================  */}
+          {/* USER */}
+          {role === "user" && (
+            <>
+              <li><NavLink to="/dashboard/my-loans" className="flex items-center gap-3"><FaList /> {open && "My Loans"}</NavLink></li>
+              <li><NavLink to="/dashboard/profile" className="flex items-center gap-3"><FaUser /> {open && "Profile"}</NavLink></li>
+            </>
+          )}
 
-           {/* Admin Router  */}
-          {/* ===================================================================== */}
-          <li>
-            <Link
-              to="/dashboard/manage-users"
-              className="flex items-center gap-3 border-t-2 border-orange-500"
-            >
-              <FaMoneyCheck /> {open && "A- Manage Users"}
-            </Link>
-          </li>
-          
-          <li>
-            <Link
-              to="/dashboard/all-loan"
-              className="flex items-center gap-3"
-            >
-              <FaMoneyCheck /> {open && "A- All Loan"}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/dashboard/loan-applications"
-              className="flex items-center gap-3"
-            >
-              <FaMoneyCheck /> {open && "A- Loan Applications"}
-            </Link>
-          </li>
-         
-          {/* =====================================================================  */}
+          {/* MANAGER */}
+          {role === "manager" && (
+            <>
+              <li><NavLink to="/dashboard/add-loan" className="flex items-center gap-3"><FaMoneyCheck /> {open && "Add Loan"}</NavLink></li>
+              <li><NavLink to="/dashboard/manage-loans" className="flex items-center gap-3"><FaMoneyCheck /> {open && "Manage Loans"}</NavLink></li>
+              <li><NavLink to="/dashboard/pending-loans" className="flex items-center gap-3"><FaMoneyCheck /> {open && "Pending Apps"}</NavLink></li>
+              <li><NavLink to="/dashboard/approved-loans" className="flex items-center gap-3"><FaMoneyCheck /> {open && "Approved"}</NavLink></li>
+            </>
+          )}
+
+          {/* ADMIN */}
+          {role === "admin" && (
+            <>
+              <li><NavLink to="/dashboard/manage-users" className="flex items-center gap-3"><FaMoneyCheck /> {open && "Manage Users"}</NavLink></li>
+              <li><NavLink to="/dashboard/all-loan" className="flex items-center gap-3"><FaMoneyCheck /> {open && "All Loans"}</NavLink></li>
+              <li><NavLink to="/dashboard/loan-applications" className="flex items-center gap-3"><FaMoneyCheck /> {open && "Loan Applications"}</NavLink></li>
+            </>
+          )}
         </ul>
 
-        {/* Logout */}
         <div className="absolute bottom-4 w-full px-4">
-          <button
-            onClick={logOut}
-            className="flex items-center gap-3 text-red-600 w-full"
-          >
+          <button onClick={() => logOut()} className="flex items-center gap-3 text-red-600 w-full">
             <FaSignOutAlt /> {open && "Logout"}
           </button>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Top navbar */}
         <div className="w-full bg-white shadow px-6 py-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Dashboard</h2>
           <div className="flex items-center gap-3">
-            <img
-              src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"}
-              className="w-10 h-10 rounded-full border"
-              alt="User"
-            />
+            <img src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"} className="w-10 h-10 rounded-full border" alt="User" />
             <p className="font-medium">{user?.displayName || "User"}</p>
           </div>
         </div>
 
-        {/* Dynamic page */}
         <div className="p-6">
           <Outlet />
         </div>

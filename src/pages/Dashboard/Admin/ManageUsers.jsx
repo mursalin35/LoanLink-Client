@@ -64,7 +64,7 @@ const ManageUsers = () => {
               <tr key={u.email} className="border-t">
                 <td className="p-2">{u.displayName || u.name || "—"}</td>
                 <td className="p-2">{u.email}</td>
-                <td className="p-2">{u.role || "borrower"}</td>
+                <td className="p-2">{u.role || "user"}</td>
                 <td className="p-2 flex gap-2">
                   <button
                     className="px-3 py-1 bg-yellow-500 text-white rounded"
@@ -87,17 +87,23 @@ const ManageUsers = () => {
 
             <div className="mb-2">
               <label className="block text-sm">Email</label>
-              <input readOnly value={editUser.email} className="w-full p-2 border rounded bg-gray-100" />
+              <input
+                readOnly
+                value={editUser.email}
+                className="w-full p-2 border rounded bg-gray-100"
+              />
             </div>
 
             <div className="mb-2">
               <label className="block text-sm">Role</label>
               <select
-                value={editUser.role || "borrower"}
-                onChange={(e) => setEditUser((p) => ({ ...p, role: e.target.value }))}
+                value={editUser.role || "user"}
+                onChange={(e) =>
+                  setEditUser((p) => ({ ...p, role: e.target.value }))
+                }
                 className="w-full p-2 border rounded"
               >
-                <option value="borrower">Borrower</option>
+                <option value="user">user</option>
                 <option value="manager">Manager</option>
                 <option value="admin">Admin</option>
               </select>
@@ -108,7 +114,9 @@ const ManageUsers = () => {
                 <input
                   type="checkbox"
                   checked={!!editUser.suspended}
-                  onChange={(e) => setEditUser((p) => ({ ...p, suspended: e.target.checked }))}
+                  onChange={(e) =>
+                    setEditUser((p) => ({ ...p, suspended: e.target.checked }))
+                  }
                 />
                 Suspend user
               </label>
@@ -117,14 +125,19 @@ const ManageUsers = () => {
             {editUser.suspended && (
               <textarea
                 value={editUser.suspendReason || ""}
-                onChange={(e) => setEditUser((p) => ({ ...p, suspendReason: e.target.value }))}
+                onChange={(e) =>
+                  setEditUser((p) => ({ ...p, suspendReason: e.target.value }))
+                }
                 placeholder="Suspend reason"
                 className="w-full p-2 border rounded mb-2"
               />
             )}
 
             <div className="flex justify-end gap-2">
-              <button className="px-3 py-1 bg-gray-300 rounded" onClick={() => setEditUser(null)}>
+              <button
+                className="px-3 py-1 bg-gray-300 rounded"
+                onClick={() => setEditUser(null)}
+              >
                 Cancel
               </button>
               <button

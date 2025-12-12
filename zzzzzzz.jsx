@@ -1,17 +1,19 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { AuthContext } from "../../context/AuthContext";
 import { toast, Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
+import SocialLogin from "./SocialLogin";
+import axios from "axios";
 
 const Register = () => {
-  const { createUser, setUser, updateUserProfile, signInWithGoogle } =
-    useContext(AuthContext);
-
+  const { createUser, setUser, updateUserProfile } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const location = useLocation()
+  // const navigate = useNavigate();
 
   // -------------------------------
   //      React Hook Form Setup
@@ -38,39 +40,72 @@ const Register = () => {
   // -------------------------------
   //      Handle Signup Submit
   // -------------------------------
-  const onSubmit = (data) => {
-    const { name, photo, email, password } = data;
+  const handleRegister = (data) => {
+    console.log("after register", data.photo[0]);
+    const profileImage = data.photo[0];
 
-    createUser(email, password)
+    createUser(data.email, data.password)
       .then((result) => {
-        const user = result.user;
+        console.log(result.user);
+        // store the image get the photo url
+        const formData = new FormData();
+        formData.append("image", profileImage);
 
-        updateUserProfile({ displayName: name, photoURL: photo })
-          .then(() => {
-            setUser({ ...user, displayName: name, photoURL: photo });
-            toast.success("Account created successfully! 🎉");
-            navigate("/");
-          })
-          .catch(() => {
-            setUser(user);
-            toast("Signed up, but profile not updated 🟡");
-          });
+        const imageAPI_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${
+          import.meta.env.VITE_image_host_key
+        }`;
+
+        axios.post(imageAPI_URL, formData).then((res) => {
+          console.log("after image upload", res.data.data.url);
+          const photoURL = res.data.data.url;
+
+          // update user profile
+          const userProfile = {
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          updateUserProfile(userProfile)
+            .then(() => {
+              console.log("user profile update done");
+               navigate(location.state || "/");
+            })
+            .catch((error) => console.log(error));
+        });
       })
-      .catch((error) => toast.error(error.message));
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // createUser(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+
+    //     updateUserProfile({ displayName: name, photoURL: photo })
+    //       .then(() => {
+    //         setUser({ ...user, displayName: name, photoURL: photo });
+    //         toast.success("Account created successfully! 🎉");
+    //         navigate("/");
+    //       })
+    //       .catch(() => {
+    //         setUser(user);
+    //         toast("Signed up, but profile not updated 🟡");
+    //       });
+    //   })
+    //   .catch((error) => toast.error(error.message));
   };
 
   // -------------------------------
-  //  Google Sign In Handler
-  // -------------------------------
-  const handleGoogleSignIn = () => {
-    signInWithGoogle()
-      .then((result) => {
-        setUser(result.user);
-        toast.success("Signed in with Google!");
-        navigate("/");
-      })
-      .catch((error) => toast.error(error.message));
-  };
+  // //  Google Sign In Handler
+  // // -------------------------------
+  // const handleGoogleSignIn = () => {
+  //   signInWithGoogle()
+  //     .then((result) => {
+  //       setUser(result.user);
+  //       toast.success("Signed in with Google!");
+  //       navigate("/");
+  //     })
+  //     .catch((error) => toast.error(error.message));
+  // };
 
   return (
     <div className="flex justify-center items-center min-h-screen px-4 sm:px-6 md:px-0">
@@ -83,7 +118,17 @@ const Register = () => {
         </h2>
 
         {/* FORM START */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
+          {/* PHOTO URL */}
+          <input
+            type="file"
+            {...register("photo", { required: "Photo is required" })}
+            className="file-input w-full p-2 border text-[#1F1F2E] dark:text-[#EDEBFF] dark:bg-[#1F1F2E] border-[#D3D0FA] dark:border-[#3D3A64] rounded-md focus:ring-2 focus:ring-[#632EE3]"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-xs">{errors.photo.message}</p>
+          )}
+
           {/* NAME */}
           <input
             type="text"
@@ -94,14 +139,6 @@ const Register = () => {
           {errors.name && (
             <p className="text-red-500 text-xs">{errors.name.message}</p>
           )}
-
-          {/* PHOTO URL */}
-          <input
-            type="text"
-            placeholder="Photo URL"
-            {...register("photo")}
-            className="w-full p-2 border text-[#1F1F2E] dark:text-[#EDEBFF] dark:bg-[#1F1F2E] border-[#D3D0FA] dark:border-[#3D3A64] rounded-md focus:ring-2 focus:ring-[#632EE3]"
-          />
 
           {/* EMAIL */}
           <input
@@ -150,33 +187,19 @@ const Register = () => {
             Signup
           </button>
         </form>
+
         {/* LOGIN LINK */}
         <p className="text-center text-sm dark:text-[#B0B3C6] text-gray-600 mt-4">
           Already have an account?
-          <Link to="/login">
-            <span className="text-[#632EE3] dark:text-[#00E0C6] font-semibold cursor-pointer hover:underline ml-1">
+          <Link 
+          state={location.state}
+          className="text-[#632EE3] dark:text-[#00E0C6] font-semibold cursor-pointer hover:underline ml-1"
+          to="/login">
               Login
-            </span>
           </Link>
         </p>
 
-        {/* DIVIDER */}
-        <div className="flex items-center my-4">
-          <div className="flex-grow h-px bg-gray-300 dark:bg-[#4A4A5A]"></div>
-          <span className="mx-2 text-gray-500 dark:text-[#B0B3C6] text-sm">
-            or
-          </span>
-          <div className="flex-grow h-px bg-gray-300 dark:bg-[#4A4A5A]"></div>
-        </div>
-
-        {/* GOOGLE SIGN IN */}
-        <button
-          type="button"
-          onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-[#3D3A64] py-2 rounded-md text-[#2E1F47] dark:text-[#EDEBFF] hover:bg-[#F5F3FF] dark:hover:bg-[#3A3A4A]"
-        >
-          <FcGoogle className="text-xl" /> Sign in with Google
-        </button>
+        <SocialLogin />
       </div>
 
       <Toaster position="top-center" />
@@ -185,3 +208,19 @@ const Register = () => {
 };
 
 export default Register;
+
+// {/* DIVIDER */}
+//         <div className="flex items-center my-4">
+//           <div className="flex-grow h-px bg-gray-300 dark:bg-[#4A4A5A]"></div>
+//           <span className="mx-2 text-gray-500 dark:text-[#B0B3C6] text-sm">or</span>
+//           <div className="flex-grow h-px bg-gray-300 dark:bg-[#4A4A5A]"></div>
+//         </div>
+
+//         {/* GOOGLE SIGN IN */}
+//         <button
+//           type="button"
+//           onClick={handleGoogleSignIn}
+//           className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-[#3D3A64] py-2 rounded-md text-[#2E1F47] dark:text-[#EDEBFF] hover:bg-[#F5F3FF] dark:hover:bg-[#3A3A4A]"
+//         >
+//           <FcGoogle className="text-xl" /> Sign in with Google
+//         </button>

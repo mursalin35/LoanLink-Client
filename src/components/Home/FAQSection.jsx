@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "What is LoanLink?",
     answer:
-      "LoanLink is a web-based microloan request, review, and approval management system for borrowers, managers, and admins.",
+      "LoanLink is a web-based microloan request, review, and approval management system for users, managers, and admins.",
   },
   {
     question: "How can I apply for a loan?",
@@ -21,7 +21,7 @@ const faqs = [
   {
     question: "How can I track my loan application status?",
     answer:
-      "Logged-in borrowers can check their loan status under the 'My Loans' section in the dashboard.",
+      "Logged-in users can check their loan status under the 'My Loans' section in the dashboard.",
   },
   {
     question: "Can managers approve loans?",
