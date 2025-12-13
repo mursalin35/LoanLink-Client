@@ -24,6 +24,7 @@ import LoanApplications from "../pages/Dashboard/Admin/LoanApplications";
 import ManagerRoute from "./LocalRoutes/ManagerRoute";
 import AdminRoute from "./LocalRoutes/AdminRoute";
 import PrivateRoute from "./PrivateRoute";
+import Overview from "../pages/Dashboard/Overview";
 
 const router = createBrowserRouter([
   {
@@ -69,11 +70,10 @@ const router = createBrowserRouter([
     ),
     children: [
       // user routes
-      { path: "", element: <MyLoans /> }, // /dashboard
+      { index: true, element: <Overview /> }, // /dashboard
       { path: "profile", element: <Profile /> },
       { path: "my-loans", element: <MyLoans /> },
 
-      // manager routes (protected inside ManagerRoute)
       {
         path: "add-loan",
         element: (
@@ -133,10 +133,6 @@ const router = createBrowserRouter([
         ),
       },
 
-      // admin routes
-      // { path: "manage-users", element: <ManageUsers /> },
-      // { path: "all-loan", element: <AdminAllLoans /> },
-      // { path: "loan-applications", element: <LoanApplications /> },
     ],
   },
 ]);

@@ -37,7 +37,7 @@ const DashboardLayout = () => {
 
         <ul className="menu p-4 space-y-2 text-gray-700">
           {/* Common */}
-          <li><NavLink to="/" className="flex items-center gap-3"><FaHome /> {open && "Dashboard"}</NavLink></li>
+          <li><NavLink to="/dashboard" end className="flex items-center gap-3"><FaHome /> {open && "Overview"}</NavLink></li>
           <li><NavLink to="/dashboard/profile" className="flex items-center gap-3"><FaUser /> {open && "Profile"}</NavLink></li>
 
           {/* USER */}
