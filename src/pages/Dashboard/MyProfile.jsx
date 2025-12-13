@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
@@ -6,120 +6,112 @@ import { toast } from "react-toastify";
 const Profile = () => {
   const { user, logout } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-  });
+
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch profile data
   useEffect(() => {
-    if (user) {
-      (async () => {
-        try {
-          const res = await axiosSecure.get(`/users/${user.email}`);
-          if (res.data) {
-            setProfile({
-              name: res.data.name || user.displayName || "",
-              email: res.data.email || user.email,
-              phone: res.data.phone || "",
-              address: res.data.address || "",
-            });
-          } else {
-            setProfile({
-              name: user.displayName || "",
-              email: user.email,
-              phone: "",
-              address: "",
-            });
-          }
-        } catch (err) {
-          setProfile({
-            name: user.displayName || "",
-            email: user.email,
-            phone: "",
-            address: "",
-          });
-        } finally {
-          setLoading(false);
-        }
-      })();
-    }
+    if (!user) return;
+
+    const loadProfile = async () => {
+      try {
+        const { data } = await axiosSecure.get(`/users/${user.email}`);
+        setProfile(data);
+      } catch {
+        setProfile({
+          name: user?.displayName || "User",
+          email: user?.email,
+          role: "user",
+          status: "active",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
   }, [user, axiosSecure]);
 
-  const handleChange = (e) =>
-    setProfile((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const handleSave = async () => {
-    try {
-      const res = await axiosSecure.patch(
-        `/users/profile/${user.email}`,
-        profile
-      );
-      setProfile(res.data);
-      toast.success("Profile updated successfully");
-    } catch (err) {
-      toast.error("Failed to update profile");
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      toast.success("Logged out successfully");
-    } catch {
-      toast.error("Logout failed");
-    }
-  };
-
-  if (loading) return <p>Loading profile...</p>;
+  if (loading) {
+    return <p className="text-center mt-10">Loading profile...</p>;
+  }
 
   return (
-    <div className="max-w-2xl p-6 bg-white rounded shadow mx-auto mt-6">
-      <h2 className="text-2xl font-bold mb-4">My Profile</h2>
+    <div className="max-w-5xl mx-auto mt-10 bg-white rounded-2xl shadow-xl overflow-hidden">
 
-      <div className="space-y-3">
-        <input
-          name="name"
-          value={profile.name}
-          onChange={handleChange}
-          placeholder="Name"
-          className="w-full border p-2 rounded"
-        />
-        <input
-          name="email"
-          value={profile.email}
-          readOnly
-          className="w-full border p-2 rounded bg-gray-100"
-        />
-        <input
-          name="phone"
-          value={profile.phone}
-          onChange={handleChange}
-          placeholder="Phone"
-          className="w-full border p-2 rounded"
-        />
-        <textarea
-          name="address"
-          value={profile.address}
-          onChange={handleChange}
-          placeholder="Address"
-          className="w-full border p-2 rounded"
-          rows={3}
-        />
+      {/* COVER */}
+      <div className="h-48 bg-yellow-400 relative">
+        <div className="absolute -bottom-14 left-10">
+          <img
+            src={user?.photoURL || "https://i.ibb.co/2kR8YzC/user.png"}
+            alt="Profile"
+            className="w-28 h-28 rounded-full border-4 border-white object-cover shadow"
+          />
+        </div>
+      </div>
 
-        <div className="flex gap-3 mt-3">
-          <button
-            onClick={handleSave}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+      {/* CONTENT */}
+      <div className="pt-20 px-10 pb-10">
+        <div className="flex items-center gap-3 mb-2">
+          <h2 className="text-2xl font-semibold">{profile?.name}</h2>
+
+          <span
+            className={`px-3 py-1 text-xs rounded-full font-medium ${
+              profile?.status === "active"
+                ? "bg-green-100 text-green-700"
+                : "bg-gray-200 text-gray-600"
+            }`}
           >
-            Save
-          </button>
+            {profile?.status || "inactive"}
+          </span>
+        </div>
+
+        <p className="text-gray-600 mb-6">
+          Welcome to your profile dashboard. Here you can see all your registered details.
+        </p>
+
+        <hr className="mb-6" />
+
+        {/* INFO GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+          <Info label="Email Address" value={profile?.email} />
+          <Info
+            label="Account Created"
+            value={
+              profile?.createdAt
+                ? new Date(profile.createdAt).toLocaleDateString()
+                : "N/A"
+            }
+          />
+          <Info
+            label="Last Logged In"
+            value={
+              user?.metadata?.lastSignInTime
+                ? new Date(user.metadata.lastSignInTime).toLocaleDateString()
+                : "N/A"
+            }
+          />
+          <Info label="User Role" value={profile?.role || "user"} />
+          <Info label="Phone Number" value={profile?.phone || "N/A"} />
+          <Info label="Gender" value={profile?.gender || "N/A"} />
+          <Info label="Age" value={profile?.age || "N/A"} />
+          <Info label="Address" value={profile?.address || "N/A"} />
+        </div>
+
+        {/* ACTIONS */}
+        <div className="mt-10 flex flex-wrap gap-4">
           <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white px-4 py-2 rounded"
+            className="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition"
+          >
+            Edit Profile
+          </button>
+
+          <button
+            onClick={async () => {
+              await logout();
+              toast.success("Logged out successfully");
+            }}
+            className="px-6 py-3 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition"
           >
             Logout
           </button>
@@ -128,5 +120,13 @@ const Profile = () => {
     </div>
   );
 };
+
+/* Reusable Info Component */
+const Info = ({ label, value }) => (
+  <div>
+    <p className="text-gray-500">{label}</p>
+    <p className="font-medium capitalize">{value}</p>
+  </div>
+);
 
 export default Profile;
