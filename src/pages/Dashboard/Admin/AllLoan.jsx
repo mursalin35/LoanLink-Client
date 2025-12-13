@@ -175,7 +175,7 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
     },
   });
 
-  const onSubmit = (data) => {
+  const handleLoanImageUpdate = (data) => {
     const payload = {
       title: data.title,
       description: data.description,
@@ -199,7 +199,7 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
       <div className="bg-white p-6 rounded max-w-md w-full">
         <h3 className="font-bold text-lg mb-3">Edit Loan</h3>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(handleLoanImageUpdate)}>
           <input
             {...register("title")}
             className="w-full p-2 mb-2 border rounded"
@@ -239,11 +239,12 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
             placeholder="EMI Plans (3 month, 5 month, 7 month)"
           />
 
-          <input
-            {...register("image")}
-            className="w-full p-2 mb-4 border rounded"
-            placeholder="Image URL"
-          />
+  <input
+        type="file"
+          {...register("image", )}
+          placeholder="Image Upload"
+          className="file-input w-full p-2 mb-4 border rounded"
+        />
 
           <div className="flex justify-end gap-2">
             <button

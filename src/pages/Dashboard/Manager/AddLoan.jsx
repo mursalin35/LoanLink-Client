@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const AddLoan = () => {
   const {user} = useAuth()
@@ -30,7 +31,19 @@ const AddLoan = () => {
     onError: () => toast.error("Failed to add loan"),
   });
 
-  const onSubmit = (data) => {
+  const handleFormAddLoan = async (data) => {
+  try {
+    // 1️⃣ image upload
+    const loanImage = data.image[0];
+    const formData = new FormData();
+    formData.append("image", loanImage);
+
+    const loanImageAPI = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+
+    const imgRes = await axios.post(loanImageAPI, formData);
+    const imageUrl = imgRes.data.data.url;
+
+    // 2️⃣ payload তৈরি
     const payload = {
       title: data.title,
       description: data.description,
@@ -38,28 +51,35 @@ const AddLoan = () => {
       interest: Number(data.interest),
       maxLimit: Number(data.maxLimit),
 
-       requiredDocuments: data.requiredDocuments
-    ? data.requiredDocuments.split(",").map((v) => v.trim())
-    : [],
-
-      // EMI: convert "3,6,9" ⇒ [3,6,9]
-      emiPlans: data.emiPlans
-        ? data.emiPlans.split(",").map((v) => v.trim())
+      requiredDocuments: data.requiredDocuments
+        ? data.requiredDocuments.split(",").map(v => v.trim())
         : [],
 
-      image: data.image,
+      emiPlans: data.emiPlans
+        ? data.emiPlans.split(",").map(v => v.trim())
+        : [],
+
+      image: imageUrl, // ✅ এখানে URL যাবে
+
       showOnHome: data.showOnHome || false,
       createdBy: `Manager - ${user?.displayName || "Unknown"}`,
     };
 
+    // 3️⃣ DB তে পাঠানো
     mutation.mutate(payload);
-  };
+
+  } catch (error) {
+    console.error(error);
+    toast.error("Image upload or loan add failed");
+  }
+};
+
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Add Loan</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+      <form onSubmit={handleSubmit(handleFormAddLoan)} className="space-y-3">
 
         <input
           {...register("title", { required: true })}
@@ -112,12 +132,15 @@ const AddLoan = () => {
   className="w-full border p-2 rounded"
   
 />
-
+{/* Image upload  */}
         <input
-          {...register("image")}
-          placeholder="Image URL"
-          className="w-full border p-2 rounded"
+        type="file"
+          {...register("image", { required: true })}
+          placeholder="Image Upload"
+          className="file-input w-full border p-2 rounded"
         />
+          {errors.image && <p className="text-red-500">Photo is required</p>}
+        
 
         <label className="flex items-center gap-2">
           <input type="checkbox" {...register("showOnHome")} />
