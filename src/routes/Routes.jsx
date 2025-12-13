@@ -20,11 +20,13 @@ import AddLoan from "../pages/Dashboard/Manager/AddLoan";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AdminAllLoans from "../pages/Dashboard/Admin/AllLoan";
 import LoanApplications from "../pages/Dashboard/Admin/LoanApplications";
-
 import ManagerRoute from "./LocalRoutes/ManagerRoute";
 import AdminRoute from "./LocalRoutes/AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import Overview from "../pages/Dashboard/Overview";
+import PaymentSuccess from "../pages/Dashboard/User/PaymentSuccess";
+import PaymentCancel from "../pages/Dashboard/User/PaymentCancel";
+import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -73,7 +75,20 @@ const router = createBrowserRouter([
       { index: true, element: <Overview /> }, // /dashboard
       { path: "profile", element: <Profile /> },
       { path: "my-loans", element: <MyLoans /> },
+       {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+       {
+        path: "payment-history",
+        Component: PaymentHistory,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancel,
+      },
 
+       // Manager routes
       {
         path: "add-loan",
         element: (
@@ -132,7 +147,6 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-
     ],
   },
 ]);

@@ -37,9 +37,28 @@ const MyLoans = () => {
     }
   };
 
-  const handlePay = (loan) => {
-    navigate(`/dashboard/pay-loan/${loan._id}`);
-  };
+  // payment *****************
+  const handlePay = async (loan) => {
+  try {
+    const paymentInfo = {
+      loanId: loan._id,                // backend expects this
+      loanTitle: loan.loanTitle,       // name shown in Stripe
+      loanAmount: 10,                  // fixed $10 fee
+      userEmail: user.email,
+    };
+
+    const res = await axiosSecure.post(
+      "/payment-checkout-system",
+      paymentInfo
+    );
+
+    // Stripe redirect
+    window.location.assign(res.data.url);
+  } catch (error) {
+    toast.error("Payment failed");
+  }
+};
+
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError) return <p className="text-center mt-10 text-red-500">Failed to load loans.</p>;
