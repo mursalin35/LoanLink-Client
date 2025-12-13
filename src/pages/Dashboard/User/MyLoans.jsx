@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MyLoans = () => {
   const axiosSecure = useAxiosSecure();
@@ -18,7 +19,12 @@ const MyLoans = () => {
     return null;
   }
 
-  const { data: loans = [], isLoading, isError, refetch } = useQuery({
+  const {
+    data: loans = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ["myLoans", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/applications/user/${user.email}`);
@@ -27,42 +33,67 @@ const MyLoans = () => {
   });
 
   const handleCancel = async (loanId) => {
-    if (!window.confirm("Are you sure you want to cancel this loan application?")) return;
-    try {
-      await axiosSecure.patch(`/applications/cancel/${loanId}`);
-      toast.success("Loan application canceled");
-      refetch();
-    } catch (error) {
-      toast.error("Failed to cancel loan");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.delete(
+            `/applications/cancel/${loanId}`
+          );
+          toast.success("Loan application canceled");
+          if (refetch) refetch();
+          Swal.fire(
+            "Canceled!",
+            "Your loan application has been canceled.",
+            "success"
+          );
+        } catch (error) {
+          console.error(error);
+          toast.error("Failed to cancel loan");
+          Swal.fire("Error!", "Failed to cancel loan application.", "error");
+        }
+      }
+    });
   };
 
   // payment *****************
   const handlePay = async (loan) => {
-  try {
-    const paymentInfo = {
-      loanId: loan._id,                // backend expects this
-      loanTitle: loan.loanTitle,       // name shown in Stripe
-      loanAmount: 10,                  // fixed $10 fee
-      userEmail: user.email,
-    };
+    try {
+      const paymentInfo = {
+        loanId: loan._id, // backend expects this
+        loanTitle: loan.loanTitle, // name shown in Stripe
+        loanAmount: 10, // fixed $10 fee
+        userEmail: user.email,
+      };
 
-    const res = await axiosSecure.post(
-      "/payment-checkout-system",
-      paymentInfo
-    );
+      const res = await axiosSecure.post(
+        "/payment-checkout-system",
+        paymentInfo
+      );
 
-    // Stripe redirect
-    window.location.assign(res.data.url);
-  } catch (error) {
-    toast.error("Payment failed");
-  }
-};
-
+      // Stripe redirect
+      window.location.assign(res.data.url);
+    } catch (error) {
+      toast.error("Payment failed");
+    }
+  };
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
-  if (isError) return <p className="text-center mt-10 text-red-500">Failed to load loans.</p>;
-  if (loans.length === 0) return <p className="text-center mt-10">You have no loan applications yet.</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-10 text-red-500">Failed to load loans.</p>
+    );
+  if (loans.length === 0)
+    return (
+      <p className="text-center mt-10">You have no loan applications yet.</p>
+    );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -95,14 +126,15 @@ const MyLoans = () => {
                     View
                   </button>
 
-                  {loan.status === "Pending" && (
-                    <button
-                      onClick={() => handleCancel(loan._id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    >
-                      Cancel
-                    </button>
-                  )}
+                  {loan.status === "Pending" &&
+                    loan.applicationFeeStatus === "Unpaid" && (
+                      <button
+                        onClick={() => handleCancel(loan._id)}
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                      >
+                        Cancel
+                      </button>
+                    )}
 
                   {loan.applicationFeeStatus === "Unpaid" ? (
                     <button
@@ -137,16 +169,37 @@ const MyLoans = () => {
               &times;
             </button>
             <h2 className="text-2xl font-bold mb-4">{viewLoan.loanTitle}</h2>
-            <p><strong>Loan ID:</strong> {viewLoan._id}</p>
-            <p><strong>Amount:</strong> ${viewLoan.loanAmount}</p>
-            <p><strong>Status:</strong> {viewLoan.status}</p>
-            <p><strong>Fee Status:</strong> {viewLoan.applicationFeeStatus}</p>
-            <p><strong>Applied At:</strong> {new Date(viewLoan.appliedAt).toLocaleString()}</p>
-            <p><strong>Income Source:</strong> {viewLoan.incomeSource}</p>
-            <p><strong>Monthly Income:</strong> ${viewLoan.monthlyIncome}</p>
-            <p><strong>Reason for Loan:</strong> {viewLoan.reason}</p>
-            <p><strong>Address:</strong> {viewLoan.address}</p>
-            <p><strong>Extra Notes:</strong> {viewLoan.extraNotes}</p>
+            <p>
+              <strong>Loan ID:</strong> {viewLoan._id}
+            </p>
+            <p>
+              <strong>Amount:</strong> ${viewLoan.loanAmount}
+            </p>
+            <p>
+              <strong>Status:</strong> {viewLoan.status}
+            </p>
+            <p>
+              <strong>Fee Status:</strong> {viewLoan.applicationFeeStatus}
+            </p>
+            <p>
+              <strong>Applied At:</strong>{" "}
+              {new Date(viewLoan.appliedAt).toLocaleString()}
+            </p>
+            <p>
+              <strong>Income Source:</strong> {viewLoan.incomeSource}
+            </p>
+            <p>
+              <strong>Monthly Income:</strong> ${viewLoan.monthlyIncome}
+            </p>
+            <p>
+              <strong>Reason for Loan:</strong> {viewLoan.reason}
+            </p>
+            <p>
+              <strong>Address:</strong> {viewLoan.address}
+            </p>
+            <p>
+              <strong>Extra Notes:</strong> {viewLoan.extraNotes}
+            </p>
           </div>
         </div>
       )}
