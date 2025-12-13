@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const AdminAllLoans = () => {
   const axiosSecure = useAxiosSecure();
@@ -175,7 +176,19 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
     },
   });
 
-  const handleLoanImageUpdate = (data) => {
+  const handleLoanImageUpdate = async (data) => {
+  try {
+   
+    // 2️⃣ Upload new image
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+
+    const imageAPI = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+    const imgRes = await axios.post(imageAPI, formData);
+
+    const imageUrl = imgRes.data.data.url;
+
+    // 3️⃣ Update payload
     const payload = {
       title: data.title,
       description: data.description,
@@ -183,16 +196,24 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
       interest: Number(data.interest),
       maxLimit: Number(data.maxLimit || 0),
 
-      emiPlans: data.emiPlansText
+         emiPlans: data.emiPlansText
         .split(",")
         .map((v) => (v.trim())),
 
-      image: data.image,
+      image: imageUrl, // ✅ new image only
+
       showOnHome: !!loan.showOnHome,
     };
 
-    updateM.mutate({ id: loan._id, update: payload });
-  };
+    // 4️⃣ Update DB
+    await updateM.mutate({id: loan._id, update: payload,});
+
+  } catch (error) {
+    console.error(error);
+    toast.error("Image update failed");
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
