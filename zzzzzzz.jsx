@@ -1,262 +1,124 @@
-// src/pages/Dashboard/Admin/AdminAllLoans.jsx
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { toast } from "react-toastify";
+import React from "react";
+import { FaUsers, FaMoneyCheckAlt, FaClock, FaCheckCircle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
 
-const AdminAllLoans = () => {
-  const axiosSecure = useAxiosSecure();
-  const qc = useQueryClient();
-
-  const [q, setQ] = useState("");
-  const [edit, setEdit] = useState(null);
-  const [deleteId, setDeleteId] = useState(null);
-
-  const { data: loans = [], isLoading } = useQuery({
-    queryKey: ["admin-loans", q],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/admin/loans${q ? `?q=${encodeURIComponent(q)}` : ""}`
-      );
-      return res.data;
-    },
-  });
-
-  const updateM = useMutation({
-    mutationFn: async ({ id, update }) =>
-      axiosSecure.patch(`/admin/loans/${id}`, update),
-    onSuccess: () => {
-      toast.success("Loan updated successfully");
-      qc.invalidateQueries(["admin-loans"]);
-      setEdit(null);
-    },
-    onError: () => toast.error("Update failed"),
-  });
-
-  const delM = useMutation({
-    mutationFn: async (id) => axiosSecure.delete(`/admin/loans/${id}`),
-    onSuccess: () => {
-      toast.success("Loan deleted");
-      qc.invalidateQueries(["admin-loans"]);
-      setDeleteId(null);
-    },
-    onError: () => toast.error("Delete failed"),
-  });
-
-  const toggleHomeM = useMutation({
-    mutationFn: async ({ id, val }) =>
-      axiosSecure.patch(`/admin/loans/show-home/${id}`, { showOnHome: val }),
-    onSuccess: () => qc.invalidateQueries(["admin-loans"]),
-  });
-
-  if (isLoading) return <p>Loading loans...</p>;
+const Overview = () => {
+  const { user, role } = useAuth();
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">All Loans</h2>
-
-      <input
-        placeholder="Search title or category"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        className="w-full p-2 mb-4 border rounded"
-      />
-
-      <div className="overflow-x-auto bg-white rounded shadow">
-        <table className="min-w-full">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2">Image</th>
-              <th className="p-2">Title</th>
-              <th className="p-2">Interest</th>
-              <th className="p-2">Category</th>
-              <th className="p-2">Created By</th>
-              <th className="p-2">Show on Home</th>
-              <th className="p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loans.map((loan) => (
-              <tr key={loan._id} className="border-t">
-                <td className="p-2">
-                  {loan.image ? (
-                    <img
-                      src={loan.image}
-                      alt=""
-                      className="w-12 h-12 object-cover rounded"
-                    />
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td className="p-2">{loan.title}</td>
-                <td className="p-2">{loan.interest}%</td>
-                <td className="p-2">{loan.category}</td>
-                <td className="p-2">{loan.createdBy}</td>
-                <td className="p-2">
-                  <input
-                    type="checkbox"
-                    checked={!!loan.showOnHome}
-                    onChange={(e) =>
-                      toggleHomeM.mutate({
-                        id: loan._id,
-                        val: e.target.checked,
-                      })
-                    }
-                  />
-                </td>
-                <td className="p-2 flex gap-2">
-                  <button
-                    className="px-3 py-1 bg-yellow-500 text-white rounded"
-                    onClick={() => setEdit(loan)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="px-3 py-1 bg-red-500 text-white rounded"
-                    onClick={() => setDeleteId(loan._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="p-6 space-y-6">
+      {/* Page Title */}
+      <div>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+          Dashboard Overview
+        </h1>
+        <p className="text-gray-500 dark:text-gray-300 mt-1">
+          Welcome back, {user?.displayName || "User"} 👋
+        </p>
       </div>
 
-      {/* Edit modal */}
-      {edit && (
-        <EditLoanModal loan={edit} setLoan={setEdit} updateM={updateM} />
-      )}
-
-      {/* Delete confirm */}
-      {deleteId && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded max-w-sm">
-            <p>Confirm delete?</p>
-            <div className="flex justify-end gap-2 mt-3">
-              <button
-                className="px-3 py-1 bg-gray-300 rounded"
-                onClick={() => setDeleteId(null)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-3 py-1 bg-red-600 text-white rounded"
-                onClick={() => delM.mutate(deleteId)}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// -------------------------
-// Edit Loan Modal
-// -------------------------
-const EditLoanModal = ({ loan, setLoan, updateM }) => {
-  const [form, setForm] = useState({ ...loan });
-
-  const save = () => {
-    const payload = {
-      title: form.title,
-      description: form.description,
-      category: form.category,
-      interest: Number(form.interest),
-      maxLimit: Number(form.maxLimit || 0),
-      emiPlans: form.emiPlans ? form.emiPlans.map((v) => Number(v)) : [],
-      image: form.image,
-      showOnHome: !!form.showOnHome,
-    };
-    updateM.mutate({ id: loan._id, update: payload });
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded max-w-md w-full">
-        <h3 className="font-bold text-lg mb-3">Edit Loan</h3>
-
-        <input
-          className="w-full p-2 mb-2 border rounded"
-          value={form.title}
-          onChange={(e) => setForm((s) => ({ ...s, title: e.target.value }))}
-          placeholder="Title"
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard
+          icon={<FaUsers />}
+          title="Total Users"
+          value="1,240"
+          color="bg-blue-600"
         />
-
-        <textarea
-          className="w-full p-2 mb-2 border rounded"
-          value={form.description}
-          onChange={(e) =>
-            setForm((s) => ({ ...s, description: e.target.value }))
-          }
-          rows={3}
-          placeholder="Description"
+        <StatCard
+          icon={<FaMoneyCheckAlt />}
+          title="Total Loans"
+          value="$540,000"
+          color="bg-green-600"
         />
-
-        <input
-          className="w-full p-2 mb-2 border rounded"
-          value={form.category}
-          onChange={(e) => setForm((s) => ({ ...s, category: e.target.value }))}
-          placeholder="Category"
+        <StatCard
+          icon={<FaClock />}
+          title="Pending Applications"
+          value="18"
+          color="bg-yellow-500"
         />
-
-        <input
-          className="w-full p-2 mb-2 border rounded"
-          type="number"
-          value={form.interest}
-          onChange={(e) => setForm((s) => ({ ...s, interest: e.target.value }))}
-          placeholder="Interest (%)"
+        <StatCard
+          icon={<FaCheckCircle />}
+          title="Approved Loans"
+          value="96"
+          color="bg-purple-600"
         />
+      </div>
 
-        <input
-          className="w-full p-2 mb-2 border rounded"
-          type="number"
-          value={form.maxLimit}
-          onChange={(e) => setForm((s) => ({ ...s, maxLimit: e.target.value }))}
-          placeholder="Max Limit"
-        />
+      {/* Role Based Sections */}
+      {role === "admin" && <AdminSection />}
+      {role === "manager" && <ManagerSection />}
+      {role === "user" && <BorrowerSection />}
 
-        <input
-          className="w-full p-2 mb-2 border rounded"
-          value={form.emiPlans?.join(",")}
-          onChange={(e) =>
-            setForm((s) => ({
-              ...s,
-              emiPlans: e.target.value.split(",").map((v) => Number(v.trim())),
-            }))
-          }
-          placeholder="EMI Plans (3,6,9,12)"
-        />
-
-        <input
-          className="w-full p-2 mb-2 border rounded"
-          value={form.image}
-          onChange={(e) => setForm((s) => ({ ...s, image: e.target.value }))}
-          placeholder="Image URL"
-        />
-
-        <div className="flex justify-end gap-2">
-          <button
-            className="px-3 py-1 bg-gray-300 rounded"
-            onClick={() => setLoan(null)}
-          >
-            Cancel
-          </button>
-          <button
-            className="px-3 py-1 bg-blue-600 text-white rounded"
-            onClick={save}
-          >
-            Update
-          </button>
+      {/* Chart Placeholder */}
+      <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+          Loan Activity Analytics
+        </h2>
+        <div className="h-64 flex items-center justify-center border-2 border-dashed rounded-lg text-gray-400">
+          📊 Chart will be displayed here (Recharts / Chart.js)
         </div>
       </div>
     </div>
   );
 };
 
-export default AdminAllLoans;
+export default Overview;
+
+/* ================= Components ================= */
+
+const StatCard = ({ icon, title, value, color }) => (
+  <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-5 flex items-center gap-4">
+    <div className={`${color} text-white p-4 rounded-full text-xl`}>
+      {icon}
+    </div>
+    <div>
+      <p className="text-gray-500 dark:text-gray-400 text-sm">{title}</p>
+      <h3 className="text-2xl font-bold text-gray-800 dark:text-white">
+        {value}
+      </h3>
+    </div>
+  </div>
+);
+
+const AdminSection = () => (
+  <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
+    <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+      Admin Summary
+    </h2>
+    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+      <li>Manage all users & roles</li>
+      <li>View and filter all loan applications</li>
+      <li>Control which loans appear on Home page</li>
+      <li>Monitor platform-wide loan activity</li>
+    </ul>
+  </div>
+);
+
+const ManagerSection = () => (
+  <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
+    <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+      Manager Summary
+    </h2>
+    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+      <li>Create & manage loan products</li>
+      <li>Review pending loan applications</li>
+      <li>Approve or reject borrower requests</li>
+      <li>Track approved loans</li>
+    </ul>
+  </div>
+);
+
+const BorrowerSection = () => (
+  <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
+    <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+      Borrower Summary
+    </h2>
+    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+      <li>Apply for microloans</li>
+      <li>Track application status</li>
+      <li>Pay application fee securely</li>
+      <li>View approved loan details</li>
+    </ul>
+  </div>
+);
