@@ -44,6 +44,7 @@ const DashboardLayout = () => {
           {role === "user" && (
             <>
               <li><NavLink to="/dashboard/my-loans" className="flex items-center gap-3"><FaList /> {open && "My Loans"}</NavLink></li>
+              <li><NavLink to="/dashboard/payment-history" className="flex items-center gap-3"><FaList /> {open && "Payment History"}</NavLink></li>
             </>
           )}
 

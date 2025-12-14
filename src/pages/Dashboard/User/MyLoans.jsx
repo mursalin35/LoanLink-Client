@@ -12,6 +12,7 @@ const MyLoans = () => {
   const navigate = useNavigate();
 
   const [viewLoan, setViewLoan] = useState(null); // Selected loan for modal
+  const [paymentDetails, setPaymentDetails] = useState(null) // payment details modal 
 
   if (!user) {
     toast.error("Please login first");
@@ -145,7 +146,7 @@ const MyLoans = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => setViewLoan(loan)}
+                      onClick={() => setPaymentDetails(loan)}
                       className="bg-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-400"
                     >
                       Paid
@@ -158,7 +159,7 @@ const MyLoans = () => {
         </table>
       </div>
 
-      {/* Modal */}
+      {/* application view Modal */}
       {viewLoan && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative max-h-[90vh] overflow-y-auto">
@@ -203,6 +204,38 @@ const MyLoans = () => {
           </div>
         </div>
       )}
+
+      {/* Payment Details Modal */}
+{paymentDetails && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative">
+      <button
+        onClick={() => setPaymentDetails(null)}
+        className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl font-bold"
+      >
+        &times;
+      </button>
+
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        Payment Details
+      </h2>
+
+      <p><strong>Email:</strong> {user.email}</p>
+      <p><strong>Loan ID:</strong> {paymentDetails._id}</p>
+      <p><strong>Loan Title:</strong> {paymentDetails.loanTitle}</p>
+      <p><strong>Amount Paid:</strong> $10</p>
+      <p><strong>Transaction ID:</strong> {paymentDetails.transactionId}</p>
+      <p><strong>Tracking ID:</strong> {paymentDetails.trackingId}</p>
+      <p>
+        <strong>Paid At:</strong>{" "}
+        {paymentDetails.paidAt
+          ? new Date(paymentDetails.paidAt).toLocaleString()
+          : "N/A"}
+      </p>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

@@ -75,20 +75,20 @@ const router = createBrowserRouter([
       { index: true, element: <Overview /> }, // /dashboard
       { path: "profile", element: <Profile /> },
       { path: "my-loans", element: <MyLoans /> },
-       {
+      {
         path: "payment-success",
-        Component: PaymentSuccess,
+        element: <PaymentSuccess />,
       },
-       {
+      {
         path: "payment-history",
-        Component: PaymentHistory,
+        element: <PaymentHistory />,
       },
       {
         path: "payment-cancelled",
-        Component: PaymentCancel,
+        element: <PaymentCancel />,
       },
 
-       // Manager routes
+      // Manager routes
       {
         path: "add-loan",
         element: (
