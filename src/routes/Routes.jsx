@@ -27,6 +27,7 @@ import Overview from "../pages/Dashboard/Overview";
 import PaymentSuccess from "../pages/Dashboard/User/PaymentSuccess";
 import PaymentCancel from "../pages/Dashboard/User/PaymentCancel";
 import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
+import ForgetPassword from "../pages/Auth/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
     children: [
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+      { path: "forget-password", element: <ForgetPassword/> },
     ],
   },
 
