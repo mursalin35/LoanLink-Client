@@ -4,40 +4,6 @@
 @tailwind utilities;
 
 
-/* them:  */
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
-}
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-/* LIGHT THEME */
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-
-  --color-primary: #632ee3;
-  --color-secondary: #00b8b0;
-  --color-accent: #6f4ef2;
-  --color-neutral: #1c1c28;
-
-  --color-base-100: #f9f9fc;
-  --color-base-200: #eef0f5;
-  --color-base-300: #d9dce3;
-}
-
-/* DARK THEME */
-@plugin "daisyui/theme" {
-  name: "dark";
-
-  --color-primary: #7a5efc;
-  --color-secondary: #23e3d3;
-  --color-accent: #b388ff;
-  --color-neutral: #e5e7eb;
-
-  --color-base-100: #12141b;
-  --color-base-200: #1a1c25;
-  --color-base-300: #22232f;
-}
 
 body {
   font-family: "Roboto", sans-serif;
