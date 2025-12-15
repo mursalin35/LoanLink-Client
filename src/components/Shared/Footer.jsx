@@ -9,106 +9,91 @@ import { MdOutlineMailOutline, MdPhoneCallback } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="relative mt-16 text-base-content overflow-hidden rounded-t-3xl shadow-lg">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#4126ba] to-[#088781] opacity-90 blur-[1px]"></div>
-      {/* Dark overlay balanced */}
-      <div className="absolute inset-0 bg-white/20 dark:bg-[#0e0e10]/60 backdrop-blur-md"></div>
+    <footer className="relative mt-16 overflow-hidden rounded-t-3xl shadow-lg">
+      {/* Gradient Background (LoanLink Theme) */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1F4F45] to-[#2E6A5F] opacity-95"></div>
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-sm"></div>
 
       {/* Content */}
-      <div className="relative glass-card py-10 px-6 md:px-12 text-center md:text-left text-white">
+      <div className="relative py-12 px-6 md:px-12 text-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand Section */}
           <div>
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
-              <img
-                src="https://i.ibb.co.com/0yDRJgjJ/finans-logo.png"
-                alt="FinEase Logo"
-                className="bg-white/90 dark:bg-gray-100/80 rounded-xl h-10"
-              />
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
+              <h2 className="text-2xl font-bold">LoanLink</h2>
             </div>
-            <p className="text-sm text-gray-100/90 dark:text-gray-200 leading-relaxed">
-              FinEase helps you manage your income, expenses, and savings goals
-              — making personal finance simple, smart, and stress-free.
+            <p className="text-sm text-gray-100/90 leading-relaxed">
+              LoanLink is a secure microloan request, review, and approval
+              management platform built to streamline lending operations and
+              ensure transparency across the entire loan lifecycle.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-3 text-teal-100 dark:text-teal-300">
+            <h3 className="text-lg font-semibold mb-3 text-[#B6E04C]">
               Quick Links
             </h3>
             <ul className="space-y-2 opacity-90">
               <li>
-                <Link to="/" className="hover:underline">
+                <Link to="/" className="hover:text-[#B6E04C]">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/add-transaction" className="hover:underline">
-                  Add Transaction
+                <Link to="/all-loans" className="hover:text-[#B6E04C]">
+                  All Loans
                 </Link>
               </li>
               <li>
-                <Link to="/my-transactions" className="hover:underline">
-                  My Transactions
+                <Link to="/about" className="hover:text-[#B6E04C]">
+                  About Us
                 </Link>
               </li>
               <li>
-                <Link to="/reports" className="hover:underline">
-                  Reports
+                <Link to="/contact" className="hover:text-[#B6E04C]">
+                  Contact
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Policies */}
+          {/* Legal */}
           <div>
-            <h3 className="text-lg font-semibold mb-3 text-teal-100 dark:text-teal-300">
-              Legal
-            </h3>
+            <h3 className="text-lg font-semibold mb-3 text-[#B6E04C]">Legal</h3>
             <ul className="space-y-2 opacity-90">
-              <li className="hover:underline cursor-pointer">
+              <li className="">
                 Terms & Conditions
               </li>
-              <li className="hover:underline cursor-pointer">Privacy Policy</li>
-              <li className="hover:underline cursor-pointer">Support</li>
+              <li className="">Privacy Policy</li>
+              <li className="">Support</li>
             </ul>
           </div>
 
           {/* Contact & Social */}
           <div>
-            <h3 className="text-lg font-semibold mb-3 text-teal-100 dark:text-teal-300">
+            <h3 className="text-lg font-semibold mb-3 text-[#B6E04C]">
               Contact Us
             </h3>
-            <p className="text-sm text-gray-100 dark:text-gray-200 mb-2 flex justify-center md:justify-start items-center gap-2">
-              <MdOutlineMailOutline /> support@finease.com
+            <p className="text-sm text-gray-100 mb-2 flex  items-center gap-2">
+              <MdOutlineMailOutline /> support@loanlink.com
             </p>
-            <p className="text-sm text-gray-100 dark:text-gray-200 mb-3 flex justify-center md:justify-start items-center gap-2">
-              <MdPhoneCallback /> +880 1700-00000
+            <p className="text-sm text-gray-100 mb-3 flex  items-center gap-2">
+              <MdPhoneCallback /> +880 1700-000000
             </p>
 
-            <div className="flex justify-center md:justify-start gap-3 mt-2">
+            <div className="flex  gap-3 mt-2">
               {[
-                {
-                  icon: <FaFacebookF />,
-                  href: "https://www.facebook.com/mursalin07",
-                },
-                {
-                  icon: <FaInstagram />,
-                  href: "https://www.instagram.com/msmursalin07/?hl=en",
-                },
-                {
-                  icon: <FaLinkedinIn />,
-                  href: "https://www.linkedin.com/in/mursalin07/",
-                },
+                { icon: <FaFacebookF />, href: "https://www.facebook.com/mursalin07" },
+                { icon: <FaInstagram />, href: "https://www.instagram.com/msmursalin07/?hl=en" },
+                { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/in/mursalin07/" },
                 { icon: <FaGithub />, href: "https://github.com/mursalin35" },
               ].map((item, i) => (
                 <a
                   key={i}
                   href={item.href}
                   target="_blank"
-                  className="p-2 rounded-full bg-white/10 dark:bg-white/15 hover:bg-white/25 hover:scale-110 transition transform text-white"
+                  className="p-2 rounded-full bg-white/10 hover:bg-[#B6E04C] hover:text-[#1F4F45] transition transform hover:scale-110"
                 >
                   {item.icon}
                 </a>
@@ -118,9 +103,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Line */}
-        <div className="border-t border-white/30 dark:border-white/20 mt-10 pt-5 text-sm text-gray-100/80 dark:text-gray-300 text-center">
-          © {new Date().getFullYear()}{" "}
-          <span className="font-semibold">FinEase</span> — All rights reserved.
+        <div className="border-t border-white/30 mt-10 pt-8 text-sm text-gray-100/80      flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="md:flex gap-1">
+            <p className="text-center">© {new Date().getFullYear()} LoanLink. </p>
+            <p> All rights reserved by M.S Mursalin.</p>
+          </div>
+          <p>Built for transparent & secure micro‑lending solutions.</p>
         </div>
       </div>
     </footer>
@@ -128,3 +116,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+  
