@@ -28,7 +28,7 @@ const DashboardLayout = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen ">
       <div className={`${open ? "w-64" : "w-16"} bg-white shadow-lg transition-all duration-300 relative`}>
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className={`${open ? "text-xl font-bold" : "hidden"} text-blue-600`}>LoanLink</h2>

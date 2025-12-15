@@ -3,13 +3,14 @@ import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { TbTransformFilled } from "react-icons/tb";
 import {
   MdLightMode,
+  MdOutlineDashboard,
   MdOutlineLightMode,
   MdTransferWithinAStation,
 } from "react-icons/md";
 import { BiSolidReport } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { FaUser } from "react-icons/fa";
+import { FaDashcube, FaUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import Logo from "../Logo";
 
@@ -89,7 +90,7 @@ const NavBar = () => {
           className="flex items-center gap-1"
           onClick={() => document.activeElement.blur()}
         >
-          <FaUser /> Dashboard
+          <MdOutlineDashboard/> Dashboard
         </NavLink>
       </li>
       <li>
@@ -105,7 +106,7 @@ const NavBar = () => {
   );
 
   return (
-    <div className="navbar backdrop-blur-lg border border-white/20 shadow-md px-4 md:px-8 h-18 mx-auto glass-card bg-[#E8FAF7] dark:bg-[#1a1c25] sticky top-0 z-10">
+    <div className="navbar backdrop-blur-lg text-[#1C2B27] border border-white/20 shadow-md px-4 md:px-8 h-18 mx-auto glass-card bg-[#caf9f1] dark:bg-[#1a1c25] sticky top-0 z-10">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Dropdown */}
@@ -189,7 +190,7 @@ const NavBar = () => {
               <li>
                 <button
                   onClick={logOut}
-                  className="btn btn-sm mt-3 text-white border-none bg-gradient-to-r from-[#632ee3] to-[#00b8b0] hover:opacity-90"
+                  className="btn btm btn-sm mt-3 text-white border-none hover:opacity-90"
                 >
                   <IoLogOut /> Logout
                 </button>
@@ -199,7 +200,7 @@ const NavBar = () => {
         ) : (
           <Link
             to="/login"
-            className="btn text-[#555565] btn-sm rounded-full text-white border-none bg-gradient-to-r from-[#632ee3] to-[#00b8b0] hover:opacity-90"
+            className="btn btm btn-sm rounded-full text-white border-none hover:opacity-90"
           >
             <IoLogIn /> Login
           </Link>
