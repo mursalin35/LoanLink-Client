@@ -1,7 +1,7 @@
 import { GoHomeFill } from "react-icons/go";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { TbTransformFilled } from "react-icons/tb";
-import { MdTransferWithinAStation } from "react-icons/md";
+import { MdLightMode, MdOutlineLightMode, MdTransferWithinAStation } from "react-icons/md";
 import { BiSolidReport } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
@@ -57,31 +57,21 @@ const NavBar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/all-loans"
-          onClick={() => document.activeElement.blur()}
-        >
+        <NavLink to="/all-loans" onClick={() => document.activeElement.blur()}>
           <TbTransformFilled /> All Loans
         </NavLink>
       </li>
 
       <li>
-        <NavLink
-          to="/about"
-          onClick={() => document.activeElement.blur()}
-        >
+        <NavLink to="/about" onClick={() => document.activeElement.blur()}>
           <MdTransferWithinAStation /> About Us
         </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/contact"
-          onClick={() => document.activeElement.blur()}
-        >
+        <NavLink to="/contact" onClick={() => document.activeElement.blur()}>
           <MdTransferWithinAStation /> Contact
         </NavLink>
       </li>
-      
     </>
   );
 
@@ -97,17 +87,16 @@ const NavBar = () => {
           <FaUser /> Dashboard
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/profile"
+          className="flex items-center gap-1"
+          onClick={() => document.activeElement.blur()}
+        >
+          <FaUser /> Profile
+        </NavLink>
+      </li>
 
-      {/* Theme toggle */}
-      <div className="flex items-center gap-2 mt-3 px-2">
-        <span className="text-sm">{theme === "dark" ? "🌙" : "☀️"}</span>
-        <input
-          type="checkbox"
-          className="toggle"
-          checked={theme === "dark"}
-          onChange={(e) => handleTheme(e.target.checked)}
-        />
-      </div>
     </>
   );
 
@@ -158,6 +147,16 @@ const NavBar = () => {
 
       {/* Navbar End */}
       <div className="navbar-end gap-3">
+        {/* theme toggle  */}
+        <button
+          onClick={() => handleTheme(theme !== "dark")}
+          className="text-xl p-2 "
+        >
+          {theme === "dark" ? <MdLightMode className="text-black"/> : <MdOutlineLightMode/>}
+        </button>
+
+
+
         {user ? (
           <div className="dropdown dropdown-end">
             <div
