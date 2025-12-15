@@ -1,12 +1,17 @@
 import { GoHomeFill } from "react-icons/go";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { TbTransformFilled } from "react-icons/tb";
-import { MdLightMode, MdOutlineLightMode, MdTransferWithinAStation } from "react-icons/md";
+import {
+  MdLightMode,
+  MdOutlineLightMode,
+  MdTransferWithinAStation,
+} from "react-icons/md";
 import { BiSolidReport } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
+import Logo from "../Logo";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -89,14 +94,13 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
-          to="/profile"
+          to="/dashboard/profile"
           className="flex items-center gap-1"
           onClick={() => document.activeElement.blur()}
         >
           <FaUser /> Profile
         </NavLink>
       </li>
-
     </>
   );
 
@@ -132,11 +136,7 @@ const NavBar = () => {
 
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2 text-xl font-bold w-34">
-          <img
-            src="https://i.ibb.co.com/0yDRJgjJ/finans-logo.png"
-            alt="FinEase Logo"
-            className="h-10 "
-          />
+          <Logo />
         </Link>
       </div>
 
@@ -152,10 +152,12 @@ const NavBar = () => {
           onClick={() => handleTheme(theme !== "dark")}
           className="text-xl p-2 "
         >
-          {theme === "dark" ? <MdLightMode className="text-black"/> : <MdOutlineLightMode/>}
+          {theme === "dark" ? (
+            <MdLightMode className="text-black" />
+          ) : (
+            <MdOutlineLightMode />
+          )}
         </button>
-
-
 
         {user ? (
           <div className="dropdown dropdown-end">
