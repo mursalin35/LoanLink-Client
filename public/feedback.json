@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Ayesha Rahman",
+    "role": "Small Business Owner",
+    "feedback": "LoanLink made my loan approval super fast and transparent. The dashboard and updates were extremely helpful!",
+    "rating": 5,
+    "img": "https://i.pravatar.cc/150?img=47"
+  },
+  {
+    "id": 2,
+    "name": "Mahmudul Hasan",
+    "role": "Freelancer",
+    "feedback": "The process was smooth and user-friendly. I loved how everything was automated and easy to understand.",
+    "rating": 4,
+    "img": "https://i.pravatar.cc/150?img=33"
+  },
+  {
+    "id": 3,
+    "name": "Rifat Hossain",
+    "role": "Entrepreneur",
+    "feedback": "Amazing experience! Their loan tracking feature saved me a lot of time. Highly recommended!",
+    "rating": 3,
+    "img": "https://i.pravatar.cc/150?img=16"
+  },
+  {
+    "id": 4,
+    "name": "Nusrat Jahan",
+    "role": "Online Seller",
+    "feedback": "LoanLink helped me grow my online business. The application process was simple and fast.",
+    "rating": 5,
+    "img": "https://i.pravatar.cc/150?img=12"
+  },
+  {
+    "id": 5,
+    "name": "Imran Ahmed",
+    "role": "Startup Founder",
+    "feedback": "Very professional platform. I could monitor everything in real-time without any confusion.",
+    "rating": 4,
+    "img": "https://i.pravatar.cc/150?img=21"
+  },
+  {
+    "id": 6,
+    "name": "Sadia Islam",
+    "role": "Boutique Owner",
+    "feedback": "Their customer support and transparent process really impressed me. Highly satisfied!",
+    "rating": 3,
+    "img": "https://i.pravatar.cc/150?img=45"
+  },
+  {
+    "id": 7,
+    "name": "Tanvir Rahman",
+    "role": "IT Consultant",
+    "feedback": "The UI is clean and modern. LoanLink made loan management stress-free for me.",
+    "rating": 4,
+    "img": "https://i.pravatar.cc/150?img=29"
+  },
+  {
+    "id": 8,
+    "name": "Farhana Akter",
+    "role": "Home-based Entrepreneur",
+    "feedback": "I never thought taking a loan could be this easy. Everything was well explained.",
+    "rating": 5,
+    "img": "https://i.pravatar.cc/150?img=41"
+  },
+  {
+    "id": 9,
+    "name": "Shakib Mahmud",
+    "role": "Digital Marketer",
+    "feedback": "Fast approval and clear updates. LoanLink is perfect for professionals like me.",
+    "rating": 4,
+    "img": "https://i.pravatar.cc/150?img=18"
+  },
+  {
+    "id": 10,
+    "name": "Jannatul Ferdous",
+    "role": "Craft Business Owner",
+    "feedback": "Thanks to LoanLink, I expanded my small business smoothly. Great platform!",
+    "rating": 5,
+    "img": "https://i.pravatar.cc/150?img=36"
+  }
+]

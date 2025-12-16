@@ -1,46 +1,38 @@
+import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import { motion } from "framer-motion";
-
 import { Quote, Star } from "lucide-react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 
-const feedbacks = [
-  {
-    name: "Ayesha Rahman",
-    role: "Small Business Owner",
-    feedback:
-      "LoanLink made my loan approval super fast and transparent. The dashboard and updates were extremely helpful!",
-    rating: 5,
-    img: "https://i.pravatar.cc/150?img=47",
-  },
-  {
-    name: "Mahmudul Hasan",
-    role: "Freelancer",
-    feedback:
-      "The process was smooth and user-friendly. I loved how everything was automated and easy to understand.",
-    rating: 4,
-    img: "https://i.pravatar.cc/150?img=33",
-  },
-  {
-    name: "Rifat Hossain",
-    role: "Entrepreneur",
-    feedback:
-      "Amazing experience! Their loan tracking feature saved me a lot of time. Highly recommended!",
-    rating: 5,
-    img: "https://i.pravatar.cc/150?img=16",
-  },
-];
+const CustomerFeedback = () => {
+  const [feedbacks, setFeedbacks] = useState([]);
 
-export default function CustomerFeedback() {
+  useEffect(() => {
+    fetch("/feedback.json")
+      .then((res) => res.json())
+      .then((data) => setFeedbacks(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  // Loop only if enough slides
+  const enableLoop = feedbacks.length >= 3;
+  const slidesPerView = Math.min(feedbacks.length, 3);
+
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+      {/* Header */}
       <div className="max-w-6xl mx-auto text-center mb-16">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-gray-900"
+          className="text-4xl md:text-5xl font-bold text-[#1F4F45]"
         >
-          What Our <span className="text-primary">Customers Say</span>
+          What Our Customers Say
         </motion.h2>
 
         <motion.p
@@ -48,61 +40,83 @@ export default function CustomerFeedback() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-4 max-w-2xl mx-auto text-gray-600 text-lg"
+          className="mt-4 max-w-2xl mx-auto text-[#6B7C75] text-lg"
         >
           Thousands of users trust LoanLink for fast, secure and transparent
           microloan processing.
         </motion.p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+      {/* Swiper Carousel */}
+      <Swiper
+        loop={enableLoop}
+        effect={"coverflow"}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={slidesPerView}
+        coverflowEffect={{
+          rotate: 30,
+          stretch: 40,
+          depth: 100,
+          modifier: 1,
+          scale: 1,
+          slideShadows: true,
+        }}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={true}
+        modules={[EffectCoverflow, Pagination, Autoplay]}
+        className="max-w-6xl mx-auto mySwiper"
+      >
         {feedbacks.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: i * 0.1 }}
-            className="h-full"
-          >
-            <div className="rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
-              <div className="p-6 relative">
+          <SwiperSlide key={item.id || i}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.1 }}
+            >
+              {/* Card */}
+              <div className="rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm p-6 flex flex-col items-center text-center min-h-[380px] relative">
+                {/* Quote Icon */}
+                <Quote className="absolute top-4 right-4 text-[#B6E04C]/20 w-10 h-10" />
 
-                {/* Quotation Icon */}
-                <Quote className="absolute top-4 right-4 text-primary/20 w-10 h-10" />
+                {/* Avatar */}
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-20 h-20 rounded-full border-4 border-[#6FBF73]/20 shadow-md mt-4"
+                />
 
-                {/* Image */}
-                <div className="flex flex-col items-center mt-2">
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="w-20 h-20 rounded-full border-4 border-primary/10 shadow-md"
-                  />
+                {/* Name & Role */}
+                <h3 className="text-xl font-semibold text-[#1C2B27] mt-4">
+                  {item.name}
+                </h3>
+                <p className="text-[#6B7C75] text-sm">{item.role}</p>
 
-                  {/* Name & Role */}
-                  <h3 className="text-xl font-semibold mt-4 text-gray-900">
-                    {item.name}
-                  </h3>
-                  <p className="text-gray-500 text-sm">{item.role}</p>
+                {/* Feedback Text */}
+                <p className="text-[#1C2B27] mt-4 leading-relaxed text-center flex-1">
+                  "{item.feedback}"
+                </p>
 
-                  {/* Feedback Text */}
-                  <p className="text-gray-700 mt-4 text-center leading-relaxed">
-                    "{item.feedback}"
-                  </p>
-
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mt-4">
-                    {Array.from({ length: item.rating }).map((_, idx) => (
-                      <Star key={idx} className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                    ))}
-                  </div>
+                {/* Rating */}
+                <div className="flex items-center gap-1 mt-4">
+                  {Array.from({ length: item.rating }).map((_, idx) => (
+                    <Star
+                      key={idx}
+                      className="w-5 h-5 text-[#B6E04C] fill-[#B6E04C]"
+                    />
+                  ))}
                 </div>
-
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </section>
   );
-}
+};
+
+export default CustomerFeedback;
