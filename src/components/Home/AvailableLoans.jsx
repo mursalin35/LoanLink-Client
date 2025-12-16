@@ -17,13 +17,14 @@ export default function AvailableLoans() {
 
   if (isLoading)
     return (
-      <div className="text-center mt-10 text-[#1C2B27] font-semibold">
+      <div className="text-center mt-20 text-lg font-semibold text-[#1C2B27]">
         Loading loans...
       </div>
     );
+
   if (isError)
     return (
-      <div className="text-center mt-10 text-red-500 font-semibold">
+      <div className="text-center mt-20 text-red-500">
         Failed to load loans.
       </div>
     );
@@ -31,89 +32,85 @@ export default function AvailableLoans() {
   const homeLoans = loans.filter((loan) => loan.showOnHome).slice(0, 6);
 
   return (
-    <section className="py-24 px-6 bg-[#F4F7F5]">
-      <div className="max-w-7xl mx-auto text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold text-[#1C2B27]">
-          Available Loans
-        </h2>
-        <p className="mt-4 text-[#6B7C75] text-lg max-w-2xl mx-auto">
-          Explore our most popular microloans and find the perfect solution for your needs.
-        </p>
-      </div>
+    <section className="bg-[#F4F7F5] py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1C2B27]">
+            Available Loans
+          </h2>
+          <p className="mt-4 text-[#6B7C75] text-lg max-w-2xl mx-auto">
+            Explore our most popular microloans and find the perfect solution for your needs.
+          </p>
+        </div>
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-        {homeLoans.map((loan, i) => (
-          <motion.div
-            key={loan._id}
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: i * 0.15, ease: "easeOut" }}
-            className="relative rounded-3xl shadow-xl overflow-hidden  transform transition-all hover:-translate-y-3 hover:shadow-2xl hover:scale-[1.05] bg-white/60 backdrop-blur-md flex flex-col"
-            style={{ minHeight: "400px" }} // All cards same height
-          >
-            {/* Image */}
-            <div className="h-48 w-full overflow-hidden rounded-t-3xl relative flex-shrink-0">
-              {loan.image ? (
-                <>
-                  <img
-                    src={loan.image}
-                    alt={loan.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                </>
-              ) : (
-                <div className="w-full h-full bg-[#6FBF73] flex items-center justify-center text-white text-xl font-bold">
-                  No Image
-                </div>
-              )}
-            </div>
-
-            {/* Content */}
-            <div className="p-6 flex flex-col flex-1">
-              <h3 className="text-2xl font-bold text-[#1C2B27] min-h-[40px]">
-                {loan.title ? loan.title.slice(0, 27) + ".." : "No Title"}
-              </h3>
-              <p className="mt-2 text-[#6B7C75] text-sm sm:text-base flex-1">
-                {loan.description
-                  ? loan.description.slice(0, 120) + "..."
-                  : "No description available."}
-              </p>
-
-              <p className="mt-4 text-[#1C2B27] font-semibold">
-                Max Limit:{" "}
-                <span className="text-[#1F4F45] font-bold">
-                  {loan.maxLimit || "N/A"}
-                </span>
-              </p>
-
-              <motion.button
-                onClick={() => navigate(`/all-loans/${loan._id}`)}
-                whileHover={{
-                  scale: 1.01,
-                  background:
-                    "linear-gradient(90deg, #B6E04C, #6FBF73)",
-                  color: "#1F4F45",
-                }}
-                whileTap={{ scale: 0.97 }}
-                className="mt-6 w-full py-3 bg-[#1F4F45] text-white rounded-xl font-semibold text-lg shadow-md transition-all"
-              >
-                View Details
-              </motion.button>
-            </div>
-
-            {/* Badge */}
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {homeLoans.map((loan, i) => (
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: i * 0.15 + 0.3 }}
-              className="absolute top-4 left-4 bg-[#B6E04C] text-[#1F4F45] font-bold px-3 py-1 rounded-full text-sm shadow-md"
+              key={loan._id}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.15 }}
+              className="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden"
+              style={{ minHeight: "420px" }}
             >
-              Popular
+              {/* Image */}
+              <div className="relative h-48 overflow-hidden flex-shrink-0">
+                {loan.image ? (
+                  <>
+                    <img
+                      src={loan.image}
+                      alt={loan.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  </>
+                ) : (
+                  <div className="w-full h-full bg-[#6FBF73] flex items-center justify-center text-white font-bold text-xl">
+                    No Image
+                  </div>
+                )}
+
+                <div className="absolute top-4 left-4 bg-[#B6E04C] text-[#1F4F45] text-sm font-bold px-3 py-1 rounded-full shadow-md">
+                  Popular
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-7 flex flex-col flex-1">
+                <h3 className="text-2xl font-bold text-[#1C2B27] min-h-[40px]">
+                     {loan.title
+                    ? loan.title.slice(0, 26) + ".."
+                    : "No Title."}
+                </h3>
+
+                <p className=" text-[#616865] text-sm leading-relaxed flex-1">
+                  {loan.description
+                    ? loan.description.slice(0, 130) + "..."
+                    : "No description available."}
+                </p>
+
+                <p className="mt-4 text-[#1C2B27] font-semibold">
+                  Max Limit:{" "}
+                  <span className="text-[#1F4F45] font-bold">
+                    ${loan.maxLimit}
+                  </span>
+                </p>
+              
+
+                <button
+                  onClick={() => navigate(`/all-loans/${loan._id}`)}
+                  className="mt-6 w-full py-3 rounded-xl bg-[#1F4F45] text-white font-semibold text-lg transition-all duration-500 hover:bg-[#B6E04C] hover:text-[#1F4F45]"
+                >
+                  View Details
+                </button>
+              </div>
+
+              <div className="absolute inset-0 rounded-3xl ring-1 ring-transparent group-hover:ring-[#6FBF73]/40 transition-all duration-500 pointer-events-none" />
             </motion.div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
