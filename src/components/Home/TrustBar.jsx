@@ -1,75 +1,96 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, Users, Award, Zap } from "lucide-react";
 
-export default function TrustBar() {
+const TrustBar = () => {
   const items = [
     {
-      icon: <ShieldCheck className="w-10 h-10 text-primary" />,
-      title: "Bank-Level Security",
-      desc: "Your personal and financial data is always encrypted.",
+      icon: ShieldCheck,
+      title: "Bank-Grade Security",
+      desc: "Advanced encryption keeps your financial data safe at all times.",
     },
     {
-      icon: <Users className="w-10 h-10 text-primary" />,
-      title: "40,000+ Active Users",
-      desc: "Growing community trusting LoanLink every day.",
+      icon: Users,
+      title: "40,000+ Users",
+      desc: "A rapidly growing community trusting LoanLink every day.",
     },
     {
-      icon: <Award className="w-10 h-10 text-primary" />,
-      title: "Top Rated Platform",
-      desc: "Recognized for reliability, speed & transparency.",
+      icon: Award,
+      title: "Reliable Platform",
+      desc: "Built with transparency, performance, and long-term trust.",
     },
     {
-      icon: <Zap className="w-10 h-10 text-primary" />,
-      title: "Lightning-Fast Approval",
-      desc: "Your loan gets processed in minutes, not hours.",
+      icon: Zap,
+      title: "Instant Processing",
+      desc: "Loan approvals handled efficiently within minutes.",
     },
   ];
 
   return (
-    <section className="py-20 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-blue-100/10 to-primary/10 blur-3xl opacity-60"></div>
+    <section className="py-20 bg-[#F3FBF9]">
+      <div className="max-w-7xl mx-auto px-6">
 
-      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {items.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.15 }}
-            whileHover={{ scale: 1.05, y: -6 }}
-            className="backdrop-blur-xl bg-white/40 border border-white/30 shadow-lg rounded-3xl p-8 text-center transition-all duration-300 hover:shadow-2xl hover:bg-white/70"
-          >
-            {/* Icon Wrapper */}
-            <motion.div
-              initial={{ scale: 0.8 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="w-20 h-20 flex items-center justify-center rounded-2xl bg-primary/10 mx-auto shadow-inner"
-            >
-              {item.icon}
-            </motion.div>
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C28]">
+            Trusted by Thousands
+          </h2>
+          <p className="mt-4 text-[#5F6C72] max-w-2xl mx-auto text-base">
+            LoanLink delivers a secure, fast, and transparent micro-loan
+            experience designed for real people.
+          </p>
+        </motion.div>
 
-            {/* Title */}
-            <h3 className="mt-6 text-xl font-bold text-gray-900">
-              {item.title}
-            </h3>
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {items.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.55,
+                  delay: i * 0.12,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  y: -10,
+                  boxShadow: "0 20px 40px rgba(31, 122, 99, 0.12)",
+                }}
+                className="group bg-white border border-[#DFF1EC] rounded-2xl p-7 transition-all duration-300"
+              >
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-xl bg-[#E8FAF7] flex items-center justify-center transition-colors duration-300 group-hover:bg-[#1F7A63]">
+                  <Icon className="w-7 h-7 text-[#1F7A63] transition-colors duration-300 group-hover:text-white" />
+                </div>
 
-            {/* Line Divider */}
-            <div className="mt-3 mb-3 w-12 h-[3px] bg-primary/60 mx-auto rounded-full"></div>
+                {/* Content */}
+                <h3 className="mt-6 text-lg font-semibold text-[#1C1C28]">
+                  {item.title}
+                </h3>
 
-            {/* Description */}
-            <p className="text-gray-700 text-sm leading-relaxed">
-              {item.desc}
-            </p>
-          </motion.div>
-        ))}
+                <p className="mt-3 text-sm text-[#5F6C72] leading-relaxed">
+                  {item.desc}
+                </p>
+
+                {/* Accent Line */}
+                <div className="mt-5 h-[3px] w-10 rounded-full bg-[#4FD1B2] opacity-70 group-hover:w-16 transition-all duration-300"></div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
-}
+};
 
-
-
-// export default TrustBar;
+export default TrustBar;
