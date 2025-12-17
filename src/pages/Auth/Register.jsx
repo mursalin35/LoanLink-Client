@@ -5,6 +5,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import SocialLogin from "./SocialLogin";
 
 const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
@@ -172,7 +173,9 @@ const Register = () => {
             Login
           </Link>
         </p>
+         <SocialLogin />
       </div>
+    
       <Toaster position="top-center" />
     </div>
   );
