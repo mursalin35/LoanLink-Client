@@ -1,90 +1,110 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
     question: "What is LoanLink?",
     answer:
-      "LoanLink is a web-based microloan request, review, and approval management system for users, managers, and admins.",
+      "LoanLink is a digital micro-loan management platform that allows users to apply, monitor, and repay loans transparently while enabling managers to review and approve applications efficiently.",
   },
   {
-    question: "How can I apply for a loan?",
+    question: "How do I apply for a loan?",
     answer:
-      "Register and login first. Then, browse loans on the Home or All Loans page and click 'Apply Now' on the loan details page.",
+      "After registering and logging in, you can explore available loan options and submit an application directly from the loan details page.",
   },
   {
-    question: "What are the eligibility criteria?",
+    question: "Who can approve my loan?",
     answer:
-      "Eligibility criteria may vary based on the loan category. Ensure your personal and financial information is accurate when applying.",
+      "Loan applications are reviewed by authorized loan managers based on verification and eligibility rules defined by the platform.",
   },
   {
-    question: "How can I track my loan application status?",
+    question: "How can I track loan status?",
     answer:
-      "Logged-in users can check their loan status under the 'My Loans' section in the dashboard.",
+      "You can track real-time loan progress from your dashboard under the “My Loans” section once you are logged in.",
   },
   {
-    question: "Can managers approve loans?",
+    question: "Is my information secure?",
     answer:
-      "Yes, managers (loan officers) can approve or reject pending loan applications through their dashboard.",
+      "Yes. LoanLink uses encrypted data handling and role-based access to ensure your personal and financial data remains protected.",
   },
 ];
 
 const FAQSection = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const toggleFAQ = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+  const [open, setOpen] = useState(null);
 
   return (
-    <section className="relative py-20 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-white">
-      {/* Optional top wave */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180">
-        <svg
-          className="relative block w-full h-16"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
+    <section className="py-24 ">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <path
-            fill="currentColor"
-            d="M0,96L48,128C96,160,192,224,288,229.3C384,235,480,181,576,154.7C672,128,768,128,864,144C960,160,1056,192,1152,208C1248,224,1344,224,1392,224L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></path>
-        </svg>
-      </div>
+          <h2 className="text-4xl font-bold text-[#1C1C28]">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-4 text-[#6B7280] max-w-2xl mx-auto">
+            Clear answers to common questions about how LoanLink works and how
+            we keep the loan process simple, secure, and transparent.
+          </p>
+        </motion.div>
 
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 drop-shadow-lg">
-          Frequently Asked Questions
-        </h2>
-        <div className="grid  gap-6">
-          {faqs.map((faq, index) => (
+        {/* FAQ Cards */}
+        <div className="space-y-6">
+          {faqs.map((item, i) => (
             <motion.div
-              key={index}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300"
-              layout
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="group bg-white rounded-2xl border border-[#E3F1EC] shadow-sm hover:shadow-lg transition"
             >
               <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-5 flex justify-between items-center text-left text-gray-800 dark:text-gray-200 font-semibold text-lg"
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between px-8 py-6 text-left"
               >
-                {faq.question}
-                {activeIndex === index ? (
-                  <ChevronUp className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
-                ) : (
-                  <ChevronDown className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
-                )}
+                <div className="flex items-center gap-4">
+                  {/* Accent Bar */}
+                  <span
+                    className={`h-8 w-1 rounded-full transition ${
+                      open === i
+                        ? "bg-[#1F7A63]"
+                        : "bg-[#CDEAE2] group-hover:bg-[#1F7A63]"
+                    }`}
+                  ></span>
+
+                  <h3 className="text-lg font-semibold text-[#1C1C28]">
+                    {item.question}
+                  </h3>
+                </div>
+
+                <motion.div
+                  animate={{ rotate: open === i ? 180 : 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-[#1F7A63]"
+                >
+                  {open === i ? <Minus size={20} /> : <Plus size={20} />}
+                </motion.div>
               </button>
+
               <AnimatePresence>
-                {activeIndex === index && (
+                {open === i && (
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0 }}
-                    className="px-6 pb-5 text-gray-600 dark:text-gray-300 text-base"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{
+                      duration: 0.7,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="px-8 pb-6 text-[#6B7280] leading-relaxed"
                   >
-                    {faq.answer}
+                    {item.answer}
                   </motion.div>
                 )}
               </AnimatePresence>
