@@ -63,7 +63,8 @@ const Profile = () => {
                 : "bg-gray-200 text-gray-600"
             }`}
           >
-            {profile?.status || "inactive"}
+            {profile?.status || "active"}
+            {/* {profile?.status || "inactive"} */}
           </span>
         </div>
 
@@ -75,7 +76,8 @@ const Profile = () => {
 
         {/* INFO GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-          <Info label="Email Address" value={profile?.email} />
+        <Info label="Email Address" value={profile?.email} capitalize={false}/>
+
           <Info
             label="Account Created"
             value={
@@ -123,11 +125,12 @@ const Profile = () => {
 };
 
 /* Reusable Info Component */
-const Info = ({ label, value }) => (
+const Info = ({ label, value, capitalize = true }) => (
   <div>
     <p className="text-gray-500">{label}</p>
-    <p className="font-medium capitalize">{value}</p>
+    <p className={`font-medium ${capitalize ? "capitalize" : ""}`}>{value}</p>
   </div>
 );
+
 
 export default Profile;
