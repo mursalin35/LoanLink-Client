@@ -1,94 +1,151 @@
-import { motion } from "framer-motion";
-import { Quote, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import {
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaUser,
+  FaMoneyCheck,
+  FaList,
+  FaSignOutAlt,
+  FaChevronRight,
+} from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
 
-
-const CustomerFeedback = () => {
-   const [feedbacks, setFeedbacks] = useState([]);
+const DashboardLayout = () => {
+  const [open, setOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const { user, logOut, role } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/feedback.json")
-      .then((res) => res.json())
-      .then((data) => setFeedbacks(data))
-      .catch((err) => console.error(err));
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setOpen(window.innerWidth >= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleLogout = () => {
+    logOut();
+    navigate("/");
+  };
+
+  const mainMenu = [
+    { name: "Overview", icon: <FaHome />, path: "/dashboard" },
+    { name: "Profile", icon: <FaUser />, path: "/dashboard/profile" },
+  ];
+
+  const roleMenu = {
+    user: [
+      { name: "My Loans", icon: <FaList />, path: "/dashboard/my-loans" },
+      { name: "Payment History", icon: <FaList />, path: "/dashboard/payment-history" },
+    ],
+    manager: [
+      { name: "Add Loan", icon: <FaMoneyCheck />, path: "/dashboard/add-loan" },
+      { name: "Manage Loans", icon: <FaMoneyCheck />, path: "/dashboard/manage-loans" },
+      { name: "Pending Apps", icon: <FaMoneyCheck />, path: "/dashboard/pending-loans" },
+      { name: "Approved", icon: <FaMoneyCheck />, path: "/dashboard/approved-loans" },
+    ],
+    admin: [
+      { name: "Manage Users", icon: <FaMoneyCheck />, path: "/dashboard/manage-users" },
+      { name: "All Loans", icon: <FaMoneyCheck />, path: "/dashboard/all-loan" },
+      { name: "Loan Applications", icon: <FaMoneyCheck />, path: "/dashboard/loan-applications" },
+    ],
+  };
+
+  const menuItems = [...mainMenu, ...(roleMenu[role] || [])];
+
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-6xl mx-auto text-center mb-16">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-gray-900"
-        >
-          What Our <span className="text-primary">Customers Say</span>
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-4 max-w-2xl mx-auto text-gray-600 text-lg"
-        >
-          Thousands of users trust LoanLink for fast, secure and transparent
-          microloan processing.
-        </motion.p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
-        {feedbacks.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: i * 0.1 }}
-            className="h-full"
+    <div className="flex min-h-screen bg-[#F4F7F5]">
+      {/* Sidebar */}
+      <div
+        className={`transition-all duration-300 relative shadow-lg ${
+          open ? "w-64" : "w-16"
+        } bg-[#1F4F45] text-white flex flex-col`}
+      >
+        {/* Logo & toggle */}
+        <div className="flex items-center justify-between h-16 px-6 border-b border-[#ffffff33]">
+          <Link 
+          to="/"
+          className={`font-bold text-xl transition-all ${open ? "block" : "hidden"}`}>
+            LoanLink
+          </Link>
+          <button
+            className="md:hidden text-white hover:text-[#B6E04C] transition-colors"
+            onClick={() => setOpen(!open)}
           >
-            <div className="rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
-              <div className="p-6 relative">
-                {/* Quotation Icon */}
-                <Quote className="absolute top-4 right-4 text-primary/20 w-10 h-10" />
+            {open ? <FaTimes size={20} /> : <FaBars size={20} />}
+          </button>
+        </div>
 
-                {/* Image */}
-                <div className="flex flex-col items-center mt-2">
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="w-20 h-20 rounded-full border-4 border-primary/10 shadow-md"
-                  />
-
-                  {/* Name & Role */}
-                  <h3 className="text-xl font-semibold mt-4 text-gray-900">
+        {/* Menu */}
+        <ul className="flex-1 p-4 space-y-2">
+          {menuItems.map((item) => (
+            <li key={item.name} className="group relative">
+              <NavLink
+                to={item.path}
+                end
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-2 rounded-lg transition-all duration-200 ${
+                    isActive
+                      ? "bg-[#6FBF73] text-[#1F4F45] font-semibold shadow"
+                      : "hover:bg-[#B6E04C] hover:text-[#1F4F45]"
+                  }`
+                }
+              >
+                {item.icon}
+                {open && <span>{item.name}</span>}
+                {!open && (
+                  <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-[#1C2B27] text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
                     {item.name}
-                  </h3>
-                  <p className="text-gray-500 text-sm">{item.role}</p>
+                  </span>
+                )}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
 
-                  {/* Feedback Text */}
-                  <p className="text-gray-700 mt-4 text-center leading-relaxed">
-                    "{item.feedback}"
-                  </p>
-
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mt-4">
-                    {Array.from({ length: item.rating }).map((_, idx) => (
-                      <Star
-                        key={idx}
-                        className="w-5 h-5 text-yellow-500 fill-yellow-500"
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+        {/* Logout */}
+        <div className="p-4 border-t border-[#ffffff33]">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-red-100 hover:text-red-600 text-red-600 transition-all duration-200"
+          >
+            <FaSignOutAlt />
+            {open && "Logout"}
+          </button>
+        </div>
       </div>
-    </section>
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Navbar */}
+        <div className="flex justify-between items-center h-16 px-6 shadow-md bg-[#FFFFFF] border-b border-[#E0E7E2]">
+          <div className="flex items-center gap-4">
+            
+            <h2 className="text-[#1C2B27] font-semibold text-xl">Dashboard</h2>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <img
+              src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"}
+              alt="User"
+              className="w-10 h-10 rounded-full border-2 border-[#B6E04C] hover:border-[#6FBF73] transition-all duration-200"
+            />
+            <p className="font-medium text-[#1C2B27]">{user?.displayName || "User"}</p>
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <div className="p-6 flex-1 overflow-auto">
+          <Outlet />
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default CustomerFeedback;
+export default DashboardLayout;
