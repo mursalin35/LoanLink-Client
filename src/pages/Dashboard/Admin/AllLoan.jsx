@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Spinner from "../../../components/Spinner";
 
 const AdminAllLoans = () => {
   const axiosSecure = useAxiosSecure();
@@ -51,7 +52,7 @@ const AdminAllLoans = () => {
     onSuccess: () => qc.invalidateQueries(["admin-loans"]),
   });
 
-  if (isLoading) return <p>Loading loans...</p>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="p-4">

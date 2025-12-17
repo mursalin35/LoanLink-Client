@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Spinner from "../../../components/Spinner";
 
 const ManageLoans = () => {
   const axiosSecure = useAxiosSecure();
@@ -90,7 +91,7 @@ const ManageLoans = () => {
     updateMutation.mutate({ id: editingLoan, data: editForm });
   };
 
-  if (isLoading) return <p>Loading loans...</p>;
+    if (isLoading) return <Spinner/>;
 
   // Filter loans live by search input
   const filteredLoans = loans.filter(

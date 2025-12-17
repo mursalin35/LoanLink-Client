@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Spinner from "../../../components/Spinner";
 
 const ApprovedApplications = () => {
   const axiosSecure = useAxiosSecure();
@@ -15,7 +16,7 @@ const ApprovedApplications = () => {
     },
   });
 
-  if (isLoading) return <p>Loading approved applications...</p>;
+  if (isLoading) return <Spinner/>;
   if (apps.length === 0) return <p className="p-4">No approved applications yet.</p>;
 
   return (

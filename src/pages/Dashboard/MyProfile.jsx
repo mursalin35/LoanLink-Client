@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Spinner from "../../components/Spinner";
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -33,7 +34,7 @@ const Profile = () => {
   }, [user, axiosSecure]);
 
   if (loading) {
-    return <p className="text-center mt-10">Loading profile...</p>;
+    return <Spinner/>;
   }
 
   return (

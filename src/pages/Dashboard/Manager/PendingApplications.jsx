@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Spinner from "../../../components/Spinner";
 
 const PendingApplications = () => {
   const axiosSecure = useAxiosSecure();
@@ -40,7 +41,7 @@ const PendingApplications = () => {
     onError: () => toast.error("Reject failed"),
   });
 
-  if (isLoading) return <p>Loading pending applications...</p>;
+  if (isLoading) return <Spinner/>;
 
   return (
     <div className="p-4">

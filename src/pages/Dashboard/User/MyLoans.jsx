@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Spinner from "../../../components/Spinner";
 
 const MyLoans = () => {
   const axiosSecure = useAxiosSecure();
@@ -86,7 +87,7 @@ const MyLoans = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+    if (isLoading) return <Spinner/>;
   if (isError)
     return (
       <p className="text-center mt-10 text-red-500">Failed to load loans.</p>

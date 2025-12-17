@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Spinner from "../../../components/Spinner";
 
 const LoanApplications = () => {
   const axiosSecure = useAxiosSecure();
@@ -29,7 +30,7 @@ const LoanApplications = () => {
     onError: () => toast.error("Update failed"),
   });
 
-  if (isLoading) return <p>Loading applications...</p>;
+  if (isLoading) return <Spinner/>;
 
   return (
     <div className="p-4">
