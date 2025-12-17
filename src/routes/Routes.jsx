@@ -28,11 +28,14 @@ import PaymentSuccess from "../pages/Dashboard/User/PaymentSuccess";
 import PaymentCancel from "../pages/Dashboard/User/PaymentCancel";
 import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
 import ForgetPassword from "../pages/Auth/ForgetPassword";
+import Error404 from "../pages/Error404/Error404";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <Error404/>,
     children: [
       { index: true, element: <Home /> },
       { path: "about", element: <About /> },
