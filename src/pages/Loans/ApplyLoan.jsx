@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
+import Spinner from "../../components/Spinner";
 
 const Application = () => {
   const { id } = useParams();
@@ -79,7 +80,7 @@ const Application = () => {
     mutation.mutate(applicationData);
   };
 
-  if (isLoading) return <div className="text-center mt-10">Loading...</div>;
+  if (isLoading) return <div className="text-center mt-10"><Spinner/></div>;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">

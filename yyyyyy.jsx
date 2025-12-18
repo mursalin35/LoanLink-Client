@@ -4,8 +4,8 @@ import Footer from "../components/Shared/Footer";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
-import Loader from "../components/Loader";
 import useAuth from "../hooks/useAuth";
+import Spinner from "./src/components/Spinner";
 
 const MainLayout = () => {
   const { loading } = useAuth(); // 🔑 real loading
@@ -14,7 +14,7 @@ const MainLayout = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#d9f7ed] to-[#bae6da] dark:from-[#0D0D16] dark:to-[#1A1A2E]">
-        <Loader text="Initializing LoanLink..." />
+        <Spinner text="Welcome our LoanLink..." />
       </div>
     );
   }

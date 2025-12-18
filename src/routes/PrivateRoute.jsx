@@ -2,6 +2,7 @@ import React from "react";
 
 import { Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
+import Spinner from "../components/Spinner";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading, suspended } = useAuth();
@@ -10,8 +11,8 @@ const PrivateRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center">
-        <span className="loading loading-spinner loading-xl"></span>
+       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#d9f7ed] to-[#bae6da] dark:from-[#0D0D16] dark:to-[#1A1A2E]">
+        <Spinner text="Welcome our Dashboard..." />
       </div>
     );
   }

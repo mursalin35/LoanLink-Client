@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
+import Spinner from "../../components/Spinner";
 
 const LoanDetails = () => {
   const { user, role } = useAuth();
@@ -24,7 +25,7 @@ const LoanDetails = () => {
     },
   });
 
-  if (isLoading) return <div className="text-center mt-10">Loading...</div>;
+  if (isLoading) return <div className="text-center mt-10"><Spinner/></div>;
   if (isError) {
     toast.error("Failed to fetch loan details");
     return <div className="text-center mt-10 text-red-500">Error!</div>;

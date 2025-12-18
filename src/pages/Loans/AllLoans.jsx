@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Loader from "../../components/Loader";
 import Spinner from "../../components/Spinner";
 
 const AllLoans = () => {

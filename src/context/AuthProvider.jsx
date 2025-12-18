@@ -121,7 +121,7 @@ const AuthProvider = ({ children }) => {
     getIdToken,
   };
 
-  return <AuthContext.Provider value={authData}> {!loading && children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={authData}> { children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
