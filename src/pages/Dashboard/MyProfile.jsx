@@ -39,7 +39,7 @@ const Profile = () => {
 
   return (
     <div className="max-w-5xl mx-auto mt-10 bg-white rounded-2xl shadow-xl overflow-hidden">
-
+<title>My Profile</title>
       {/* COVER */}
       <div className="h-48 bg-yellow-400 relative">
         <div className="absolute -bottom-14 left-10">

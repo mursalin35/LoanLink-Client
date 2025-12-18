@@ -40,6 +40,7 @@ const Overview = () => {
 
   return (
     <div className="p-6 space-y-6">
+      <title>Dashboard</title>
       {/* Page Title */}
       <div>
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white">

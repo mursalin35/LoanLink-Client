@@ -34,6 +34,7 @@ const AllLoans = () => {
 
   return (
     <section className="bg-[#F4F7F5] py-10 px-4">
+      <title>All Loans</title>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1C2B27]">

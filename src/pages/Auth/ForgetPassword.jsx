@@ -6,7 +6,6 @@ import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 
 const ForgetPassword = () => {
-  document.title="Reset Pass"
   const location = useLocation();
   const navigate = useNavigate();
   const { resetPassword } = useContext(AuthContext);

@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 const PaymentCancel = () => {
     return (
         <div>
+            <title>Payment Cancel</title>
             <h1>Payment is cancel. try again</h1>
             <Link to="/dashboard/my-parcels">
             <button className='btn btn-primary btn-sm text-black'>try again</button></Link>

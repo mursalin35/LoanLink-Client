@@ -77,6 +77,7 @@ const AddLoan = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
+      <title>Add Loan</title>
       <h2 className="text-2xl font-bold mb-4">Add Loan</h2>
 
       <form onSubmit={handleSubmit(handleFormAddLoan)} className="space-y-3">

@@ -37,6 +37,7 @@ const LoanDetails = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
+      <title>Loan Details</title>
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Loan Image */}
         <div className="lg:w-1/2">

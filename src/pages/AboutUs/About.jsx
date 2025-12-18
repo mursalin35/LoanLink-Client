@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 export default function About() {
   return (
     <div className="bg-[#F4F7F5] text-[#1C2B27]">
+      <title>About Us</title>
       {/* HERO SECTION */}
       <section className="bg-gradient-to-br from-[#1F4F45] to-[#2E6A5F] text-white">
         <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">

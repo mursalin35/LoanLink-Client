@@ -24,6 +24,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen  bg-gray-50 text-gray-700 font-sans">
+      <title>Contact</title>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-[#004d40] to-[#00695c] text-white h-64 px-6 text-center">
         <motion.h1

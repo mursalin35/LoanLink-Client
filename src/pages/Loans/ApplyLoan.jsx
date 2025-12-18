@@ -83,6 +83,7 @@ const Application = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
+      <title>Apply loan</title>
       <h1 className="text-3xl font-bold mb-6 text-center">
         Apply for {loan.title}
       </h1>

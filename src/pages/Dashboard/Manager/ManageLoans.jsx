@@ -103,6 +103,7 @@ const ManageLoans = () => {
 
   return (
     <div className="p-4">
+      <title>Manage Loans</title>
       <h2 className="text-2xl font-bold mb-4">Manage Loans</h2>
 
       <input

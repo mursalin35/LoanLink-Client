@@ -10,7 +10,7 @@ import {
 import { BiSolidReport } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { FaDashcube, FaUser } from "react-icons/fa";
+import { FaDashcube, FaInfoCircle, FaPhoneAlt, FaUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import Logo from "../Logo";
 
@@ -70,12 +70,12 @@ const NavBar = () => {
 
       <li>
         <NavLink to="/about" onClick={() => document.activeElement.blur()}>
-          <MdTransferWithinAStation /> About Us
+          <FaInfoCircle /> About Us
         </NavLink>
       </li>
       <li>
         <NavLink to="/contact" onClick={() => document.activeElement.blur()}>
-          <MdTransferWithinAStation /> Contact
+          <FaPhoneAlt /> Contact
         </NavLink>
       </li>
     </>

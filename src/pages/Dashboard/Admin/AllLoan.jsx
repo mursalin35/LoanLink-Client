@@ -56,6 +56,7 @@ const AdminAllLoans = () => {
 
   return (
     <div className="p-4">
+      <title>All Loan</title>
       <h2 className="text-2xl font-bold mb-4">All Loans</h2>
 
       <input

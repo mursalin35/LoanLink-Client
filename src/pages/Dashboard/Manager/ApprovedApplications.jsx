@@ -21,6 +21,7 @@ const ApprovedApplications = () => {
 
   return (
     <div className="p-4">
+      <title>Approved Loans</title>
       <h2 className="text-2xl font-bold mb-4">Approved Loan Applications</h2>
 
       <div className="overflow-x-auto bg-white rounded shadow">

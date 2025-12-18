@@ -34,6 +34,7 @@ const LoanApplications = () => {
 
   return (
     <div className="p-4">
+      <title>Loan Applications</title>
       <h2 className="text-2xl font-bold mb-4">Loan Applications</h2>
 
       <div className="flex gap-2 mb-4">

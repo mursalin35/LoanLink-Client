@@ -45,6 +45,7 @@ const PendingApplications = () => {
 
   return (
     <div className="p-4">
+      <title>Pending Loans</title>
       <h2 className="text-2xl font-bold mb-4">Pending Loan Applications</h2>
 
       {apps.length === 0 ? (

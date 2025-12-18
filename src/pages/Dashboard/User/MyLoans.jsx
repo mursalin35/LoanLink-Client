@@ -99,6 +99,7 @@ const MyLoans = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
+      <title>My Loans</title>
       <h1 className="text-3xl font-bold mb-6 text-center">My Loans</h1>
       <div className="overflow-x-auto">
         <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden">

@@ -7,7 +7,7 @@ const navigate = useNavigate()
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#F6FBFA] overflow-hidden">
-
+<title>Error 404</title>
       {/* Background blobs */}
       <motion.div
         animate={{ y: [0, 20, 0] }}
