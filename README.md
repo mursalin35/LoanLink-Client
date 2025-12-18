@@ -1,13 +1,13 @@
-# LoanLink – Microloan Request & Approval Tracker System (Frontend)
-![LoanLink](/src/assets/LiveDemo.png)
-
+# LoanLink – Microloan Request & Approval Tracker System 
 A modern, responsive frontend application for managing microloan requests, reviews, and approvals with role-based user experiences.
+
+![LoanLink](/src/assets/LiveDemo.png)
 
 ---
 
 ## Project Overview
 
-**LoanLink (Frontend)** is a user-focused web application that allows borrowers to apply for microloans, managers to review applications, and admins to oversee platform activity through clean, role-based dashboards.
+**LoanLink ** is a user-focused web application that allows borrowers to apply for microloans, managers to review applications, and admins to oversee platform activity through clean, role-based dashboards.
 
 This frontend application:
 - Provides intuitive UI flows for loan discovery, application, and tracking
@@ -92,7 +92,7 @@ VITE_FIREBASE_PROJECT_ID=your_project_id
 
 ---
 
-## Authentication & Security (Frontend)
+## Authentication & Security 
 
 - Firebase authentication for user login and registration
 - JWT stored and handled securely via HTTP-only cookies
