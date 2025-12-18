@@ -70,7 +70,9 @@ const Register = () => {
       navigate(location.state || "/");
     } catch (err) {
       console.error(err);
-      toast.error(err.message || "Failed to register");
+      toast.error(
+        err.response?.data?.message || err.message || "Failed to register"
+      );
     }
   };
 
@@ -173,9 +175,9 @@ const Register = () => {
             Login
           </Link>
         </p>
-         <SocialLogin />
+        <SocialLogin />
       </div>
-    
+
       <Toaster position="top-center" />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
@@ -9,9 +9,8 @@ import SocialLogin from "./SocialLogin";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { login, setUser } = useAuth();
+  const { login} = useAuth();
   const location = useLocation();
-  console.log("login location", location);
   const navigate = useNavigate();
 
   // const [wrongAttempts, setWrongAttempts] = useState(0);
@@ -34,30 +33,14 @@ const Login = () => {
     login(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        toast.success("Login successful! 🎉");
         navigate(location?.state || "/");
       })
-      .catch((error) => {
+      .catch((error) => { 
         console.log(error);
+           toast.error(error.message || "Login failed!");
       });
-    // const { email, password } = data;
-
-    // login(email, password)
-    //   .then((result) => {
-    //     setUser(result.user);
-    //     setWrongAttempts(0);
-    //     toast.success("Login successful!");
-    //     navigate(location.state ? location.state : "/");
-    //   })
-    //   .catch(() => {
-    //     const attempts = wrongAttempts + 1;
-    //     setWrongAttempts(attempts);
-
-    //     if (attempts >= 4) {
-    //       toast.error("Too many attempts. Click forgot!");
-    //     } else {
-    //       toast.error("Wrong password");
-    //     }
-    //   });
+   
   };
 
   return (

@@ -3,40 +3,48 @@ import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
-  const location =useLocation()
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const handleGoogleSignIn = () => {
-    signInWithGoogle()
-      .then((result) => {
-        console.log(result.user);
-         toast.success("Signed in with Google!");
-        navigate(location?.state || "/");
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const user = result.user;
+
+      // 🔥 Save user to DB (first time only)
+      await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        role: "user",
       });
+
+      toast.success("Signed in with Google!");
+      navigate(location?.state || "/");
+    } catch (error) {
+      console.log(error);
+      toast.error("Google sign-in failed");
+    }
   };
 
   return (
     <div>
-      {/* DIVIDER */}
+      {/* Divider */}
       <div className="flex items-center my-4">
-        <div className="flex-grow h-px bg-gray-300 dark:bg-[#4A4A5A]"></div>
-        <span className="mx-2 text-gray-500 dark:text-[#B0B3C6] text-sm">
-          or
-        </span>
-        <div className="flex-grow h-px bg-gray-300 dark:bg-[#4A4A5A]"></div>
+        <div className="flex-grow h-px bg-gray-300"></div>
+        <span className="mx-2 text-gray-500 text-sm">or</span>
+        <div className="flex-grow h-px bg-gray-300"></div>
       </div>
 
-      {/* GOOGLE SIGN IN */}
+      {/* Google Button */}
       <button
         type="button"
         onClick={handleGoogleSignIn}
-        className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-[#3D3A64] py-2 rounded-md text-[#2E1F47] dark:text-[#EDEBFF] hover:bg-[#F5F3FF] dark:hover:bg-[#3A3A4A]"
+        className="w-full flex items-center justify-center gap-2 border py-2 rounded-md"
       >
         <FcGoogle className="text-xl" /> Sign in with Google
       </button>
