@@ -90,7 +90,7 @@ const NavBar = () => {
           className="flex items-center gap-1"
           onClick={() => document.activeElement.blur()}
         >
-          <MdOutlineDashboard/> Dashboard
+          <MdOutlineDashboard /> Dashboard
         </NavLink>
       </li>
       <li>

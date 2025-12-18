@@ -1,13 +1,23 @@
-import logo from "../assets/logo-1.png"
+import logo from "../assets/logo-1.png";
 
-const Logo = () => {
+const Logo = ({
+  imgSize = "h-9 w-9",
+  textSize = "text-3xl",
+  loanColor = "#14532d",
+  linkColor = "#22c55e",
+}) => {
   return (
-    <div className="flex items-center gap-1 ">
+    <div className="flex items-center gap-2">
       {/* Icon */}
-    <img src={logo} alt="logo" className="max-h-10 max-w-10" />
+      <img src={logo} alt="logo" className={`${imgSize} object-contain`} />
+
       {/* Text */}
-      <span className="text-3xl font-bold tracking-wide text-[#14532d] -ms-0.5">
-        Loan<span className="text-[#22c55e]">Link</span>
+      <span
+        className={`${textSize} font-bold tracking-wide`}
+        style={{ color: loanColor }}
+      >
+        Loan
+        <span style={{ color: linkColor }}>Link</span>
       </span>
     </div>
   );
