@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loader from "../../components/Loader";
+import Spinner from "../../components/Spinner";
 
 const AllLoans = () => {
   const axiosSecure = useAxiosSecure();
@@ -18,8 +20,8 @@ const AllLoans = () => {
 
   if (isLoading)
     return (
-      <div className="text-center mt-20 text-lg font-semibold text-[#1C2B27]">
-        Loading Loans...
+      <div className="text-center mt-16">
+       <Spinner/>
       </div>
     );
 
