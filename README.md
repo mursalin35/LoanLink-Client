@@ -1,130 +1,137 @@
-# LoanLink – Microloan Request & Approval Tracker System
+# LoanLink – Microloan Request & Approval Tracker System (Frontend)
+![LoanLink](/src/assets/LiveDemo.png)
 
-LoanLink is a full-stack web application designed to simplify microloan requests, approvals, and management for borrowers, loan officers (managers), and administrators.  
-The platform ensures a secure, transparent, and role-based workflow for handling loan applications efficiently.
-
----
-
-## 🚀 Live Demo
-🔗 Live Site: https://your-live-site-url.com
+A modern, responsive frontend application for managing microloan requests, reviews, and approvals with role-based user experiences.
 
 ---
 
-## 🧩 Project Purpose
-Many microfinance institutions and NGOs struggle to manage loan applications, approvals, EMI plans, and repayments efficiently.  
-LoanLink solves this problem by providing a centralized, role-based system where:
+## Project Overview
 
-- Borrowers can apply for and track loans
-- Managers can review, approve, or reject applications
-- Admins can manage users, loans, and platform-level controls
+**LoanLink (Frontend)** is a user-focused web application that allows borrowers to apply for microloans, managers to review applications, and admins to oversee platform activity through clean, role-based dashboards.
+
+This frontend application:
+- Provides intuitive UI flows for loan discovery, application, and tracking
+- Communicates with a RESTful backend API for data operations
+- Uses secure authentication and protected routing to ensure proper access control
+
+**Target Users**
+- **Borrower**: Browse loans, apply, and track application status
+- **Manager**: Review, approve, or reject loan requests
+- **Admin**: Monitor users and platform activities (UI-level access)
 
 ---
 
-## ✨ Key Features
+## Website Information
 
-### 🌐 Public Features
-- Modern landing page with smooth animations
-- View available loan categories
-- Loan details page with EMI plans
-- Fully responsive design (Mobile, Tablet, Desktop)
-- Dark / Light theme toggle
+🔗 **Live Site:** [Visit Live site](https://loanlink-side.web.app/)
+<!-- 🔗 **Server Site:** [Visit Server site](https://loanlink-server-bd.vercel.app/) -->
+🔗 **Server Site Repository:** [Visit Server repo](https://github.com/mursalin35/LoanLink-Server.git)
+
+---
+
+## Features (Frontend Only)
+
+- Public pages (Home, All Loans, Loan Details)
+- Authentication (Login, Register, Google Sign-in)
+- Role-based dashboards (Borrower, Manager, Admin)
+- Private and protected routing
+- Light / Dark theme support
+- Fully responsive UI
+- Smooth animations and transitions
 - Custom 404 error page
+- Reload-safe client-side routing
 
 ---
 
-### 🔐 Authentication & Security
-- Email & Password authentication (Firebase)
-- Google / GitHub social login
-- JWT token stored securely in cookies
-- Protected private routes (User / Manager / Admin)
-- Environment variables for Firebase & MongoDB credentials
+## Tech Stack
 
----
-
-### 👤 Borrower (User) Dashboard
-- Apply for loans
-- View applied loans & application status
-- Cancel pending loan applications
-- Pay fixed loan application fee via Stripe
-- View payment details after successful payment
-- Manage personal profile
-
----
-
-### 🧑‍💼 Manager (Loan Officer) Dashboard
-- Add new loan products
-- Manage own created loans
-- View pending loan applications
-- Approve or reject loan applications
-- View approved loans
-- Profile management
-
----
-
-### 👑 Admin Dashboard
-- Manage users & roles (Borrower / Manager / Admin)
-- Suspend users with reason & feedback
-- Manage all loans
-- Control which loans appear on the home page
-- View all loan applications
-- Filter loan applications by status
-- Pagination support for large datasets
-
----
-
-## 🛠️ Technologies Used
-
-### Frontend
 - React
-- React Router
+- React Router DOM
 - Tailwind CSS
-- DaisyUI
-- Framer Motion
-- React Hook Form
-- Axios
 - Firebase Authentication
-
-### Backend
-- Node.js
-- Express.js
-- MongoDB
-- JWT Authentication
-- Stripe Payment Gateway
-- CORS
-- Dotenv
+- Context API
+- Framer Motion
+- TanStack Query
+- React Icons
 
 ---
 
-## 📦 NPM Packages Used (Client)
+## NPM Packages Used
+
+- react
 - react-router-dom
+- firebase
 - framer-motion
-- react-hook-form
-- react-hot-toast
 - axios
 - lucide-react
-- react-icons
 
 ---
 
-## 📦 NPM Packages Used (Server)
-- express
-- mongodb
-- cors
-- dotenv
-- jsonwebtoken
-- stripe
-- cookie-parser
+## Folder Structure
+
+src/
+├── components/
+├── pages/
+├── routes/
+├── context/
+├── hooks/
+├── assets/
+├── layouts/
+└── main.jsx
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
-### Client (.env)
-```env
-VITE_apiKey=your_firebase_api_key
-VITE_authDomain=your_firebase_auth_domain
-VITE_projectId=your_firebase_project_id
-VITE_storageBucket=your_firebase_storage_bucket
-VITE_messagingSenderId=your_firebase_sender_id
-VITE_appId=your_firebase_app_id
-VITE_API_URL=your_server_api_url
+Create a `.env` file in the root directory and add:
+
+VITE_API_BASE_URL=your_api_url  
+VITE_FIREBASE_API_KEY=your_key  
+VITE_FIREBASE_AUTH_DOMAIN=your_domain  
+VITE_FIREBASE_PROJECT_ID=your_project_id  
+
+---
+
+## Authentication & Security (Frontend)
+
+- Firebase authentication for user login and registration
+- JWT stored and handled securely via HTTP-only cookies
+- Route protection based on authentication and user roles
+
+---
+
+## UI/UX Highlights
+
+- Clean and consistent design system
+- Brand-focused color palette
+- Accessible and mobile-first layouts
+- Smooth interactions and micro-animations
+
+---
+
+## Deployment Notes
+
+- Frontend hosted on a static hosting platform (e.g., Firebase / Vercel)
+- Authorized domains configured in Firebase
+- Client-side routing configured to prevent reload errors
+
+---
+
+## Commit Guidelines
+
+- Use clear and meaningful commit messages
+- Follow feature-based or fix-based commit naming
+
+---
+
+## Author
+
+**Developer Name:** Md. Saiyedul Mursalin 
+**Protfolio:** https://saiyedul-mursalin.vercel.app  
+**LinkedIn:** https://www.linkedin.com/in/mursalin07  
+
+---
+
+## Copyright
+
+© 2025 LoanLink. All rights reserved.
