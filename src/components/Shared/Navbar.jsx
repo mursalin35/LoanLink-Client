@@ -11,6 +11,7 @@ import { BiSolidReport } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { FaDashcube, FaInfoCircle, FaPhoneAlt, FaUser } from "react-icons/fa";
+import { HiOutlineViewGrid } from "react-icons/hi";
 import { AuthContext } from "../../context/AuthContext";
 import Logo from "../Logo";
 
@@ -68,6 +69,19 @@ const NavBar = () => {
         </NavLink>
       </li>
 
+      {/* private route */}
+      {user && (
+        <li>
+          <NavLink
+            to="/dashboard"
+            className="flex items-center gap-1"
+            onClick={() => document.activeElement.blur()}
+          >
+            <HiOutlineViewGrid /> Dashboard
+          </NavLink>
+        </li>
+      )}
+
       <li>
         <NavLink to="/about" onClick={() => document.activeElement.blur()}>
           <FaInfoCircle /> About Us
@@ -90,7 +104,7 @@ const NavBar = () => {
           className="flex items-center gap-1"
           onClick={() => document.activeElement.blur()}
         >
-          <MdOutlineDashboard /> Dashboard
+          <HiOutlineViewGrid /> Dashboard
         </NavLink>
       </li>
       <li>
