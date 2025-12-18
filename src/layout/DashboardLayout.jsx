@@ -189,7 +189,7 @@ const DashboardLayout = () => {
                 <FaBars size={20} />
               </button>
             )}
-            <h2 className="text-[#1C2B27] font-semibold text-xl">Dashboard</h2>
+            <h2 className="flex items-center gap-1 text-[#1f6c57] font-semibold text-xl"> <FaHome /> Dashboard</h2>
           </div>
 
           <Link to="/">
