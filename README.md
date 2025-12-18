@@ -21,15 +21,16 @@ This frontend application:
 
 ---
 
-## Website Information
-
+## Live Demo
 🔗 **Live Site:** [Visit Live site](https://loanlink-side.web.app/)
-<!-- 🔗 **Server Site:** [Visit Server site](https://loanlink-server-bd.vercel.app/) -->
+
+## Website Information
+🔗 **Server Site:** [Visit Server site](https://loanlink-server-bd.vercel.app/)
 🔗 **Server Site Repository:** [Visit Server repo](https://github.com/mursalin35/LoanLink-Server.git)
 
 ---
 
-## Features (Frontend Only)
+## Features 
 
 - Public pages (Home, All Loans, Loan Details)
 - Authentication (Login, Register, Google Sign-in)
@@ -126,9 +127,10 @@ VITE_FIREBASE_PROJECT_ID=your_project_id
 
 ## Author
 
-**Developer Name:** Md. Saiyedul Mursalin 
-**Protfolio:** https://saiyedul-mursalin.vercel.app  
-**LinkedIn:** https://www.linkedin.com/in/mursalin07  
+## Author
+- Name: Md. Saiyedul Mursalin
+- Protfolio: https://saiyedul-mursalin.vercel.app  
+- LinkedIn: https://www.linkedin.com/in/mursalin07  
 
 ---
 
