@@ -22,7 +22,7 @@ const CustomerFeedback = () => {
   const slidesPerView = Math.min(feedbacks.length, 3);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-24 ">
       {/* Header */}
       <div className="max-w-6xl mx-auto text-center mb-16">
         <motion.h2
@@ -69,6 +69,9 @@ const CustomerFeedback = () => {
         pagination={true}
         modules={[EffectCoverflow, Pagination, Autoplay]}
         className="max-w-6xl mx-auto mySwiper"
+        breakpoints={{
+          520: { slidesPerView: 1 },
+        }}
       >
         {feedbacks.map((item, i) => (
           <SwiperSlide key={item.id || i}>
