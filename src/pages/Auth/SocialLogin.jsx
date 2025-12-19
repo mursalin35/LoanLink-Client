@@ -44,7 +44,7 @@ const SocialLogin = () => {
       <button
         type="button"
         onClick={handleGoogleSignIn}
-        className="w-full flex items-center justify-center gap-2 border py-2 rounded-md"
+        className="w-full flex items-center justify-center gap-2 border py-2 text-black rounded-md"
       >
         <FcGoogle className="text-xl" /> Sign in with Google
       </button>

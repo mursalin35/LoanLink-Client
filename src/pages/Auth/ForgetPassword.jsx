@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { FaEnvelope, FaLockOpen } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
@@ -33,78 +33,61 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center  px-4 py-6">
+    <div className="min-h-screen flex items-center justify-center px-4 ">
+      
       <title>Reset Password</title>
       <Toaster position="top-center" />
 
       {/* FORM CARD */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
-        className="relative bg-white/90 dark:bg-[#2C2C3A]/80 backdrop-blur-xl w-full max-w-md p-8 rounded-2xl shadow-[0_8px_30px_rgba(99,46,227,0.15)] border border-[#E2E0F5] dark:border-[#3D3A64] overflow-hidden"
+        transition={{ duration: 0.5 }}
+        className="relative w-full max-w-md p-10 bg-white dark:bg-[#2C2C3A] rounded-[2rem] shadow-2xl border border-[#6FBF73] dark:border-[#B6E04C] overflow-hidden"
       >
-        {/* Glow Border */}
-        <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-r from-[#632EE3] to-[#4CB5AE] opacity-20 blur-xl"></div>
+        {/* Glowing Header Circle */}
+        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-tr from-[#1F4F45] to-[#6FBF73] flex items-center justify-center shadow-lg animate-pulse">
+          <FaLock className="text-white text-4xl" />
+        </div>
 
-        {/* Header Icon */}
-        <FaLockOpen className="text-4xl text-[#632EE3] mx-auto mb-3" />
+        {/* Title & Subtitle */}
+        <div className="mt-16 text-center">
+          <h2 className="text-2xl font-bold text-[#1F4F45] dark:text-[#EDEBFF] mb-2">
+            Reset Your Password
+          </h2>
+          <p className="text-sm text-[#6B7C75] dark:text-[#B0B3C6]">
+            Enter your registered email below and we will send you a link to reset your password.
+          </p>
+        </div>
 
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-center text-[#1F1F2E] dark:text-[#EDEBFF]">
-          Forgot Password?
-        </h2>
-        <p className="text-sm text-center text-[#6B6B82] dark:text-[#B0B3C6] mt-1 mb-6">
-          Enter your email to reset your password.
-        </p>
+        {/* Email Input */}
+        <div className="mt-8 relative">
+          <input
+            type="email"
+            value={email}
+            readOnly
+            className="w-full p-4 pl-12 rounded-xl border border-[#6FBF73] dark:border-[#B6E04C] bg-[#F4F7F5] dark:bg-[#1F4F45] text-[#1C2B27] dark:text-[#EDEBFF] outline-none focus:ring-2 focus:ring-[#B6E04C] placeholder:text-[#6B7C75] dark:placeholder:text-[#B0B3C6]"
+          />
+          <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#1F4F45] dark:text-[#B6E04C]" />
+        </div>
 
-        {/* FORM */}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleReset();
-          }}
+        {/* Reset Button */}
+        <button
+          onClick={handleReset}
+          className="w-full mt-6 py-3 rounded-xl bg-gradient-to-r from-[#1F4F45] to-[#6FBF73] text-white font-semibold shadow-lg hover:scale-105 transition-transform"
         >
-          {/* Email Field */}
-          <div className="mb-5">
-            <label className="block text-sm font-semibold text-[#2E1F47] dark:text-[#EDEBFF] mb-2">
-              Email Address
-            </label>
+          Send Reset Link
+        </button>
 
-            <div className="flex items-center border border-[#E2E0F5] dark:border-[#3D3A64] rounded-lg overflow-hidden 
-            bg-white/70 dark:bg-[#1F1F2E] backdrop-blur focus-within:ring-2 focus-within:ring-[#632EE3]">
-              <FaEnvelope className="ml-3 text-[#632EE3]" />
-              <input
-                id="email"
-                type="email"
-                value={email}
-                readOnly
-                className="w-full p-2.5 pl-3 bg-transparent outline-none text-[#1F1F2E] dark:text-[#EDEBFF]"
-              />
-            </div>
-          </div>
-
-          {/* Reset Button */}
+        {/* Back to Login */}
+        <div className="mt-6 text-center">
           <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-[#632EE3] to-[#4CB5AE] 
-            text-white font-medium py-2.5 rounded-lg shadow-sm hover:opacity-90 
-            transition cursor-pointer"
+            onClick={() => navigate(-1)}
+            className="text-sm font-medium text-[#6B7C75] dark:text-[#B0B3C6] hover:text-[#B6E04C] transition"
           >
-            Reset Password
+            ← Back to Login
           </button>
-
-          {/* Back */}
-          <div className="text-center mt-5">
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className="text-sm font-medium text-[#6B6B82] dark:text-[#B0B3C6] hover:text-[#632EE3] transition cursor-pointer"
-            >
-              ← Back to Login
-            </button>
-          </div>
-        </form>
+        </div>
       </motion.div>
     </div>
   );
