@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 export default function About() {
   return (
@@ -13,12 +14,16 @@ export default function About() {
               LoanLink is a full-stack microloan request, review, approval, and tracking platform built to modernize how small financial organizations manage lending operations. We focus on transparency, security, and operational efficiency across the entire loan lifecycle.
             </p>
             <div className="flex gap-4">
-              <button className="px-6 py-3 rounded-xl bg-[#B6E04C] text-[#1F4F45] font-semibold hover:opacity-90">
+              <Link 
+              to="/all-loans"
+              className="px-6 py-3 rounded-xl bg-[#B6E04C] text-[#1F4F45] font-semibold hover:opacity-90">
                 Explore Loans
-              </button>
-              <button className="px-6 py-3 rounded-xl border border-white hover:bg-white hover:text-[#1F4F45]">
+              </Link>
+              <Link 
+              to="/contact"
+              className="px-6 py-3 rounded-xl border border-white hover:bg-white hover:text-[#1F4F45]">
                 Contact Us
-              </button>
+              </Link>
             </div>
           </motion.div>
 
