@@ -13,7 +13,7 @@ const MyLoans = () => {
   const navigate = useNavigate();
 
   const [viewLoan, setViewLoan] = useState(null); // Selected loan for modal
-  const [paymentDetails, setPaymentDetails] = useState(null) // payment details modal 
+  const [paymentDetails, setPaymentDetails] = useState(null); // payment details modal
 
   if (!user) {
     toast.error("Please login first");
@@ -87,7 +87,7 @@ const MyLoans = () => {
     }
   };
 
-    if (isLoading) return <Spinner/>;
+  if (isLoading) return <Spinner />;
   if (isError)
     return (
       <p className="text-center mt-10 text-red-500">Failed to load loans.</p>
@@ -98,146 +98,356 @@ const MyLoans = () => {
     );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="min-h-screen bg-[#F4F7F5] px-4 sm:px-6  pt-4 pb-10 max-w-7xl mx-auto">
       <title>My Loans</title>
-      <h1 className="text-3xl font-bold mb-6 text-center">My Loans</h1>
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="px-4 py-2">Loan ID</th>
-              <th className="px-4 py-2">Loan Info</th>
-              <th className="px-4 py-2">Amount</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Fee Status</th>
-              <th className="px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loans.map((loan) => (
-              <tr key={loan._id} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-2 text-center">{loan._id.slice(-6)}</td>
-                <td className="px-4 py-2">{loan.loanTitle}</td>
-                <td className="px-4 py-2">${loan.loanAmount}</td>
-                <td className="px-4 py-2">{loan.status}</td>
-                <td className="px-4 py-2">{loan.applicationFeeStatus}</td>
-                <td className="px-4 py-2 flex flex-col md:flex-row gap-2 justify-center">
-                  <button
-                    onClick={() => setViewLoan(loan)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                  >
-                    View
-                  </button>
 
-                  {loan.status === "Pending" &&
-                    loan.applicationFeeStatus === "Unpaid" && (
-                      <button
-                        onClick={() => handleCancel(loan._id)}
-                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                      >
-                        Cancel
-                      </button>
-                    )}
-
-                  {loan.applicationFeeStatus === "Unpaid" ? (
-                    <button
-                      onClick={() => handlePay(loan)}
-                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                    >
-                      Pay
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => setPaymentDetails(loan)}
-                      className="bg-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-400"
-                    >
-                      Paid
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Header */}
+      <div className="mb-6 text-center sm:text-left">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#1C2B27]">
+          My Loans
+        </h1>
+        <p className="text-sm sm:text-base text-[#6B7C75] mt-2">
+          View and manage your loan applications
+        </p>
       </div>
 
-      {/* application view Modal */}
+      {/* Desktop / Tablet Table */}
+      <div className="hidden sm:block bg-white rounded-md shadow-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm sm:text-base">
+            <thead className="bg-[#1F4F45] text-white">
+              <tr>
+                <th className="px-4 py-4 text-left">Loan Info</th>
+                <th className="px-4 py-4 text-left">Amount</th>
+                <th className="px-4 py-4 text-left">Status</th>
+                <th className="px-4 py-4 text-left">Fee Status</th>
+                <th className="px-12 py-4 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {loans.map((loan) => (
+                <tr key={loan._id} className="hover:bg-[#F4F7F5] transition">
+                  <td className="flex flex-col gap-1 px-4 py-3 font-semibold text-[#1C2B27]">
+                    {loan.loanTitle}
+                    <span className="text-sm font-normal">
+                      #{loan._id.slice(-10)}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-[#1F4F45]">
+                    ${loan.loanAmount}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`px-3 py-1 rounded-xl text-xs font-semibold ${
+                        loan.status === "Approved"
+                          ? "bg-[#6FBF73]/30 text-[#1F4F45]"
+                          : loan.status === "Pending"
+                          ? "bg-[#B6E04C]/30 text-[#1C2B27]"
+                          : loan.status === "Rejected"
+                          ? "bg-red-200 text-red-700"
+                          : loan.status === "Cancelled"
+                          ? "bg-gray-200 text-gray-700"
+                          : "bg-gray-100 text-[#1C2B27]"
+                      }`}
+                    >
+                      {loan.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`px-3 py-1 rounded-xl text-xs font-semibold ${
+                        loan.applicationFeeStatus === "Paid"
+                          ? "bg-[#6FBF73]/20 text-[#1F4F45]"
+                          : "bg-[#B6E04C]/30 text-[#1C2B27]"
+                      }`}
+                    >
+                      {loan.applicationFeeStatus}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button
+                        onClick={() => setViewLoan(loan)}
+                        className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+                      >
+                        View
+                      </button>
+                      {loan.status === "Pending" &&
+                        loan.applicationFeeStatus === "Unpaid" && (
+                          <button
+                            onClick={() => handleCancel(loan._id)}
+                            className="px-3 py-1 rounded-md bg-red-400 text-white text-sm font-semibold hover:bg-red-500 transition-colors"
+                          >
+                            Cancel
+                          </button>
+                        )}
+                      {loan.applicationFeeStatus === "Unpaid" ? (
+                        <button
+                          onClick={() => handlePay(loan)}
+                          className="px-3 py-1 rounded-md bg-[#B6E04C] text-[#1C2B27] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
+                        >
+                          Pay
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setPaymentDetails(loan)}
+                          className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                        >
+                          Paid
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="sm:hidden space-y-4">
+        {loans.map((loan) => (
+          <div
+            key={loan._id}
+            className="bg-white rounded-2xl shadow-md p-5 space-y-4 border border-gray-100"
+          >
+            {/* Header */}
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="font-semibold text-[#1C2B27] text-lg">
+                  {loan.loanTitle}
+                </h2>
+                <span className="text-xs text-[#6B7C75] mt-1 block">
+                  #{loan._id.slice(-10)}
+                </span>
+              </div>
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  loan.status === "Approved"
+                    ? "bg-[#6FBF73]/30 text-[#1F4F45]"
+                    : loan.status === "Pending"
+                    ? "bg-[#B6E04C]/30 text-[#1C2B27]"
+                    : loan.status === "Rejected"
+                    ? "bg-red-200 text-red-700"
+                    : loan.status === "Cancelled"
+                    ? "bg-gray-200 text-gray-700"
+                    : "bg-gray-100 text-[#1C2B27]"
+                }`}
+              >
+                {loan.status}
+              </span>
+            </div>
+
+            {/* Loan Info */}
+            <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27]">
+              <p>
+                <strong>Amount:</strong> ${loan.loanAmount}
+              </p>
+              <p>
+                <strong>Fee Status:</strong>
+                <span
+                  className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                    loan.applicationFeeStatus === "Paid"
+                      ? "bg-[#6FBF73]/20 text-[#1F4F45]"
+                      : "bg-[#B6E04C]/30 text-[#1C2B27]"
+                  }`}
+                >
+                  {loan.applicationFeeStatus}
+                </span>
+              </p>
+              <p>
+                <strong>Applied At:</strong>{" "}
+                {new Date(loan.appliedAt).toLocaleString()}
+              </p>
+            </div>
+
+            {/* Personal Info */}
+            <div className="bg-[#F4F7F5] rounded-xl p-3 space-y-1">
+              <p>
+                <strong>Income Source:</strong> {loan.incomeSource}
+              </p>
+              <p>
+                <strong>Monthly Income:</strong> ${loan.monthlyIncome}
+              </p>
+              <p>
+                <strong>Reason:</strong> {loan.reason}
+              </p>
+              <p>
+                <strong>Address:</strong> {loan.address}
+              </p>
+              {loan.extraNotes && (
+                <p>
+                  <strong>Notes:</strong> {loan.extraNotes}
+                </p>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-2 mt-2">
+              <button
+                onClick={() => setViewLoan(loan)}
+                className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+              >
+                View
+              </button>
+              {loan.status === "Pending" &&
+                loan.applicationFeeStatus === "Unpaid" && (
+                  <button
+                    onClick={() => handleCancel(loan._id)}
+                    className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-red-400 text-white text-sm font-semibold hover:bg-red-500 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                )}
+              {loan.applicationFeeStatus === "Unpaid" ? (
+                <button
+                  onClick={() => handlePay(loan)}
+                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#B6E04C] text-[#1C2B27] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
+                >
+                  Pay
+                </button>
+              ) : (
+                <button
+                  onClick={() => setPaymentDetails(loan)}
+                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                >
+                  Paid
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+       {/* View Loan Modal */}
       {viewLoan && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+            {/* Close Button */}
             <button
               onClick={() => setViewLoan(null)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl font-bold"
+              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] hover:text-[#ef4f4f] transition-colors"
             >
               &times;
             </button>
-            <h2 className="text-2xl font-bold mb-4">{viewLoan.loanTitle}</h2>
-            <p>
-              <strong>Loan ID:</strong> {viewLoan._id}
-            </p>
-            <p>
-              <strong>Amount:</strong> ${viewLoan.loanAmount}
-            </p>
-            <p>
-              <strong>Status:</strong> {viewLoan.status}
-            </p>
-            <p>
-              <strong>Fee Status:</strong> {viewLoan.applicationFeeStatus}
-            </p>
-            <p>
-              <strong>Applied At:</strong>{" "}
-              {new Date(viewLoan.appliedAt).toLocaleString()}
-            </p>
-            <p>
-              <strong>Income Source:</strong> {viewLoan.incomeSource}
-            </p>
-            <p>
-              <strong>Monthly Income:</strong> ${viewLoan.monthlyIncome}
-            </p>
-            <p>
-              <strong>Reason for Loan:</strong> {viewLoan.reason}
-            </p>
-            <p>
-              <strong>Address:</strong> {viewLoan.address}
-            </p>
-            <p>
-              <strong>Extra Notes:</strong> {viewLoan.extraNotes}
-            </p>
+
+            {/* Title */}
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] text-center">
+              {viewLoan.loanTitle}
+            </h2>
+
+            {/* Loan Info Section */}
+            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
+              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+                Loan Details
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+                <p>
+                  <strong>Loan ID:</strong> {viewLoan._id}
+                </p>
+                <p>
+                  <strong>Amount:</strong> ${viewLoan.loanAmount}
+                </p>
+                <p>
+                  <strong>Status:</strong>{" "}
+                  <span
+                    className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      viewLoan.status === "Approved"
+                        ? "bg-[#6FBF73]/30 text-[#1F4F45]"
+                        : viewLoan.status === "Pending"
+                        ? "bg-[#B6E04C]/30 text-[#1C2B27]"
+                        : viewLoan.status === "Rejected"
+                        ? "bg-red-200 text-red-700"
+                        : viewLoan.status === "Cancelled"
+                        ? "bg-gray-200 text-gray-700"
+                        : "bg-gray-100 text-[#1C2B27]"
+                    }`}
+                  >
+                    {viewLoan.status}
+                  </span>
+                </p>
+                <p>
+                  <strong>Fee Status:</strong> {viewLoan.applicationFeeStatus}
+                </p>
+                <p>
+                  <strong>Applied At:</strong>{" "}
+                  {new Date(viewLoan.appliedAt).toLocaleString()}
+                </p>
+              </div>
+            </div>
+
+            {/* Income & Personal Info Section */}
+            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
+              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+                Personal Info
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+                <p>
+                  <strong>Income Source:</strong> {viewLoan.incomeSource}
+                </p>
+                <p>
+                  <strong>Monthly Income:</strong> ${viewLoan.monthlyIncome}
+                </p>
+                <p className="sm:col-span-2">
+                  <strong>Reason:</strong> {viewLoan.reason}
+                </p>
+                <p className="sm:col-span-2">
+                  <strong>Address:</strong> {viewLoan.address}
+                </p>
+                <p className="sm:col-span-2">
+                  <strong>Notes:</strong> {viewLoan.extraNotes}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Payment Details Modal */}
-{paymentDetails && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative">
-      <button
-        onClick={() => setPaymentDetails(null)}
-        className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl font-bold"
-      >
-        &times;
-      </button>
-
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        Payment Details
-      </h2>
-
-      <p><strong>Email:</strong> {user.email}</p>
-      <p><strong>Loan ID:</strong> {paymentDetails._id}</p>
-      <p><strong>Loan Title:</strong> {paymentDetails.loanTitle}</p>
-      <p><strong>Amount Paid:</strong> $10</p>
-      <p><strong>Transaction ID:</strong> {paymentDetails.transactionId}</p>
-      <p><strong>Tracking ID:</strong> {paymentDetails.trackingId}</p>
-      <p>
-        <strong>Paid At:</strong>{" "}
-        {paymentDetails.paidAt
-          ? new Date(paymentDetails.paidAt).toLocaleString()
-          : "N/A"}
-      </p>
-    </div>
-  </div>
-)}
-
+      {paymentDetails && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setPaymentDetails(null)}
+              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] hover:text-[#ef4f4f] transition-colors"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-[#1F4F45]">
+              Payment Details
+            </h2>
+            <div className="bg-[#F4F7F5] rounded-xl p-4 shadow-inner space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p>
+                  <strong>Loan ID:</strong> {paymentDetails._id}
+                </p>
+                <p className="sm:col-span-2">
+                  <strong>Loan Title:</strong> {paymentDetails.loanTitle}
+                </p>
+                <p>
+                  <strong>Amount Paid:</strong> $10
+                </p>
+                <p>
+                  <strong>Transaction ID:</strong>{" "}
+                  {paymentDetails.transactionId}
+                </p>
+                <p>
+                  <strong>Tracking ID:</strong> {paymentDetails.trackingId}
+                </p>
+                <p className="sm:col-span-2">
+                  <strong>Paid At:</strong>{" "}
+                  {paymentDetails.paidAt
+                    ? new Date(paymentDetails.paidAt).toLocaleString()
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
