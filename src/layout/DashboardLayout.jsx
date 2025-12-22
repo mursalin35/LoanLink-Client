@@ -18,7 +18,6 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-
 const DashboardLayout = () => {
   const [open, setOpen] = useState(false); // mobile sidebar initially hidden
   const [isMobile, setIsMobile] = useState(false);
@@ -53,11 +52,12 @@ const DashboardLayout = () => {
         icon: <FaHandHoldingUsd />,
         path: "/dashboard/my-loans",
       },
-      {
-        name: "Payment History",
-        icon: <FaHistory />,
-        path: "/dashboard/payment-history",
-      },
+      // After mark
+      // {
+      //   name: "Payment History",
+      //   icon: <FaHistory />,
+      //   path: "/dashboard/payment-history",
+      // },
     ],
     manager: [
       { name: "Add Loan", icon: <FaMoneyCheck />, path: "/dashboard/add-loan" },
@@ -189,7 +189,10 @@ const DashboardLayout = () => {
                 <FaBars size={20} />
               </button>
             )}
-            <h2 className="flex items-center gap-1 text-[#1f6c57] font-semibold text-xl"> <FaHome /> Dashboard</h2>
+            <h2 className="flex items-center gap-1 text-[#1f6c57] font-semibold text-xl">
+              {" "}
+              <FaHome /> Dashboard
+            </h2>
           </div>
 
           <Link to="/">
