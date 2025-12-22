@@ -103,7 +103,7 @@ const MyLoans = () => {
 
       {/* Header */}
       <div className="mb-6 text-center sm:text-left">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#1C2B27]">
+        <h1 className="text-3xl font-semibold text-[#1C2B27]">
           My Loans
         </h1>
         <p className="text-sm sm:text-base text-[#6B7C75] mt-2">
@@ -121,7 +121,7 @@ const MyLoans = () => {
                 <th className="px-4 py-4 text-left">Amount</th>
                 <th className="px-4 py-4 text-left">Status</th>
                 <th className="px-4 py-4 text-left">Fee Status</th>
-                <th className="px-12 py-4 text-left">Actions</th>
+                <th className="px-4 py-4 text-left">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y">
