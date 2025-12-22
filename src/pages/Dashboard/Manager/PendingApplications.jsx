@@ -145,10 +145,10 @@ const PendingApplications = () => {
                 <tbody className="divide-y">
                   {apps.map((a) => (
                     <tr key={a._id} className="hover:bg-[#F4F7F5] transition">
-                      <td className="px-4 py-3 font-semibold text-[#1C2B27]">
+                      <td className="px-4 py-3 flex flex-col font-semibold text-[#1C2B27]">
                         {a.loanTitle}
                         <span className="text-sm font-normal">
-                          {" "}
+                         
                           #{a._id.slice(-10)}
                         </span>
                       </td>
@@ -182,7 +182,7 @@ const PendingApplications = () => {
                           </button>
                           <button
                             onClick={() => setViewApp(a)}
-                            className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+                            className="px-3 py-1 rounded-md bg-[#ebebeb] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
                           >
                             View
                           </button>
