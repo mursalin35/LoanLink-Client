@@ -72,6 +72,7 @@ const Application = () => {
       loanId: id,
       loanTitle: loan.title,
       interestRate: loan.interest,
+      loanCategory: loan.category,
       userEmail: user.email,
       ...formData,
       appliedAt: new Date(),
@@ -112,6 +113,12 @@ const Application = () => {
           readOnly
           className="border p-2 rounded bg-gray-100"
         />
+        <input
+          type="text"
+          value={loan.category}
+          readOnly
+          className="border p-2 rounded bg-gray-100"
+        />
 
         {/* User input fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -120,6 +127,7 @@ const Application = () => {
             name="firstName"
             placeholder="First Name"
             value={formData.firstName}
+              // value={user.displayName}
             onChange={handleChange}
             required
             className="border p-2 rounded"
@@ -136,7 +144,7 @@ const Application = () => {
         </div>
 
         <input
-          type="text"
+          type="number"
           name="contactNumber"
           placeholder="Contact Number"
           value={formData.contactNumber}
