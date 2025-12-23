@@ -48,6 +48,7 @@ const CustomerFeedback = () => {
 
   {/* Swiper Carousel */}
   <Swiper
+   key={feedbacks.length}
     loop={enableLoop}
     effect={"coverflow"}
     grabCursor={true}
