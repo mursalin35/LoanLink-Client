@@ -262,26 +262,7 @@ const MyLoans = () => {
               </p>
             </div>
 
-            {/* Personal Info */}
-            <div className="bg-[#F4F7F5] rounded-xl p-3 space-y-1">
-              <p>
-                <strong>Income Source:</strong> {loan.incomeSource}
-              </p>
-              <p>
-                <strong>Monthly Income:</strong> ${loan.monthlyIncome}
-              </p>
-              <p>
-                <strong>Reason:</strong> {loan.reason}
-              </p>
-              <p>
-                <strong>Address:</strong> {loan.address}
-              </p>
-              {loan.extraNotes && (
-                <p>
-                  <strong>Notes:</strong> {loan.extraNotes}
-                </p>
-              )}
-            </div>
+           
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-2 mt-2">
