@@ -54,111 +54,223 @@ const AdminAllLoans = () => {
 
   if (isLoading) return <Spinner />;
 
+  // Mail contain 
   return (
-    <div className="p-4">
-      <title>All Loan</title>
-      <h2 className="text-2xl font-bold mb-4">All Loans</h2>
+   <div className="min-h-screen bg-[#F4F7F5] px-4 sm:px-6 pt-4 pb-10 max-w-7xl mx-auto">
+  <title>All Loans</title>
 
-      <input
-        placeholder="Search title or category"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        className="w-full p-2 mb-4 border rounded"
-      />
+  {/* Header */}
+  <div className="mb-6 text-center sm:text-left">
+    <h2 className="text-3xl font-semibold text-[#1C2B27]">All Loans</h2>
+    <p className="text-sm sm:text-base text-[#6B7C75] mt-2">
+      Manage all loan products
+    </p>
+  </div>
 
-      <div className="overflow-x-auto bg-white rounded shadow">
-        <table className="min-w-full">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2">Image</th>
-              <th className="p-2">Title</th>
-              <th className="p-2">Interest</th>
-              <th className="p-2">Category</th>
-              <th className="p-2">Created By</th>
-              <th className="p-2">Show on Home</th>
-              <th className="p-2">Actions</th>
-            </tr>
-          </thead>
+  {/* Search */}
+  <input
+    placeholder="Search title or category"
+    value={q}
+    onChange={(e) => setQ(e.target.value)}
+    className="w-full mb-4 px-4 py-2 rounded-md border border-gray-200
+               focus:outline-none focus:ring-2 focus:ring-[#B6E04C]
+               bg-white text-[#1C2B27]"
+  />
 
-          <tbody>
-            {loans.map((loan) => (
-              <tr key={loan._id} className="border-t">
-                <td className="p-2">
-                  {loan.image ? (
-                    <img
-                      src={loan.image}
-                      alt=""
-                      className="w-12 h-12 object-cover rounded"
-                    />
-                  ) : (
-                    "—"
-                  )}
-                </td>
+  {/* Desktop Table */}
+  <div className="hidden sm:block bg-white rounded-md shadow-lg overflow-hidden">
+    <div className="overflow-x-auto">
+      <table className="min-w-full text-sm sm:text-base">
+        <thead className="bg-[#1F4F45] text-white">
+          <tr>
+            <th className="px-4 py-3 text-left">Image</th>
+            <th className="px-4 py-3 text-left">Title</th>
+            <th className="px-4 py-3 text-left">Interest</th>
+            <th className="px-4 py-3 text-left">Category</th>
+            <th className="px-4 py-3 text-left">Created By</th>
+            <th className="px-4 py-3 text-left">Show on Home</th>
+            <th className="px-4 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
 
-                <td className="p-2">{loan.title}</td>
-                <td className="p-2">{loan.interest}%</td>
-                <td className="p-2">{loan.category}</td>
-                <td className="p-2">{loan.createdBy}</td>
-
-                <td className="p-2">
-                  <input
-                    type="checkbox"
-                    checked={!!loan.showOnHome}
-                    onChange={(e) =>
-                      toggleHomeM.mutate({
-                        id: loan._id,
-                        val: e.target.checked,
-                      })
-                    }
+        <tbody className="divide-y">
+          {loans.map((loan) => (
+            <tr key={loan._id} className="hover:bg-[#F4F7F5] transition">
+              <td className="px-4 py-3">
+                {loan.image ? (
+                  <img
+                    src={loan.image}
+                    alt=""
+                    className="w-12 h-12 rounded-lg object-cover"
                   />
-                </td>
+                ) : (
+                  "—"
+                )}
+              </td>
 
-                <td className="p-2 flex gap-2">
+              <td className="px-4 py-3 font-semibold text-[#1C2B27]">
+                {loan.title}
+              </td>
+
+              <td className="px-4 py-3 text-[#1F4F45]">
+                {loan.interest}%
+              </td>
+
+              <td className="px-4 py-3 text-[#1C2B27]">
+                {loan.category}
+              </td>
+
+              <td className="px-4 py-3 text-[#6B7C75]">
+                {loan.createdBy}
+              </td>
+
+              <td className="px-4 py-3">
+                <input
+                  type="checkbox"
+                  checked={!!loan.showOnHome}
+                  onChange={(e) =>
+                    toggleHomeM.mutate({
+                      id: loan._id,
+                      val: e.target.checked,
+                    })
+                  }
+                  className="w-4 h-4 accent-[#6FBF73]"
+                />
+              </td>
+
+              <td className="px-4 py-3">
+                <div className="flex gap-2">
                   <button
-                    className="px-3 py-1 bg-yellow-500 text-white rounded"
                     onClick={() => setEdit(loan)}
+                    className="px-3 py-1 rounded-md bg-[#B6E04C]
+                               text-[#1C2B27] font-semibold text-sm
+                               hover:bg-[#6FBF73] transition-colors"
                   >
                     Edit
                   </button>
                   <button
-                    className="px-3 py-1 bg-red-500 text-white rounded"
                     onClick={() => setDeleteId(loan._id)}
+                    className="px-3 py-1 rounded-md bg-red-400
+                               text-white font-semibold text-sm
+                               hover:bg-red-500 transition-colors"
                   >
                     Delete
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-      {edit && (
-        <EditLoanModal loan={edit} setLoan={setEdit} updateM={updateM} />
-      )}
-
-      {deleteId && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded max-w-sm">
-            <p>Confirm delete?</p>
-            <div className="flex justify-end gap-2 mt-3">
-              <button
-                className="px-3 py-1 bg-gray-300 rounded"
-                onClick={() => setDeleteId(null)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-3 py-1 bg-red-600 text-white rounded"
-                onClick={() => delM.mutate(deleteId)}
-              >
-                Delete
-              </button>
-            </div>
+  {/* Mobile Card View */}
+  <div className="sm:hidden space-y-4">
+    {loans.map((loan) => (
+      <div
+        key={loan._id}
+        className="bg-white rounded-2xl shadow-md p-5 space-y-3 border border-gray-100"
+      >
+        <div className="flex gap-3 items-center">
+          {loan.image ? (
+            <img
+              src={loan.image}
+              alt=""
+              className="w-14 h-14 rounded-xl object-cover"
+            />
+          ) : (
+            <div className="w-14 h-14 bg-gray-200 rounded-xl" />
+          )}
+          <div>
+            <h3 className="font-semibold text-[#1C2B27]">
+              {loan.title}
+            </h3>
+            <p className="text-xs text-[#6B7C75]">{loan.category}</p>
           </div>
         </div>
-      )}
+
+        <div className="text-sm text-[#1C2B27] space-y-1">
+          <p><strong>Interest:</strong> {loan.interest}%</p>
+          <p><strong>Created By:</strong> {loan.createdBy}</p>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-semibold text-[#1C2B27]">
+            Show on Home
+          </label>
+          <input
+            type="checkbox"
+            checked={!!loan.showOnHome}
+            onChange={(e) =>
+              toggleHomeM.mutate({
+                id: loan._id,
+                val: e.target.checked,
+              })
+            }
+            className="w-4 h-4 accent-[#6FBF73]"
+          />
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={() => setEdit(loan)}
+            className="flex-1 px-3 py-2 rounded-md bg-[#B6E04C]
+                       text-[#1C2B27] font-semibold text-sm
+                       hover:bg-[#6FBF73]"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => setDeleteId(loan._id)}
+            className="flex-1 px-3 py-2 rounded-md bg-red-400
+                       text-white font-semibold text-sm
+                       hover:bg-red-500"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Edit Modal */}
+  {edit && (
+    <EditLoanModal loan={edit} setLoan={setEdit} updateM={updateM} />
+  )}
+
+  {/* Delete Modal */}
+  {deleteId && (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+        <h3 className="text-lg font-semibold text-[#1C2B27] mb-3">
+          Confirm Delete
+        </h3>
+        <p className="text-sm text-[#6B7C75]">
+          Are you sure you want to delete this loan?
+        </p>
+        <div className="flex justify-end gap-2 mt-4">
+          <button
+            onClick={() => setDeleteId(null)}
+            className="px-3 py-1 rounded-md bg-gray-200
+                       text-[#1C2B27] font-semibold
+                       hover:bg-[#1F4F45] hover:text-white"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => delM.mutate(deleteId)}
+            className="px-3 py-1 rounded-md bg-red-500
+                       text-white font-semibold hover:bg-red-600"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
+  )}
+</div>
+
   );
 };
 
@@ -218,76 +330,104 @@ const EditLoanModal = ({ loan, setLoan, updateM }) => {
 
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded max-w-md w-full">
-        <h3 className="font-bold text-lg mb-3">Edit Loan</h3>
+   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+  <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+    
+    {/* Header */}
+    <h3 className="text-xl font-semibold text-[#1C2B27] mb-4">
+      Edit Loan
+    </h3>
 
-        <form onSubmit={handleSubmit(handleLoanImageUpdate)}>
-          <input
-            {...register("title")}
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="Title"
-          />
+    <form onSubmit={handleSubmit(handleLoanImageUpdate)} className="space-y-3">
 
-          <textarea
-            {...register("description")}
-            className="w-full p-2 mb-2 border rounded"
-            rows={3}
-            placeholder="Description"
-          />
+      <input
+        {...register("title")}
+        className="w-full px-3 py-2 rounded-md border border-gray-200
+                   focus:outline-none focus:ring-2 focus:ring-[#B6E04C]
+                   text-[#1C2B27]"
+        placeholder="Loan Title"
+      />
 
-          <input
-            {...register("category")}
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="Category"
-          />
+      <textarea
+        {...register("description")}
+        rows={3}
+        className="w-full px-3 py-2 rounded-md border border-gray-200
+                   focus:outline-none focus:ring-2 focus:ring-[#B6E04C]
+                   text-[#1C2B27]"
+        placeholder="Description"
+      />
 
-          <input
-            {...register("interest")}
-            type="number"
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="Interest (%)"
-          />
+      <input
+        {...register("category")}
+        className="w-full px-3 py-2 rounded-md border border-gray-200
+                   focus:outline-none focus:ring-2 focus:ring-[#B6E04C]
+                   text-[#1C2B27]"
+        placeholder="Category"
+      />
 
-          <input
-            {...register("maxLimit")}
-            type="number"
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="Max Limit"
-          />
-
-          <input
-            {...register("emiPlansText")}
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="EMI Plans (3 month, 5 month, 7 month)"
-          />
-
-  <input
-        type="file"
-          {...register("image", )}
-          placeholder="Image Upload"
-          className="file-input w-full p-2 mb-4 border rounded"
+      <div className="grid grid-cols-2 gap-3">
+        <input
+          {...register("interest")}
+          type="number"
+          className="w-full px-3 py-2 rounded-md border border-gray-200
+                     focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+          placeholder="Interest %"
         />
 
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              className="px-3 py-1 bg-gray-300 rounded"
-              onClick={() => setLoan(null)}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="px-3 py-1 bg-blue-600 text-white rounded"
-            >
-              Update
-            </button>
-          </div>
-        </form>
+        <input
+          {...register("maxLimit")}
+          type="number"
+          className="w-full px-3 py-2 rounded-md border border-gray-200
+                     focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+          placeholder="Max Limit"
+        />
       </div>
-    </div>
+
+      <input
+        {...register("emiPlansText")}
+        className="w-full px-3 py-2 rounded-md border border-gray-200
+                   focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+        placeholder="EMI Plans (3, 5, 7 month)"
+      />
+
+      {/* File Upload */}
+      <div className="border border-dashed border-gray-300 rounded-md p-3 text-sm">
+        <input
+          type="file"
+          {...register("image")}
+          className="w-full text-sm file:mr-3 file:px-3 file:py-1
+                     file:rounded-md file:border-0
+                     file:bg-[#B6E04C] file:text-[#1C2B27]
+                     file:font-semibold hover:file:bg-[#6FBF73]"
+        />
+      </div>
+
+      {/* Actions */}
+      <div className="flex justify-end gap-2 pt-2">
+        <button
+          type="button"
+          onClick={() => setLoan(null)}
+          className="px-4 py-1.5 rounded-md bg-gray-200
+                     text-[#1C2B27] font-semibold
+                     hover:bg-[#1F4F45] hover:text-white transition"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          className="px-4 py-1.5 rounded-md bg-[#6FBF73]
+                     text-[#1C2B27] font-semibold
+                     hover:bg-[#B6E04C] transition"
+        >
+          Update
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
   );
 };
 
