@@ -84,156 +84,155 @@ const Application = () => {
   if (isLoading) return <div className="text-center mt-10"><Spinner/></div>;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <title>Apply loan</title>
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        Apply for {loan.title}
-      </h1>
+   <div className="max-w-4xl mx-auto px-4 py-10  min-h-screen">
+  <title>Apply Loan</title>
+  <h1 className="text-3xl font-bold mb-6 text-center text-[#1C2B27]">
+    Apply for {loan.title}
+  </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-lg p-8 flex flex-col gap-4"
-      >
-        {/* Read-only auto fields */}
-        <input
-          type="email"
-          value={user.email}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
-        <input
-          type="text"
-          value={loan.title}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
-        <input
-          type="text"
-          value={loan.interest + "%"}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
-        <input
-          type="text"
-          value={loan.category}
-          readOnly
-          className="border p-2 rounded bg-gray-100"
-        />
+  <form
+    onSubmit={handleSubmit}
+    className="bg-[#FFFFFF] shadow-lg rounded-lg p-8 flex flex-col gap-4"
+  >
+    {/* Read-only auto fields */}
+    <input
+      type="email"
+      value={user.email}
+      readOnly
+      className="border  p-2 rounded bg-[#F4F7F5] text-[#1C2B27]"
+    />
+    <input
+      type="text"
+      value={loan.title}
+      readOnly
+      className="border  p-2 rounded bg-[#F4F7F5] text-[#1C2B27]"
+    />
+    <input
+      type="text"
+      value={loan.interest + "%"}
+      readOnly
+      className="border  p-2 rounded bg-[#F4F7F5] text-[#1C2B27]"
+    />
+    <input
+      type="text"
+      value={loan.category}
+      readOnly
+      className="border  p-2 rounded bg-[#F4F7F5] text-[#1C2B27]"
+    />
 
-        {/* User input fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
-              // value={user.displayName}
-            onChange={handleChange}
-            required
-            className="border p-2 rounded"
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-            className="border p-2 rounded"
-          />
-        </div>
-
-        <input
-          type="number"
-          name="contactNumber"
-          placeholder="Contact Number"
-          value={formData.contactNumber}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="text"
-          name="nationalID"
-          placeholder="National ID / Passport Number"
-          value={formData.nationalID}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="text"
-          name="incomeSource"
-          placeholder="Income Source"
-          value={formData.incomeSource}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="number"
-          name="monthlyIncome"
-          placeholder="Monthly Income"
-          value={formData.monthlyIncome}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="number"
-          name="loanAmount"
-          placeholder="Loan Amount"
-          value={formData.loanAmount}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="text"
-          name="reason"
-          placeholder="Reason for Loan"
-          value={formData.reason}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={formData.address}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-
-        <textarea
-          name="extraNotes"
-          placeholder="Extra Notes"
-          value={formData.extraNotes}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-
-        <button
-          type="submit"
-          disabled={mutation.isLoading}
-          className={`${
-            mutation.isLoading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-green-600 hover:bg-green-700"
-          } text-white py-3 rounded transition-all duration-300 mt-4`}
-        >
-          {mutation.isLoading ? "Submitting..." : "Submit Application"}
-        </button>
-      </form>
+    {/* User input fields */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input
+        type="text"
+        name="firstName"
+        placeholder="First Name"
+        value={formData.firstName}
+        onChange={handleChange}
+        required
+        className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+      />
+      <input
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        value={formData.lastName}
+        onChange={handleChange}
+        required
+        className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+      />
     </div>
+
+    <input
+      type="number"
+      name="contactNumber"
+      placeholder="Contact Number"
+      value={formData.contactNumber}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <input
+      type="text"
+      name="nationalID"
+      placeholder="National ID / Passport Number"
+      value={formData.nationalID}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <input
+      type="text"
+      name="incomeSource"
+      placeholder="Income Source"
+      value={formData.incomeSource}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <input
+      type="number"
+      name="monthlyIncome"
+      placeholder="Monthly Income"
+      value={formData.monthlyIncome}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <input
+      type="number"
+      name="loanAmount"
+      placeholder="Loan Amount"
+      value={formData.loanAmount}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <input
+      type="text"
+      name="reason"
+      placeholder="Reason for Loan"
+      value={formData.reason}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <input
+      type="text"
+      name="address"
+      placeholder="Address"
+      value={formData.address}
+      onChange={handleChange}
+      required
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <textarea
+      name="extraNotes"
+      placeholder="Extra Notes"
+      value={formData.extraNotes}
+      onChange={handleChange}
+      className="border  p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#B6E04C]"
+    />
+
+    <button
+      type="submit"
+      disabled={mutation.isLoading}
+      className={`${
+        mutation.isLoading
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-[#387065] hover:bg-[#1F4F45]"
+      } text-white py-3 rounded transition-all duration-300 mt-4`}
+    >
+      {mutation.isLoading ? "Submitting..." : "Submit Application"}
+    </button>
+  </form>
+</div>
   );
 };
 
