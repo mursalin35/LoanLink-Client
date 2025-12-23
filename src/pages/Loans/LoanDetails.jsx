@@ -37,47 +37,69 @@ const LoanDetails = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <title>Loan Details</title>
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Loan Image */}
-        <div className="lg:w-1/2">
-          <img
-            src={loan.image}
-            alt={loan.title}
-            className="rounded-lg shadow-lg w-full h-96 object-cover"
-          />
-        </div>
+<div className="max-w-6xl mx-auto  mt-10 ">
+  <div className=" mx-8  px-6 py-10 bg-[#f0fff4] rounded-xl min-h-screen">
+  <title>Loan Details</title>
 
-        {/* Loan Info */}
-        <div className="lg:w-1/2 flex flex-col gap-4">
-          <h1 className="text-4xl font-bold text-gray-800">{loan.title}</h1>
-          <p className="text-gray-600">{loan.description}</p>
-          <p>
-            <strong>Category:</strong> {loan.category}
-          </p>
-          <p>
-            <strong>Interest Rate:</strong> {loan.interest}%
-          </p>
-          <p>
-            <strong>Max Loan:</strong> ${loan.maxLimit}
-          </p>
-          <p>
-            <strong>Available EMI Plans:</strong>{" "}
-            {loan.emiPlans?.join(", ") || "N/A"}
-          </p>
-
-          {role === "user" && (
-            <button
-              onClick={handleApply}
-              className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
-            >
-              Apply Now
-            </button>
-          )}
-        </div>
+  <div className="flex flex-col lg:flex-row gap-10 ">
+    {/* Loan Image */}
+    <div className="lg:w-1/2">
+      <div className="overflow-hidden rounded-2xl shadow-2xl border border-[#6B7C75]">
+        <img
+          src={loan.image}
+          alt={loan.title}
+          className="w-full sm:h-96 object-cover transform hover:scale-105 transition-transform duration-500"
+        />
       </div>
     </div>
+
+    {/* Loan Info */}
+    <div className="lg:w-1/2 flex flex-col gap-6">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl  font-extrabold text-[#1C2B27]">{loan.title}</h1>
+      <p className="text-[#6B7C75] text-md md:text-lg leading-relaxed">{loan.description}</p>
+
+      {/* Info Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md shadow-lg border border-[#E0E0E0] hover:scale-105 transform transition-all duration-300">
+          <p className="text-[#1C2B27] font-semibold mb-2">Category</p>
+          <p className="text-[#6FBF73] font-medium">{loan.category}</p>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md shadow-lg border border-[#E0E0E0] hover:scale-105 transform transition-all duration-300">
+          <p className="text-[#1C2B27] font-semibold mb-2">Interest Rate</p>
+          <p className="bg-gradient-to-r from-[#B6E04C] to-[#6FBF73] inline-block px-3 py-1 rounded-full text-white font-bold">
+            {loan.interest}%
+          </p>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md shadow-lg border border-[#E0E0E0] hover:scale-105 transform transition-all duration-300">
+          <p className="text-[#1C2B27] font-semibold mb-2">Max Loan</p>
+          <p className="bg-gradient-to-r from-[#B6E04C] to-[#6FBF73] inline-block px-3 py-1 rounded-full text-white font-bold">
+            ${loan.maxLimit}
+          </p>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md shadow-lg border border-[#E0E0E0] hover:scale-105 transform transition-all duration-300">
+          <p className="text-[#1C2B27] font-semibold mb-2">Available EMI Plans</p>
+          <p className="text-[#6FBF73] font-medium">{loan.emiPlans?.join(", ") || "N/A"}</p>
+        </div>
+      </div>
+
+      {role === "user" && (
+        <button
+          onClick={handleApply}
+          className="mt-8 bg-gradient-to-r from-[#1F4F45] to-[#6FBF73] text-white font-semibold py-4 px-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-1 hover:scale-105"
+        >
+          Apply Now
+        </button>
+      )}
+    </div>
+  </div>
+</div>
+</div>
+
+
+
   );
 };
 
