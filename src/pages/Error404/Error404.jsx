@@ -8,7 +8,7 @@ const Error404 = () => {
   return (
    <section
   className="relative min-h-screen flex items-center justify-center
-             bg-[#F6FBFA] dark:bg-[#0f1f1c] overflow-hidden" // dark bg
+             bg-[#5dac9c]/12 dark:bg-[#0f1f1c] overflow-hidden" // dark bg
 >
   <title>Error 404</title>
 
@@ -18,11 +18,7 @@ const Error404 = () => {
     transition={{ duration: 8, repeat: Infinity }}
     className="absolute -top-40 -left-40 w-96 h-96 bg-[#1F7A63]/10 dark:bg-[#1F7A63]/20 rounded-full blur-3xl"
   />
-  <motion.div
-    animate={{ y: [0, -25, 0] }}
-    transition={{ duration: 10, repeat: Infinity }}
-    className="absolute bottom-0 -right-40 w-[520px] h-[520px] bg-[#4FD1B2]/10 dark:bg-[#4FD1B2]/20 rounded-full blur-3xl"
-  />
+ 
 
   {/* Main Card */}
   <motion.div
@@ -32,7 +28,7 @@ const Error404 = () => {
     className="relative z-10 max-w-xl text-center px-6"
   >
     {/* 404 */}
-    <h1 className="text-[120px] font-extrabold text-[#1F7A63]/40 dark:text-[#1F7A63]/30 leading-none">
+    <h1 className="text-[120px] font-extrabold text-[#1F7A63]/40 dark:text-[#1F7A63] leading-none">
       404
     </h1>
 
@@ -87,7 +83,7 @@ const Error404 = () => {
     </div>
 
     {/* Footer note */}
-    <p className="mt-12 text-xs text-[#9CA3AF] dark:text-gray-400">
+    <p className="mt-12 text-xs text-gray-600 dark:text-gray-400">
       © {new Date().getFullYear()} LoanLink — Smart. Secure. Simple Loans.
     </p>
   </motion.div>
