@@ -49,12 +49,12 @@ body {
 
 /* ===== Dark mode (WORKING) ===== */
 [data-theme="dark"] .navbar .active {
-  color: #b6e04c; /* accent lime */
-  background-color: rgba(182, 224, 76, 0.18);
+  color: #21d1a5; /* accent lime */
+  background-color: rgba(71, 211, 172, 0.18);
 }
 
 [data-theme="dark"] .navbar a:hover {
-  color: #6fbf73;
+  color: #21d1a5;
 }
 
 /* =========================

@@ -152,12 +152,13 @@ const NavBar = () => {
           to="/"
           className="flex items-center gap-2 text-xl font-bold w-34 "
         >
-          <Logo loanColor={theme === "dark" ? "#B6E04C" : "#232634"} />
+          {/* <Logo loanColor={theme === "dark" ? "#B6E04C" : "#232634"} /> */}
+          <Logo loanColor={theme === "dark" ? "#2ab894" : "#2E6A5F"} />
         </Link>
       </div>
 
       {/* Navbar Center */}
-      <div className="navbar-center hidden md:flex">
+      <div className="navbar-center hidden md:flex ">
         <ul className="menu menu-horizontal gap-8">{navLinks}</ul>
       </div>
 
@@ -176,7 +177,7 @@ const NavBar = () => {
         </button>
 
         {user ? (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end ">  
             <div
               tabIndex={0}
               role="button"
