@@ -11,7 +11,7 @@ const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fixed logOut handler
+  //  Fixed logOut handler
   const handleLogout = async () => {
     try {
       await logOut(); // sign out user
@@ -46,7 +46,11 @@ const Profile = () => {
     loadProfile();
   }, [user, axiosSecure]);
 
-  if (loading) return <Spinner />;
+  if (!loading) return (
+   
+      <Spinner />
+   
+  );
 
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -122,7 +126,7 @@ const Profile = () => {
           </button> */}
 
           <button
-            onClick={handleLogout} // ✅ Fixed logOut
+            onClick={handleLogout} //  Fixed logOut
             className="px-6 py-3 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition"
           >
             Logout

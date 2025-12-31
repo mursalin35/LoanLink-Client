@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
-import Spinner from "../Spinner";
+
 
 export default function AvailableLoans() {
   const axiosSecure = useAxiosSecure();
@@ -18,8 +18,8 @@ export default function AvailableLoans() {
 
   if (isLoading)
     return (
-      <div className="text-center mt-20 text-lg font-semibold text-[#1C2B27]">
-       <Spinner/>
+      <div className=" mt-20 text-center pt-4  pb-20 ">
+    <span className="loading loading-bars loading-xl"></span>
       </div>
     );
 
