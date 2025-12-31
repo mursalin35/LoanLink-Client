@@ -34,14 +34,14 @@ const AllLoans = () => {
   }
 
   return (
-    <section className="bg-[#F4F7F5] py-10 px-4">
+     <section className="bg-[#F4F7F5] dark:bg-[#11121A] py-10 px-4"> {/* dark mode bg */}
       <title>All Loans</title>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1C2B27]">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1C2B27] dark:text-[#E6F4F1]"> {/* dark mode text */}
             All Loans
           </h2>
-          <p className="mt-4 text-[#6B7C75] text-lg max-w-2xl mx-auto">
+          <p className="mt-4 text-[#6B7C75] dark:text-gray-300 text-lg max-w-2xl mx-auto"> {/* dark mode text */}
             Explore all loan options in one place and find the right solution for your needs.
           </p>
         </div>
@@ -50,7 +50,7 @@ const AllLoans = () => {
           {loans.map((loan) => (
             <div
               key={loan._id}
-              className="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden"
+              className="group relative bg-white dark:bg-[#1C1C28] rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden" 
               style={{ minHeight: "420px" }}
             >
               {/* SAME CARD STRUCTURE */}
@@ -76,31 +76,31 @@ const AllLoans = () => {
               </div>
 
               <div className="p-7 flex flex-col flex-1">
-                <h3 className="text-2xl font-bold text-[#1C2B27] min-h-[40px]">
-                {loan.title
-                    ? loan.title.slice(0, 25) + "..."
-                    : "No Title"}
+                <h3 className="text-2xl font-bold text-[#1C2B27] dark:text-[#E6F4F1] min-h-[40px]"> {/* dark mode text */}
+                  {loan.title
+                      ? loan.title.slice(0, 25) + "..."
+                      : "No Title"}
                 </h3>
 
-                <p className=" text-[#616865] text-sm leading-relaxed flex-1">
+                <p className=" text-[#616865] dark:text-gray-300 text-sm leading-relaxed flex-1"> {/* dark mode text */}
                   {loan.description
                     ? loan.description.slice(0, 130) + "..."
                     : "No description available."}
                 </p>
 
-             {/* Info */}
+                {/* Info */}
                 <div className="mt-3 space-y-2 text-sm">
-                  <p className="flex justify-between text-[#1C2B27]">
+                  <p className="flex justify-between text-[#1C2B27] dark:text-[#E6F4F1]"> {/* dark mode text */}
                     <span className="font-medium">Category</span>
                     <span>{loan.category}</span>
                   </p>
-                  <p className="flex justify-between text-[#1C2B27]">
+                  <p className="flex justify-between text-[#1C2B27] dark:text-[#E6F4F1]"> {/* dark mode text */}
                     <span className="font-medium">Interest</span>
                     <span>{loan.interest}%</span>
                   </p>
-                  <p className="flex justify-between text-[#1C2B27]">
+                  <p className="flex justify-between text-[#1C2B27] dark:text-[#E6F4F1]"> {/* dark mode text */}
                     <span className="font-medium">Max Loan</span>
-                    <span className="font-bold text-[#1F4F45]">
+                    <span className="font-bold text-[#1F4F45] dark:text-[#B6E04C]"> {/* dark mode accent */}
                       ${loan.maxLimit}
                     </span>
                   </p>
