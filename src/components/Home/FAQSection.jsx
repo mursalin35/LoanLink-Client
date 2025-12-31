@@ -34,7 +34,7 @@ const FAQSection = () => {
   const [open, setOpen] = useState(null);
 
   return (
-    <section className="py-24 ">
+    <section className="py-24 dark:bg-[#11121A]">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -44,10 +44,10 @@ const FAQSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-[#1C1C28]">
+          <h2 className="text-4xl font-bold text-[#1C1C28] dark:text-[#E6F4F1]">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-[#6B7280] max-w-2xl mx-auto">
+          <p className="mt-4 text-[#6B7280] dark:text-gray-300  max-w-2xl mx-auto">
             Clear answers to common questions about how LoanLink works and how
             we keep the loan process simple, secure, and transparent.
           </p>
@@ -62,7 +62,7 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group bg-white rounded-2xl border border-[#E3F1EC] shadow-sm hover:shadow-lg transition"
+              className="group bg-white dark:bg-[#1C1C28] rounded-2xl border border-[#E3F1EC] dark:border-[#2C2C38] shadow-sm hover:shadow-lg transition"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
@@ -74,11 +74,11 @@ const FAQSection = () => {
                     className={`h-8 w-1 rounded-full transition ${
                       open === i
                         ? "bg-[#1F7A63]"
-                        : "bg-[#CDEAE2] group-hover:bg-[#1F7A63]"
+                        : "bg-[#CDEAE2] group-hover:bg-[#1F7A63] dark:bg-[#2C2C38] dark:group-hover:bg-[#1F7A63]"
                     }`}
                   ></span>
 
-                  <h3 className="text-lg font-semibold text-[#1C1C28]">
+                  <h3 className="text-lg font-semibold text-[#1C1C28] dark:text-[#E6F4F1]">
                     {item.question}
                   </h3>
                 </div>
@@ -86,7 +86,7 @@ const FAQSection = () => {
                 <motion.div
                   animate={{ rotate: open === i ? 180 : 0 }}
                   transition={{ duration: 0.25 }}
-                  className="text-[#1F7A63]"
+                  className="text-[#1F7A63] dark:text-[#B6E04C]"
                 >
                   {open === i ? <Minus size={20} /> : <Plus size={20} />}
                 </motion.div>
@@ -102,7 +102,7 @@ const FAQSection = () => {
                       duration: 0.7,
                       ease: [0.22, 1, 0.36, 1],
                     }}
-                    className="px-8 pb-6 text-[#6B7280] leading-relaxed"
+                    className="px-8 pb-6 text-[#6B7280] dark:text-gray-300 leading-relaxed"
                   >
                     {item.answer}
                   </motion.div>

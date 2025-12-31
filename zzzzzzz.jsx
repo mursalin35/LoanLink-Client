@@ -1,106 +1,121 @@
-import { motion } from "framer-motion";
-import {
-  FaUserPlus,
-  FaSearch,
-  FaFileAlt,
-  FaCheckCircle,
-  FaMoneyBillWave,
-} from "react-icons/fa";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Minus } from "lucide-react";
 
-const steps = [
+const faqs = [
   {
-    id: 1,
-    title: "Register Account",
-    description: "Sign up as a user or manager using email and password.",
-    icon: <FaUserPlus size={28} className="text-white" />,
-    color: "from-blue-400 to-blue-600",
+    question: "What is LoanLink?",
+    answer:
+      "LoanLink is a digital micro-loan management platform that allows users to apply, monitor, and repay loans transparently while enabling managers to review and approve applications efficiently.",
   },
   {
-    id: 2,
-    title: "Explore Loans",
-    description:
-      "Browse available microloans with interest, EMI, and max limit info.",
-    icon: <FaSearch size={28} className="text-white" />,
-    color: "from-green-400 to-green-600",
+    question: "How do I apply for a loan?",
+    answer:
+      "After registering and logging in, you can explore available loan options and submit an application directly from the loan details page.",
   },
   {
-    id: 3,
-    title: "Apply for Loan",
-    description:
-      "Fill in personal & financial info to submit a loan application.",
-    icon: <FaFileAlt size={28} className="text-white" />,
-    color: "from-yellow-400 to-yellow-600",
+    question: "Who can approve my loan?",
+    answer:
+      "Loan applications are reviewed by authorized loan managers based on verification and eligibility rules defined by the platform.",
   },
   {
-    id: 4,
-    title: "Manager Approval",
-    description: "Loan officers review and approve/reject applications.",
-    icon: <FaCheckCircle size={28} className="text-white" />,
-    color: "from-purple-400 to-purple-600",
+    question: "How can I track loan status?",
+    answer:
+      "You can track real-time loan progress from your dashboard under the “My Loans” section once you are logged in.",
   },
   {
-    id: 5,
-    title: "Receive Loan",
-    description:
-      "Loan is disbursed and EMI schedules are tracked automatically.",
-    icon: <FaMoneyBillWave size={28} className="text-white" />,
-    color: "from-pink-400 to-pink-600",
+    question: "Is my information secure?",
+    answer:
+      "Yes. LoanLink uses encrypted data handling and role-based access to ensure your personal and financial data remains protected.",
   },
 ];
 
-export default function HowItWorks() {
+const FAQSection = () => {
+  const [open, setOpen] = useState(null);
+
   return (
-    <section className="bg-gray-50 py-24">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Main Heading */}
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-          How LoanLink Works
-        </h2>
-        {/* Subtitle */}
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-base md:text-lg">
-          A seamless process to apply, track, and receive loans with complete
-          transparency and convenience. Follow these simple steps to get started
-          quickly.
-        </p>
+    <section className="py-24 bg-gray-50 dark:bg-[#11121A]"> {/* dark mode bg */}
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold text-[#1C1C28] dark:text-[#E6F4F1]"> {/* dark mode text */}
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-4 text-[#6B7280] dark:text-gray-300 max-w-2xl mx-auto"> {/* dark mode text */}
+            Clear answers to common questions about how LoanLink works and how
+            we keep the loan process simple, secure, and transparent.
+          </p>
+        </motion.div>
 
-        {/* Steps */}
-        <div className="flex flex-col md:flex-row items-stretch justify-between gap-8 md:gap-6">
-          {steps.map((step, index) => (
+        {/* FAQ Cards */}
+        <div className="space-y-6">
+          {faqs.map((item, i) => (
             <motion.div
-              key={step.id}
-              className="flex flex-col items-center text-center md:w-1/5 px-5 py-5 bg-white rounded-3xl shadow-lg hover:shadow-2xl cursor-pointer transition-shadow duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="group bg-white dark:bg-[#1C1C28] border border-[#E3F1EC] dark:border-[#2C2C38] rounded-2xl shadow-sm hover:shadow-lg transition"
+              /* dark mode bg + border */
             >
-              {/* Icon */}
-              <motion.div
-                className={`w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br ${step.color} mb-4 shadow-xl `}
-              
-                animate={{ y: [0, -5, 0] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  delay: index * 0.1,
-                }}
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between px-8 py-6 text-left"
               >
-                {step.icon}
-              </motion.div>
+                <div className="flex items-center gap-4">
+                  {/* Accent Bar */}
+                  <span
+                    className={`h-8 w-1 rounded-full transition ${
+                      open === i
+                        ? "bg-[#1F7A63]"
+                        : "bg-[#CDEAE2] group-hover:bg-[#1F7A63] dark:bg-[#2C2C38] dark:group-hover:bg-[#1F7A63]"
+                    }`}
+                  ></span>
 
-              {/* Step Title */}
-              <h3 className="text-lg md:text-xl flex-1  font-semibold mb-2">
-                {step.title}
-              </h3>
+                  <h3 className="text-lg font-semibold text-[#1C1C28] dark:text-[#E6F4F1]"> {/* dark mode text */}
+                    {item.question}
+                  </h3>
+                </div>
 
-              {/* Step Description */}
-              <p className="text-gray-500  text-sm md:text-base">
-                {step.description}
-              </p>
+                <motion.div
+                  animate={{ rotate: open === i ? 180 : 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-[#1F7A63] dark:text-[#B6E04C]" /* dark mode icon color */
+                >
+                  {open === i ? <Minus size={20} /> : <Plus size={20} />}
+                </motion.div>
+              </button>
+
+              <AnimatePresence>
+                {open === i && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{
+                      duration: 0.7,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="px-8 pb-6 text-[#6B7280] dark:text-gray-300 leading-relaxed" 
+                    /* dark mode text */
+                  >
+                    {item.answer}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default FAQSection;
