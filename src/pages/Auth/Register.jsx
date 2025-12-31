@@ -279,7 +279,7 @@ const Register = () => {
               type="submit"
               className="w-full py-3 rounded-md font-semibold
                      text-[#1C2B27] dark:text-[#0f1f1c]
-                     bg-[#B6E04C] hover:bg-[#A4D63A] transition"
+                     bg-[#B6E04C] hover:bg-[#A4D63A] transition cursor-pointer"
             >
               Register
             </button>
