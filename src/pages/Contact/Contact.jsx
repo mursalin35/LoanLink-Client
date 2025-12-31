@@ -104,7 +104,7 @@ const Contact = () => {
         value={formData.name}
         onChange={handleChange}
         required
-        className="input input-bordered pl-3 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-[#8bc34a] focus:border-[#004d40]"
+        className="input input-bordered pl-3 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-1 focus:ring-[#8bc34a] focus:border-[#004d40]"
       />
 
       <input
@@ -114,7 +114,7 @@ const Contact = () => {
         value={formData.email}
         onChange={handleChange}
         required
-        className="input input-bordered pl-3 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-[#8bc34a] focus:border-[#004d40]"
+        className="input input-bordered pl-3 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-1 focus:ring-[#8bc34a] focus:border-[#004d40]"
       />
 
       <input
@@ -124,7 +124,7 @@ const Contact = () => {
         value={formData.subject}
         onChange={handleChange}
         required
-        className="input input-bordered pl-3 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-[#8bc34a] focus:border-[#004d40]"
+        className="input input-bordered pl-3 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-1 focus:ring-[#8bc34a] focus:border-[#004d40]"
       />
 
       <textarea
@@ -134,12 +134,12 @@ const Contact = () => {
         onChange={handleChange}
         rows="5"
         required
-        className="textarea textarea-bordered pl-3 pt-1 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-[#8bc34a] focus:border-[#004d40]"
+        className="textarea textarea-bordered pl-3 pt-1 w-full rounded-lg bg-gray-50 dark:bg-[#0f1f1c] border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-1 focus:ring-[#8bc34a] focus:border-[#004d40]"
       ></textarea>
 
       <button
         type="submit"
-        className="w-full bg-[#8bc34a] hover:bg-lime-600 dark:bg-[#6fbf73] dark:hover:bg-[#8bc34a] text-white font-semibold py-3 rounded-lg shadow-lg transition duration-300"
+        className="w-full cursor-pointer bg-[#8bc34a] hover:bg-lime-600 dark:bg-[#6fbf73] dark:hover:bg-[#8bc34a] text-white font-semibold py-3 rounded-lg shadow-lg transition duration-300"
       >
         Send Message
       </button>

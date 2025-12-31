@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const Hero = () => {
   return (
-    <section className="bg-[#E8FAF7] dark:bg-[#11121A] relative overflow-hidden">
+    <section className="bg-[#E8FAF7] dark:bg-[#11121A] dark:bg-gradient-to-r from-[#003229] to-[#001412] relative overflow-hidden">
   <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
 
     {/* LEFT CONTENT */}
