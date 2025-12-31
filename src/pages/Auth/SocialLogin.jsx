@@ -34,7 +34,7 @@ const SocialLogin = () => {
   return (
     <div>
       {/* Divider */}
-      <div className="flex items-center my-4">
+      <div className="flex items-center my-4 ">
         <div className="flex-grow h-px bg-gray-300"></div>
         <span className="mx-2 text-gray-500 text-sm">or</span>
         <div className="flex-grow h-px bg-gray-300"></div>
@@ -44,7 +44,7 @@ const SocialLogin = () => {
       <button
         type="button"
         onClick={handleGoogleSignIn}
-        className="w-full flex items-center justify-center gap-2 border py-2 text-black rounded-md"
+        className="w-full flex items-center justify-center gap-2 border py-2 text-black dark:text-white rounded-md cursor-pointer"
       >
         <FcGoogle className="text-xl" /> Sign in with Google
       </button>

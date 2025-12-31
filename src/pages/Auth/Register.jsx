@@ -38,7 +38,9 @@ const Register = () => {
       formData.append("image", imageFile);
 
       const imageRes = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`,
         formData
       );
 
@@ -64,67 +66,117 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center mt-8 md:mt-11 px-4">
+    <div
+      className="min-h-screen flex items-center justify-center mt-8 md:mt-11 px-4
+            " // dark page bg
+    >
       <title>Register</title>
 
       {/* Container */}
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E2E8E6]">
-
+      <div
+        className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2
+               bg-white dark:bg-[#1a3d38]
+               rounded-2xl shadow-xl overflow-hidden
+               border border-[#E2E8E6] dark:border-gray-700"
+      >
         {/* LEFT INFO (SAME AS LOGIN) */}
-<div className="hidden md:flex flex-col justify-center p-10 bg-[#1F4F45] text-white">
-  <h1 className="text-3xl font-bold mb-4">
-    Join <span className="text-[#B6E04C]">LoanLink</span>
-  </h1>
+        <div
+          className="hidden md:flex flex-col justify-center p-10
+                 bg-[#1F4F45] dark:bg-[#0b2e28] text-white"
+        >
+          <h1 className="text-3xl font-bold mb-4">
+            Join <span className="text-[#B6E04C]">LoanLink</span>
+          </h1>
 
-  <p className="text-sm leading-relaxed text-[#D8E6E2] mb-6">
-   Create your LoanLink account to seamlessly request microloans, monitor approval status in real-time, 
-  manage your personal and financial information, and access role-based dashboards tailored to borrowers, 
-  managers, or admins. Enjoy full transparency, secure data handling, and an intuitive platform designed to 
-  make your loan experience fast, reliable, and hassle-free.
-  </p>
+          <p className="text-sm leading-relaxed text-[#D8E6E2] dark:text-gray-300 mb-6">
+            Create your LoanLink account to seamlessly request microloans,
+            monitor approval status in real-time, manage your personal and
+            financial information, and access role-based dashboards tailored to
+            borrowers, managers, or admins. Enjoy full transparency, secure data
+            handling, and an intuitive platform designed to make your loan
+            experience fast, reliable, and hassle-free.
+          </p>
 
-  <ul className="space-y-3 text-sm text-[#EAF3F1]">
-    <li>• Secure account creation with encrypted credentials</li>
-    <li>• Borrower & manager roles for tailored experience</li>
-    <li>• Fast, transparent, and reliable loan processing</li>
-    <li>• Real-time notifications and updates</li>
-    <li>• Modern, responsive UI for desktop & mobile</li>
-    <li>• View detailed loan history & repayment schedules</li>
-    <li>• Dedicated support for any queries or issues</li>
-  </ul>
+          <ul className="space-y-3 text-sm text-[#EAF3F1] dark:text-gray-300">
+            <li>• Secure account creation with encrypted credentials</li>
+            <li>• Borrower & manager roles for tailored experience</li>
+            <li>• Fast, transparent, and reliable loan processing</li>
+            <li>• Real-time notifications and updates</li>
+            <li>• Modern, responsive UI for desktop & mobile</li>
+            <li>• View detailed loan history & repayment schedules</li>
+            <li>• Dedicated support for any queries or issues</li>
+          </ul>
 
-  <p className="mt-8 text-sm text-[#CFE3DD]">
-    Already have an account?
-    <Link
-      to="/login"
-      className="ml-1 font-semibold text-[#B6E04C] hover:underline"
-    >
-      Login here
-    </Link>
-  </p>
-</div>
-
+          <p className="mt-8 text-sm text-[#CFE3DD] dark:text-gray-400">
+            Already have an account?
+            <Link
+              to="/login"
+              className="ml-1 font-semibold text-[#B6E04C] hover:underline"
+            >
+              Login here
+            </Link>
+          </p>
+        </div>
 
         {/* RIGHT FORM (SAME STRUCTURE AS LOGIN) */}
         <div className="p-8 sm:p-10">
-          <h2 className="text-2xl font-bold text-center text-[#1C2B27] mb-6">
+          <h2
+            className="text-2xl font-bold text-center
+                   text-[#1C2B27] dark:text-gray-100 mb-6"
+          >
             Create your account
           </h2>
 
           <form onSubmit={handleSubmit(handleRegister)} className="space-y-5">
+            {/* Photo */}
+            <div>
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
+                Profile Photo
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                {...register("photo", { required: "Photo is required" })}
+                className="w-full rounded-md cursor-pointer
+             border border-[#DDE5E2] dark:border-gray-600
+             bg-white dark:bg-[#0f1f1c]
+             text-sm text-gray-700 dark:text-gray-200
+             p-1.5
+             file:mr-4 file:py-2 file:px-4
+             file:rounded-md 
+             file:bg-[#00806b] file:text-white
+            file:cursor-pointer
+             dark:file:bg-[#17685a] 
+             focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+              />
 
+              {errors.photo && (
+                <p className="text-xs text-red-500 mt-1">
+                  {errors.photo.message}
+                </p>
+              )}
+            </div>
 
             {/* Name */}
             <div>
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
                 Full Name
               </label>
               <input
                 type="text"
                 placeholder="Enter your name"
                 {...register("name", { required: "Name is required" })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+                className="w-full px-4 py-3 rounded-md
+                       border border-[#DDE5E2] dark:border-gray-600
+                       bg-white dark:bg-[#0f1f1c]
+                       text-gray-800 dark:text-gray-200
+                       focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
               />
               {errors.name && (
                 <p className="text-xs text-red-500 mt-1">
@@ -133,37 +185,23 @@ const Register = () => {
               )}
             </div>
 
-
-            {/* Photo */}
-            <div>
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
-                Profile Photo
-              </label>
-              <input
-                type="file"
-                {...register("photo", { required: "Photo is required" })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
-              />
-              {errors.photo && (
-                <p className="text-xs text-red-500 mt-1">
-                  {errors.photo.message}
-                </p>
-              )}
-            </div>
-
-
             {/* Email */}
             <div>
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
                 Email
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 {...register("email", { required: "Email is required" })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+                className="w-full px-4 py-3 rounded-md
+                       border border-[#DDE5E2] dark:border-gray-600
+                       bg-white dark:bg-[#0f1f1c]
+                       text-gray-800 dark:text-gray-200
+                       focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
               />
               {errors.email && (
                 <p className="text-xs text-red-500 mt-1">
@@ -174,13 +212,19 @@ const Register = () => {
 
             {/* Role */}
             <div>
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
                 Role
               </label>
               <select
                 {...register("role", { required: "Role is required" })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+                className="w-full px-4 py-3 rounded-md
+                       border border-[#DDE5E2] dark:border-gray-600
+                       bg-white dark:bg-[#0f1f1c]
+                       text-gray-800 dark:text-gray-200
+                       focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
               >
                 <option value="">Select role</option>
                 <option value="user">User</option>
@@ -195,7 +239,10 @@ const Register = () => {
 
             {/* Password */}
             <div className="relative">
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
                 Password
               </label>
               <input
@@ -205,12 +252,17 @@ const Register = () => {
                   required: true,
                   validate: validatePassword,
                 })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+                className="w-full px-4 py-3 rounded-md
+                       border border-[#DDE5E2] dark:border-gray-600
+                       bg-white dark:bg-[#0f1f1c]
+                       text-gray-800 dark:text-gray-200
+                       focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-[42px] cursor-pointer text-[#6B7C75]"
+                className="absolute right-4 top-[42px]
+                       cursor-pointer
+                       text-[#6B7C75] dark:text-gray-400"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -225,8 +277,9 @@ const Register = () => {
             {/* Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-md font-semibold text-[#1C2B27]
-              bg-[#B6E04C] hover:bg-[#A4D63A] transition"
+              className="w-full py-3 rounded-md font-semibold
+                     text-[#1C2B27] dark:text-[#0f1f1c]
+                     bg-[#B6E04C] hover:bg-[#A4D63A] transition"
             >
               Register
             </button>
@@ -238,11 +291,14 @@ const Register = () => {
           </div>
 
           {/* Mobile Login */}
-          <p className="text-center mt-6 text-sm text-[#6B7C75] md:hidden">
+          <p
+            className="text-center mt-6 text-sm
+                   text-[#6B7C75] dark:text-gray-400 md:hidden"
+          >
             Already have an account?
             <Link
               to="/login"
-              className="ml-1 font-semibold text-[#1F4F45] hover:underline"
+              className="ml-1 font-semibold text-[#1F4F45] dark:text-[#9fe870] hover:underline"
             >
               Login
             </Link>

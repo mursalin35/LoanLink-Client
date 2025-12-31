@@ -33,32 +33,42 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center mt-5 md:mt-0 px-4">
+    <div
+      className="min-h-screen flex items-center justify-center mt-5 md:mt-0 px-4
+               "
+    >
       <title>LogIn</title>
 
       {/* Container */}
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E2E8E6]">
-
+      <div
+        className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2
+               bg-white dark:bg-[#1a3d38]
+               rounded-2xl shadow-xl overflow-hidden
+               border border-[#E2E8E6] dark:border-gray-700"
+      >
         {/* LEFT INFO */}
-        <div className="hidden md:flex flex-col justify-center p-10 bg-[#1F4F45] text-white">
+        <div
+          className="hidden md:flex flex-col justify-center p-10
+                    bg-[#1F4F45] dark:bg-[#0b2e28] text-white"
+        >
           <h1 className="text-3xl font-bold mb-4">
             Welcome to <span className="text-[#B6E04C]">LoanLink</span>
           </h1>
 
-          <p className="text-sm leading-relaxed text-[#D8E6E2] mb-6">
-            LoanLink is a secure microloan request and approval platform designed
-            to connect borrowers, managers, and administrators with trust,
-            transparency, and speed.
+          <p className="text-sm leading-relaxed text-[#D8E6E2] dark:text-gray-300 mb-6">
+            LoanLink is a secure microloan request and approval platform
+            designed to connect borrowers, managers, and administrators with
+            trust, transparency, and speed.
           </p>
 
-          <ul className="space-y-3 text-sm text-[#EAF3F1]">
+          <ul className="space-y-3 text-sm text-[#EAF3F1] dark:text-gray-300">
             <li>• Secure & verified access</li>
             <li>• Role-based dashboards</li>
             <li>• Transparent loan tracking</li>
             <li>• Responsive & user-friendly UI</li>
           </ul>
 
-          <p className="mt-8 text-sm text-[#CFE3DD]">
+          <p className="mt-8 text-sm text-[#CFE3DD] dark:text-gray-400">
             New to LoanLink?
             <Link
               to="/register"
@@ -71,22 +81,31 @@ const Login = () => {
 
         {/* RIGHT FORM */}
         <div className="p-8 sm:p-10">
-          <h2 className="text-2xl font-bold text-center text-[#1C2B27] mb-6">
+          <h2
+            className="text-2xl font-bold text-center
+                   text-[#1C2B27] dark:text-gray-100 mb-6"
+          >
             Login to your account
           </h2>
 
           <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
                 Email
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 {...register("email", { required: "Email is required" })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+                className="w-full px-4 py-3 rounded-md
+                       border border-[#DDE5E2] dark:border-gray-600
+                       bg-white dark:bg-[#0f1f1c]
+                       text-gray-800 dark:text-gray-200
+                       focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
               />
               {errors.email && (
                 <p className="text-xs text-red-500 mt-1">
@@ -97,19 +116,28 @@ const Login = () => {
 
             {/* Password */}
             <div className="relative">
-              <label className="block mb-1 text-sm font-semibold text-[#1C2B27]">
+              <label
+                className="block mb-1 text-sm font-semibold
+                       text-[#1C2B27] dark:text-gray-300"
+              >
                 Password
               </label>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 {...register("password", { required: true, minLength: 6 })}
-                className="w-full px-4 py-3 rounded-md border border-[#DDE5E2]
-                focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
+                className="w-full px-4 py-3 rounded-md
+                       border border-[#DDE5E2] dark:border-gray-600
+                       bg-white dark:bg-[#0f1f1c]
+                       text-gray-800 dark:text-gray-200
+                       focus:outline-none focus:ring-2 focus:ring-[#6FBF73]"
               />
+
               <span
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-[42px] cursor-pointer text-[#6B7C75]"
+                className="absolute right-4 top-[42px]
+                       cursor-pointer
+                       text-[#6B7C75] dark:text-gray-400"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -124,7 +152,7 @@ const Login = () => {
                 <Link
                   to="/forget-password"
                   state={{ email: emailValue }}
-                  className="text-xs text-[#1F4F45] hover:underline"
+                  className="text-xs text-[#1F4F45] dark:text-[#9fe870] hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -134,8 +162,10 @@ const Login = () => {
             {/* Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-md font-semibold text-[#1C2B27]
-              bg-[#B6E04C] hover:bg-[#A4D63A] transition"
+              className="w-full py-3 rounded-md font-semibold
+                     text-[#1C2B27] dark:text-[#0f1f1c]
+                     bg-[#B6E04C] hover:bg-[#A4D63A]
+                     transition"
             >
               Login
             </button>
@@ -147,11 +177,14 @@ const Login = () => {
           </div>
 
           {/* Mobile Register */}
-          <p className="text-center mt-6 text-sm text-[#6B7C75] md:hidden">
+          <p
+            className="text-center mt-6 text-sm
+                   text-[#6B7C75] dark:text-gray-400 md:hidden"
+          >
             Don’t have an account?
             <Link
               to="/register"
-              className="ml-1 font-semibold text-[#1F4F45] hover:underline"
+              className="ml-1 font-semibold text-[#1F4F45] dark:text-[#9fe870] hover:underline"
             >
               Register
             </Link>
