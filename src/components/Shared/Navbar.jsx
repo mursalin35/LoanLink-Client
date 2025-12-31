@@ -14,42 +14,11 @@ import { FaDashcube, FaInfoCircle, FaPhoneAlt, FaUser } from "react-icons/fa";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import { AuthContext } from "../../context/AuthContext";
 import Logo from "../Logo";
+import useTheme from "../../hooks/useTheme";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
-
-  // LocalStorage / System Theme detect
-  const getInitialTheme = () => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) return savedTheme;
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    return prefersDark ? "dark" : "light";
-  };
-
-  // Initial state set
-  const [theme, setTheme] = useState(getInitialTheme);
-  useEffect(() => {
-    const html = document.querySelector("html");
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  // System Theme change auto update
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e) => {
-      setTheme(e.matches ? "dark" : "light");
-    };
-    mediaQuery.addEventListener("change", handleChange); // listen for system changes
-    return () => mediaQuery.removeEventListener("change", handleChange); // cleanup
-  }, []);
-
-  // Toggle handler (manual switch)
-  const handleTheme = (checked) => {
-    setTheme(checked ? "dark" : "light");
-  };
+  const { theme, toggleTheme } = useTheme();
 
   // Nav Links
   const navLinks = (
@@ -166,7 +135,7 @@ const NavBar = () => {
       <div className="navbar-end gap-3">
         {/* theme toggle  */}
         <button
-          onClick={() => handleTheme(theme !== "dark")}
+          onClick={toggleTheme}
           className="text-[1.5rem] p-2 cursor-pointer "
         >
           {theme === "dark" ? (
@@ -177,7 +146,7 @@ const NavBar = () => {
         </button>
 
         {user ? (
-          <div className="dropdown dropdown-end ">  
+          <div className="dropdown dropdown-end ">
             <div
               tabIndex={0}
               role="button"
