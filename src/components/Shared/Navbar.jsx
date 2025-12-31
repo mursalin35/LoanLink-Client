@@ -69,19 +69,6 @@ const NavBar = () => {
         </NavLink>
       </li>
 
-      {/* private route */}
-      {user && (
-        <li>
-          <NavLink
-            to="/dashboard"
-            className="flex items-center gap-1"
-            onClick={() => document.activeElement.blur()}
-          >
-            <HiOutlineViewGrid /> Dashboard
-          </NavLink>
-        </li>
-      )}
-
       <li>
         <NavLink to="/about" onClick={() => document.activeElement.blur()}>
           <FaInfoCircle /> About Us
@@ -101,7 +88,7 @@ const NavBar = () => {
       <li>
         <NavLink
           to="/dashboard"
-          className="flex items-center gap-1"
+          className="flex items-center gap-1 mt-2"
           onClick={() => document.activeElement.blur()}
         >
           <HiOutlineViewGrid /> Dashboard
@@ -120,7 +107,14 @@ const NavBar = () => {
   );
 
   return (
-    <div className="navbar backdrop-blur-lg text-[#1C2B27] border border-white/20 shadow-md px-4 md:px-8 h-18 mx-auto glass-card bg-[#caf9f1] dark:bg-[#1a1c25] sticky top-0 z-10">
+    <div
+      className="navbar backdrop-blur-lg
+     text-[#1C2B27] dark:text-[#E6F4F1]
+      border-white/20 dark:border-white/10
+     bg-[#caf9f1] dark:bg-[#1A1C25]
+
+     border shadow-md px-4 md:px-8 h-18 mx-auto  glass-card sticky top-0 z-10"
+    >
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Dropdown */}
@@ -143,15 +137,22 @@ const NavBar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[9999] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[9999] p-2 shadow bg-base-100 rounded-box w-52 
+            
+            dark:bg-[#232634]
+  text-[#1C2B27] dark:text-[#E6F4F1]
+            "
           >
             {navLinks}
           </ul>
         </div>
 
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-2 text-xl font-bold w-34">
-          <Logo />
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-xl font-bold w-34 "
+        >
+          <Logo loanColor={theme === "dark" ? "#B6E04C" : "#232634"} />
         </Link>
       </div>
 
@@ -165,10 +166,10 @@ const NavBar = () => {
         {/* theme toggle  */}
         <button
           onClick={() => handleTheme(theme !== "dark")}
-          className="text-xl p-2 "
+          className="text-[1.5rem] p-2 cursor-pointer "
         >
           {theme === "dark" ? (
-            <MdLightMode className="text-black" />
+            <MdLightMode className="text-[#B6E04C]" />
           ) : (
             <MdOutlineLightMode />
           )}
@@ -194,7 +195,11 @@ const NavBar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content min-w-48 w-auto mt-3 z-50 p-2 shadow bg-base-100 rounded-box bg-white"
+              className="menu menu-sm dropdown-content min-w-48 w-auto mt-3 z-50 p-2 shadow  rounded-box 
+              
+               bg-white dark:bg-[#232634]
+    text-[#1C2B27] dark:text-[#E6F4F1]
+              "
             >
               <div className="pb-3 border-b border-b-gray-200">
                 <li className="text-sm font-bold">{user.displayName}</li>
@@ -204,7 +209,11 @@ const NavBar = () => {
               <li>
                 <button
                   onClick={logOut}
-                  className="btn btm btn-sm mt-3 text-white border-none hover:opacity-90"
+                  className="btn btm btn-sm mt-3  border-none hover:opacity-90
+                  
+                   text-white
+  bg-[#1F4F45] dark:bg-[#6FBF73]
+                  "
                 >
                   <IoLogOut /> Logout
                 </button>
@@ -214,7 +223,11 @@ const NavBar = () => {
         ) : (
           <Link
             to="/login"
-            className="btn btm btn-sm rounded-full text-white border-none hover:opacity-90"
+            className="btn btm btn-sm rounded-full  border-none hover:opacity-90
+            
+             text-white
+  bg-[#1F4F45] dark:bg-[#6FBF73]
+            "
           >
             <IoLogIn /> Login
           </Link>

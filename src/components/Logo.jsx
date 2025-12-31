@@ -12,13 +12,13 @@ const Logo = ({
       <img src={logo} alt="logo" className={`${imgSize} object-contain`} />
 
       {/* Text */}
-      <span
+      <div
         className={`${textSize} font-bold tracking-wide`}
         style={{ color: loanColor }}
       >
         Loan
         <span style={{ color: linkColor }}>Link</span>
-      </span>
+      </div>
     </div>
   );
 };

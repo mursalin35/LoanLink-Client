@@ -1,54 +1,60 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
-@plugin "daisyui"{
-    themes: light --default, dark --prefersdark;
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @plugin "daisyui/theme" {
-    name: "light";
-    default: true;
-    --color-primary: #caf9f1;
-    --color-secondary: #5f3afc;
-    --color-accent: #ff6652;
+  name: "light";
+  default: true;
+  --color-primary: #caf9f1;
+  --color-secondary: #5f3afc;
+  --color-accent: #ff6652;
 }
 
 @plugin "daisyui/theme" {
-    name: "dark";
-    --color-primary: #5f3afc;
-    --color-secondary: #5f3afc;
-    --color-accent: #ff6652;
+  name: "dark";
+  --color-primary: #5f3afc;
+  --color-secondary: #5f3afc;
+  --color-accent: #ff6652;
 }
-
-
-
 
 body {
   font-family: "Roboto", sans-serif;
 }
 
-.btm{
- 
-    background: linear-gradient(to right, #B6E04C, #82e993);
-  color: #1F4F45;
+.btm {
+  background: linear-gradient(to right, #b6e04c, #82e993);
+  color: #1f4f45;
 }
 
 /* =========================
    Navbar Active Link
 ========================= */
+/* ===== Light mode (unchanged) ===== */
 .navbar .active {
-  color: #14532d;              /* deep trust green */
+  color: #14532d; /* deep trust green */
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 9999px;
-  background-color: rgba(34, 197, 94, 0.12); /* soft green */
+  background-color: rgba(34, 197, 94, 0.12);
 }
 
-/* hover – subtle */
 .navbar a:hover {
   color: #166534;
+}
+
+/* ===== Dark mode (WORKING) ===== */
+[data-theme="dark"] .navbar .active {
+  color: #b6e04c; /* accent lime */
+  background-color: rgba(182, 224, 76, 0.18);
+}
+
+[data-theme="dark"] .navbar a:hover {
+  color: #6fbf73;
 }
 
 /* =========================
