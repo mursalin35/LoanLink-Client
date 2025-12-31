@@ -35,9 +35,8 @@ body {
    Navbar Active Link
 ========================= */
 /* ===== Light mode (unchanged) ===== */
-/* ===== Light mode (unchanged) ===== */
 .navbar .active {
-  color: #14532d;              /* deep trust green */
+  color: #14532d; /* deep trust green */
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 9999px;
@@ -50,22 +49,13 @@ body {
 
 /* ===== Dark mode (WORKING) ===== */
 [data-theme="dark"] .navbar .active {
-  color: #B6E04C;               /* accent lime */
-  background-color: rgba(182, 224, 76, 0.18);
+  color: #21d1a5; /* accent lime */
+  background-color: rgba(71, 211, 172, 0.18);
 }
 
 [data-theme="dark"] .navbar a:hover {
-  color: #6FBF73;
+  color: #21d1a5;
 }
-
-
-
-
-
-
-
-
-
 
 /* =========================
    Dashboard / Sidebar Active
