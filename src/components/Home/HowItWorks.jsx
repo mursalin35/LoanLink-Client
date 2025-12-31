@@ -1,5 +1,4 @@
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 import {
   FaUserPlus,
   FaSearch,
@@ -50,69 +49,52 @@ const steps = [
 ];
 
 export default function HowItWorks() {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ triggerOnce: true });
-
-  if (inView) controls.start("visible");
-
   return (
-    <section className="bg-gray-50 py-24">
+    <section className="bg-gray-50 dark:bg-[#11121A] py-24">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-20">
+        {/* Main Heading */}
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 dark:text-[#E6F4F1]">
           How LoanLink Works
         </h2>
+        {/* Subtitle */}
+        <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-16 text-base md:text-lg">
+          A seamless process to apply, track, and receive loans with complete
+          transparency and convenience. Follow these simple steps to get started
+          quickly.
+        </p>
 
-        <div
-          ref={ref}
-          className="relative flex flex-col md:flex-row items-center md:justify-between"
-        >
+        {/* Steps */}
+        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-stretch justify-between gap-8 md:gap-6">
           {steps.map((step, index) => (
             <motion.div
               key={step.id}
-              className="flex flex-col items-center text-center md:w-1/5 mb-20 md:mb-0 relative"
-              initial={{ opacity: 0, y: 50 }}
-              animate={controls}
-              variants={{
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { duration: 0.6, delay: index * 0.3 },
-                },
-              }}
+              className="flex flex-col items-center text-center px-5 py-8 lg:py-5 bg-white dark:bg-[#1C1C28] rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[#6FBF73]/40 cursor-pointer transition-shadow duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              {/* Animated Connector */}
-              {index !== steps.length - 1 && (
-                <motion.div
-                  className="hidden md:block absolute top-8 right-[-50%] w-full h-1 bg-gradient-to-r from-gray-300 to-gray-300 z-0"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.8, delay: index * 0.3 }}
-                  style={{ transformOrigin: "left" }}
-                ></motion.div>
-              )}
-
-              {/* Step Icon with Bounce */}
+              {/* Icon */}
               <motion.div
-                className={`w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br ${step.color} mb-4 shadow-xl cursor-pointer`}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
+                className={`w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br ${step.color} mb-4 shadow-xl`}
+                animate={{ y: [0, -5, 0] }}
                 transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 10,
-                  delay: index * 0.3,
+                  repeat: Infinity,
+                  duration: 2,
+                  delay: index * 0.1,
                 }}
               >
                 {step.icon}
               </motion.div>
 
               {/* Step Title */}
-              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+              <h3 className="text-lg md:text-xl flex-1 font-semibold mb-2 dark:text-[#E6F4F1]">
+                {step.title}
+              </h3>
 
               {/* Step Description */}
-              <p className="text-gray-600">{step.description}</p>
+              <p className="text-gray-500 dark:text-gray-300 text-sm md:text-base">
+                {step.description}
+              </p>
             </motion.div>
           ))}
         </div>
