@@ -98,12 +98,12 @@ const MyLoans = () => {
     );
 
   return (
-    <div className="min-h-screen bg-[#F4F7F5] px-4 sm:px-6  pt-4 pb-10 max-w-7xl mx-auto">
+    <div className="min-h-screen  px-4 sm:px-6  pt-4 pb-10 max-w-7xl mx-auto">
       <title>My Loans</title>
 
       {/* Header */}
       <div className="mb-6 text-center sm:text-left">
-        <h1 className="text-3xl font-semibold text-[#1C2B27]">
+        <h1 className="text-3xl font-semibold text-[#1C2B27] dark:text-[#E6F2EF]">
           My Loans
         </h1>
         <p className="text-sm sm:text-base text-[#6B7C75] mt-2">
@@ -112,7 +112,7 @@ const MyLoans = () => {
       </div>
 
       {/* Desktop / Tablet Table */}
-      <div className="hidden sm:block bg-white rounded-md shadow-lg overflow-hidden">
+      <div className="hidden sm:block bg-white dark:bg-[#132925] rounded-md shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm sm:text-base">
             <thead className="bg-[#1F4F45] text-white">
@@ -124,30 +124,28 @@ const MyLoans = () => {
                 <th className="px-4 py-4 text-left">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody className="divide-y dark:divide-[#1E3A35]">
               {loans.map((loan) => (
-                <tr key={loan._id} className="hover:bg-[#F4F7F5] transition">
-                  <td className="flex flex-col gap-1 px-4 py-3 font-semibold text-[#1C2B27]">
+                <tr key={loan._id} className="hover:bg-[#F4F7F5] dark:hover:bg-[#173732] transition">
+                  <td className="flex flex-col gap-1 px-4 py-3 font-semibold text-[#1C2B27] dark:text-[#E6F2EF]">
                     {loan.loanTitle}
-                    <span className="text-sm font-normal">
+                    <span className="text-sm font-normal dark:text-[#9FB8B2]">
                       #{loan._id.slice(-10)}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-[#1F4F45]">
+                  <td className="px-4 py-3 text-[#1F4F45] dark:text-[#6FBF73]">
                     ${loan.loanAmount}
                   </td>
                   <td className="px-4 py-3">
                     <span
                       className={`px-3 py-1 rounded-xl text-xs font-semibold ${
                         loan.status === "Approved"
-                          ? "bg-[#6FBF73]/30 text-[#1F4F45]"
+                          ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
                           : loan.status === "Pending"
-                          ? "bg-[#B6E04C]/30 text-[#1C2B27]"
+                          ? "bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#e0efeb]"
                           : loan.status === "Rejected"
-                          ? "bg-red-200 text-red-700"
-                          : loan.status === "Cancelled"
-                          ? "bg-gray-200 text-gray-700"
-                          : "bg-gray-100 text-[#1C2B27]"
+                          && "bg-red-100 dark:bg-red-100/50 text-red-700 dark:text-[#930f0f]"
+                       
                       }`}
                     >
                       {loan.status}
@@ -157,8 +155,8 @@ const MyLoans = () => {
                     <span
                       className={`px-3 py-1 rounded-xl text-xs font-semibold ${
                         loan.applicationFeeStatus === "Paid"
-                          ? "bg-[#6FBF73]/20 text-[#1F4F45]"
-                          : "bg-[#B6E04C]/30 text-[#1C2B27]"
+                          ? "bg-[#6FBF73]/20 text-[#1F4F45] dark:text-[#6FBF73]"
+                          : "bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#e0efeb]"
                       }`}
                     >
                       {loan.applicationFeeStatus}
@@ -225,7 +223,7 @@ const MyLoans = () => {
               <span
                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
                   loan.status === "Approved"
-                    ? "bg-[#6FBF73]/30 text-[#1F4F45]"
+                    ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
                     : loan.status === "Pending"
                     ? "bg-[#B6E04C]/30 text-[#1C2B27]"
                     : loan.status === "Rejected"
@@ -249,7 +247,7 @@ const MyLoans = () => {
                 <span
                   className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                     loan.applicationFeeStatus === "Paid"
-                      ? "bg-[#6FBF73]/20 text-[#1F4F45]"
+                      ? "bg-[#6FBF73]/20 text-[#1F4F45] dark:text-[#6FBF73]"
                       : "bg-[#B6E04C]/30 text-[#1C2B27]"
                   }`}
                 >
@@ -314,13 +312,13 @@ const MyLoans = () => {
             </button>
 
             {/* Title */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] text-center">
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] dark:text-[#6FBF73] text-center">
               {viewLoan.loanTitle}
             </h2>
 
             {/* Loan Info Section */}
             <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Loan Details
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
@@ -335,7 +333,7 @@ const MyLoans = () => {
                   <span
                     className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
                       viewLoan.status === "Approved"
-                        ? "bg-[#6FBF73]/30 text-[#1F4F45]"
+                        ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
                         : viewLoan.status === "Pending"
                         ? "bg-[#B6E04C]/30 text-[#1C2B27]"
                         : viewLoan.status === "Rejected"
@@ -360,7 +358,7 @@ const MyLoans = () => {
 
             {/* Income & Personal Info Section */}
             <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Personal Info
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
@@ -394,7 +392,7 @@ const MyLoans = () => {
             >
               &times;
             </button>
-            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-[#1F4F45]">
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-[#1F4F45] dark:text-[#6FBF73]">
               Payment Details
             </h2>
             <div className="bg-[#F4F7F5] rounded-xl p-4 shadow-inner space-y-3">

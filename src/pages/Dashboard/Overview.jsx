@@ -41,12 +41,13 @@ const Overview = () => {
   return (
     <div className="p-6 space-y-6">
       <title>Dashboard</title>
+
       {/* Page Title */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
           Dashboard Overview
         </h1>
-        <p className="text-gray-500 dark:text-gray-300 mt-1">
+        <p className="text-gray-500 dark:text-gray-400 mt-1">
           Welcome back, {user?.displayName || "User"} 👋
         </p>
       </div>
@@ -64,7 +65,9 @@ const Overview = () => {
             />
           ))
         ) : (
-          <p className="text-gray-500 dark:text-gray-400">No stats available</p>
+          <p className="text-gray-500 dark:text-gray-400">
+            No stats available
+          </p>
         )}
       </div>
 
@@ -72,11 +75,11 @@ const Overview = () => {
       <RoleSection role={role} />
 
       {/* Chart Section */}
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+      <div className="bg-white dark:bg-[#142e29] rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
           {chart}
         </h2>
-        <div className="h-64 flex items-center justify-center border-2 border-dashed rounded-lg text-gray-400">
+        <div className="h-64 flex items-center justify-center border-2 border-dashed rounded-lg text-gray-400 dark:text-gray-500 dark:border-gray-600">
           📊 Chart will appear here (use Recharts / Chart.js / ApexCharts)
         </div>
       </div>
@@ -89,13 +92,17 @@ export default Overview;
 /* ================= Components ================= */
 
 const StatCard = ({ icon, title, value, color }) => (
-  <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-5 flex items-center gap-4">
+  <div className="bg-white dark:bg-[#142e29] rounded-xl shadow p-5 flex items-center gap-4">
     <div className={`${color} text-white p-4 rounded-full text-xl`}>
       {icon}
     </div>
     <div>
-      <p className="text-gray-500 dark:text-gray-400 text-sm">{title}</p>
-      <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{value}</h3>
+      <p className="text-gray-500 dark:text-gray-400 text-sm">
+        {title}
+      </p>
+      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        {value}
+      </h3>
     </div>
   </div>
 );
@@ -105,11 +112,11 @@ const RoleSection = ({ role }) => {
 
   if (role === "admin") {
     content = (
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
-        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+      <div className="bg-white dark:bg-[#142e29] rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
           Admin Summary
         </h2>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
           <li>Manage all users & roles</li>
           <li>View and filter all loan applications</li>
           <li>Control which loans appear on Home page</li>
@@ -119,11 +126,11 @@ const RoleSection = ({ role }) => {
     );
   } else if (role === "manager") {
     content = (
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
-        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+      <div className="bg-white dark:bg-[#142e29] rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
           Manager Summary
         </h2>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
           <li>Create & manage loan products</li>
           <li>Review pending loan applications</li>
           <li>Approve or reject borrower requests</li>
@@ -133,11 +140,11 @@ const RoleSection = ({ role }) => {
     );
   } else {
     content = (
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6">
-        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+      <div className="bg-white dark:bg-[#142e29] rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
           Borrower Summary
         </h2>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
           <li>Apply for microloans</li>
           <li>Track application status</li>
           <li>Pay application fee securely</li>
