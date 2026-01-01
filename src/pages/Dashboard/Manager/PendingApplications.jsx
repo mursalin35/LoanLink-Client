@@ -48,92 +48,116 @@ const PendingApplications = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="min-h-screen bg-[#F4F7F5] px-4 sm:px-6 pt-4 pb-10 max-w-7xl mx-auto">
+    <div className="min-h-screen  px-4 sm:px-6 pt-4 pb-10 max-w-7xl mx-auto">
       <title>Pending Loans</title>
 
       {/* Header */}
       <div className="mb-6 text-center sm:text-left">
-        <h1 className="text-3xl font-semibold text-[#1C2B27]">
+        <h1 className="text-3xl font-semibold text-[#1C2B27] dark:text-[#E6F4F1] dark:text-[#E6F4F1]">
           Pending Loan Applications
         </h1>
-        <p className="text-sm sm:text-base text-[#6B7C75] mt-2">
+        <p className="text-sm sm:text-base text-[#6B7C75] dark:text-[#9FB3AC] dark:text-[#B6E04C] mt-2">
           Review and manage pending loan requests
         </p>
       </div>
 
       {apps.length === 0 ? (
-        <p className="text-[#6B7C75]">No pending applications.</p>
+        <p className="text-[#6B7C75] dark:text-[#9FB3AC] dark:text-[#9FB3AC]">
+          No pending applications.
+        </p>
       ) : (
         <>
           {/* ================= MOBILE + TABLET CARD VIEW =================  */}
-          <div className="sm:hidden space-y-4">
-            {apps.map((a) => (
-              <div
-                key={a._id}
-                className="bg-white rounded-2xl shadow-md p-5 space-y-4 border border-gray-100"
-              >
-                {/* Header */}
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="font-semibold text-[#1C2B27] text-lg">
-                      {a.loanTitle}
-                    </h2>
-                    <span className="text-sm text-[#6B7C75] mt-1 block">
-                      #{a._id.slice(-10)}
-                    </span>
-                  </div>
+      <div className="sm:hidden space-y-4">
+  {apps.map((a) => (
+    <div
+      key={a._id}
+      className="bg-white dark:bg-[#162B25] rounded-2xl shadow-md p-5 space-y-4 border border-gray-100 dark:border-[#1F3D36]"
+    >
+      {/* Header */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h2 className="font-semibold text-[#1C2B27] dark:text-[#E6F4F1] text-2xl sm:text-lg">
+            {a.loanTitle}
+          </h2>
+          <span className="text-sm text-[#6B7C75] dark:text-[#9FB3AC] mt-1 block">
+            #{a._id.slice(-10)}
+          </span>
+        </div>
 
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#B6E04C]/30 text-[#1C2B27]">
-                    Pending
-                  </span>
-                </div>
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            a.status === "Pending"
+              ? "bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#E6F4F1]"
+              : a.status === "Approved"
+              ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
+              : a.status === "Rejected"
+              ? "bg-red-200 text-red-700 dark:bg-red-900/40 dark:text-red-300"
+              : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200"
+          }`}
+        >
+          {a.status}
+        </span>
+      </div>
 
-                {/* Info (ONLY what was already there) */}
-                <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27]">
-                  <p>
-                    <strong>User:</strong> {a.firstName} {a.lastName}
-                  </p>
-                  <p className="text-[#6B7C75]">{a.userEmail}</p>
-                  <p>
-                    <strong>Amount:</strong> ${a.loanAmount}
-                  </p>
-                  <p>
-                    <strong>Applied At:</strong>{" "}
-                    {new Date(a.appliedAt).toLocaleString()}
-                  </p>
-                </div>
+      {/* Info */}
+      <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27] dark:text-[#E6F4F1]">
+        <p>
+          <strong>User:</strong> {a.firstName} {a.lastName}
+        </p>
+        <p className="text-[#6B7C75] dark:text-[#9FB3AC]">{a.userEmail}</p>
+        <p>
+          <strong>Amount:</strong> ${a.loanAmount}
+        </p>
+        <p>
+          <strong>Applied At:</strong> {new Date(a.appliedAt).toLocaleString()}
+        </p>
+      </div>
 
-                {/* Actions (same order, same style) */}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <button
-                    onClick={() => setViewApp(a)}
-                    className="flex-1 px-3 py-2 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
-                  >
-                    View
-                  </button>
+      {/* Actions */}
+      <div className="flex flex-wrap gap-2 mt-2">
+        <button
+          onClick={() => setViewApp(a)}
+          className="flex-1 px-3 py-2 rounded-md 
+            bg-[#F4F7F5] dark:bg-[#1F3D36] 
+            text-[#1C2B27] dark:text-[#E6F4F1] 
+            text-sm font-semibold 
+            hover:bg-[#1F4F45] dark:hover:bg-[#2F6F62] 
+            hover:text-white transition-colors"
+        >
+          View
+        </button>
 
-                  <button
-                    onClick={() => rejectMutation.mutate(a._id)}
-                    className="flex-1 px-3 py-2 rounded-md bg-red-400 hover:bg-red-500 transition-colors text-white text-sm font-semibold"
-                  >
-                    Reject
-                  </button>
-                  <button
-                    onClick={() => approveMutation.mutate(a._id)}
-                    className="flex-1 px-3 py-2 rounded-md bg-[#6FBF73] hover:bg-[#5fb850] text-white text-sm font-semibold transition-colors"
-                  >
-                    Approve
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+        <button
+          onClick={() => rejectMutation.mutate(a._id)}
+          className="flex-1 px-3 py-2 rounded-md 
+            bg-red-400 dark:bg-red-600 
+            hover:bg-red-500 dark:hover:bg-red-700 
+            text-white text-sm font-semibold transition-colors"
+        >
+          Reject
+        </button>
+
+        <button
+          onClick={() => approveMutation.mutate(a._id)}
+          className="flex-1 px-3 py-2 rounded-md 
+            bg-[#6FBF73] dark:bg-[#2F6F62] 
+            hover:bg-[#5fb850] dark:hover:bg-[#255B52] 
+            text-white text-sm font-semibold transition-colors"
+        >
+          Approve
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
 
           {/* ================= DESKTOP TABLE VIEW ================= */}
-          <div className="hidden sm:block bg-white rounded-md shadow-lg overflow-hidden">
+          <div className="hidden sm:block bg-white dark:bg-[#132925]  rounded-md shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm sm:text-base">
-                <thead className="bg-[#1F4F45] text-white">
+                <thead className="bg-[#1F4F45]  text-white">
                   <tr>
                     <th className="px-4 py-4 text-left">Loan ID</th>
                     <th className="px-4 py-4 text-left">User Info</th>
@@ -142,47 +166,65 @@ const PendingApplications = () => {
                     <th className="px-4 py-4 text-left">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y">
+                <tbody className="divide-y divide-[#bbc7c5] dark:divide-[#325f56] ">
                   {apps.map((a) => (
-                    <tr key={a._id} className="hover:bg-[#F4F7F5] transition">
-                      <td className="px-4 py-3 flex flex-col font-semibold text-[#1C2B27]">
+                    <tr
+                      key={a._id}
+                      className="hover:bg-[#F4F7F5] dark:hover:bg-[#142e29] transition"
+                    >
+                      <td className="px-4 py-3 flex flex-col font-semibold text-[#1C2B27] dark:text-[#E6F4F1]">
                         {a.loanTitle}
                         <span className="text-sm font-normal">
-                         
                           #{a._id.slice(-10)}
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <p className="font-semibold text-[#1C2B27]">
+                        <p className="font-semibold text-[#1C2B27] dark:text-[#E6F4F1]">
                           {a.firstName} {a.lastName}
                         </p>
-                        <span className="text-sm text-[#6B7C75]">
+                        <span className="text-sm text-[#6B7C75] dark:text-[#9FB3AC]">
                           {a.userEmail}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-[#1F4F45] ">
+                      <td className="px-4 py-3 text-[#1F4F45] dark:text-[#6FBF73]">
                         ${a.loanAmount}
                       </td>
-                      <td className="px-4 py-3 text-[#1C2B27]">
+                      <td className="px-4 py-3 text-[#1C2B27] dark:text-[#E6F4F1]">
                         {new Date(a.appliedAt).toLocaleString()}
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex flex-row gap-2">
                           <button
                             onClick={() => approveMutation.mutate(a._id)}
-                            className="px-3 py-1 rounded-md bg-[#6FBF73] text-white text-sm font-semibold hover:bg-[#5fb850] transition-colors"
+                            className="px-3 py-1 rounded-md 
+bg-[#6FBF73] dark:bg-[#2F6F62] 
+text-white dark:text-[#E6F4F1] 
+text-sm font-semibold 
+hover:bg-[#5fb850] dark:hover:bg-[#255B52] 
+transition-colors cursor-pointer"
                           >
                             Approve
                           </button>
                           <button
                             onClick={() => rejectMutation.mutate(a._id)}
-                            className="px-3 py-1 rounded-md bg-red-400 text-white text-sm font-semibold hover:bg-red-500 transition-colors"
+                            className="px-3 py-1 rounded-md 
+bg-red-400 dark:bg-red-500 
+text-white dark:text-[#f0eaea] 
+text-sm font-semibold 
+hover:bg-red-500 dark:hover:bg-red-600 
+transition-colors cursor-pointer"
                           >
                             Reject
                           </button>
                           <button
                             onClick={() => setViewApp(a)}
-                            className="px-3 py-1 rounded-md bg-[#ebebeb] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+                            className="px-3 py-1 rounded-md 
+bg-[#e3e1e1] dark:bg-[#1F3D36] 
+text-[#1C2B27] dark:text-[#E6F4F1] 
+text-sm font-semibold 
+hover:bg-[#1F4F45] hover:text-white 
+dark:hover:bg-[#2F6F62] 
+transition-colors cursor-pointer"
                           >
                             View
                           </button>
@@ -200,26 +242,27 @@ const PendingApplications = () => {
       {/* View Modal */}
       {viewApp && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-[#162B25] rounded-2xl shadow-2xl w-full max-w-2xl p-6 py-8 relative max-h-[90vh] overflow-y-auto border border-[#E2E8E6] dark:border-[#1F3D36]">
             {/* Close Button */}
             <button
               onClick={() => setViewApp(null)}
-              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] hover:text-[#ef4f4f] transition-colors"
+              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] dark:text-[#9FB3AC] hover:text-[#ef4f4f] transition-colors"
             >
               &times;
             </button>
 
             {/* Title */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] text-center">
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] dark:text-[#B6E04C] text-center">
               {viewApp.loanTitle}
             </h2>
 
             {/* Loan Details */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+            <div className="bg-[#F4F7F5] dark:bg-[#1F3D36] rounded-xl p-4 mb-4 shadow-inner border border-[#E2E8E6] dark:border-[#2A4B3D]">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Loan Details
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#E6F4F1] text-sm sm:text-base">
                 <p>
                   <strong>Loan ID:</strong> {viewApp.loanId}
                 </p>
@@ -232,24 +275,8 @@ const PendingApplications = () => {
                 <p>
                   <strong>Interest Rate:</strong> {viewApp.interestRate}%
                 </p>
-                <p>
-                  <strong>Status:</strong>{" "}
-                  <span
-                    className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
-                      viewApp.status === "Approved"
-                        ? "bg-[#6FBF73]/30 text-[#1F4F45]"
-                        : viewApp.status === "Pending"
-                        ? "bg-[#B6E04C]/30 text-[#1C2B27]"
-                        : viewApp.status === "Rejected"
-                        ? "bg-red-200 text-red-700"
-                        : viewApp.status === "Cancelled"
-                        ? "bg-gray-200 text-gray-700"
-                        : "bg-gray-100 text-[#1C2B27]"
-                    }`}
-                  >
-                    {viewApp.status}
-                  </span>
-                </p>
+
+                
                 <p>
                   <strong>Application Fee Status:</strong>{" "}
                   {viewApp.applicationFeeStatus}
@@ -262,12 +289,12 @@ const PendingApplications = () => {
             </div>
 
             {/* Borrower & Personal Info */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+            <div className="bg-[#F4F7F5] dark:bg-[#1F3D36] rounded-xl p-4 shadow-inner border border-[#E2E8E6] dark:border-[#2A4B3D]">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Borrower & Personal Info
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
-                {/* Left Column */}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#E6F4F1] text-sm sm:text-base">
                 <div className="space-y-2">
                   <p>
                     <strong>Name:</strong> {viewApp.firstName}{" "}
@@ -287,7 +314,6 @@ const PendingApplications = () => {
                   </p>
                 </div>
 
-                {/* Right Column */}
                 <div className="space-y-2">
                   <p>
                     <strong>National ID:</strong> {viewApp.nationalID}
