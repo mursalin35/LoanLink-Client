@@ -214,29 +214,29 @@ const MyLoans = () => {
         {loans.map((loan) => (
           <div
             key={loan._id}
-            className="bg-white rounded-2xl shadow-md p-5 space-y-4 border border-gray-100"
+            className="bg-white dark:bg-[#0F1F1C] rounded-2xl shadow-md p-5 space-y-4 border border-gray-100 dark:border-[#1F3B35]"
           >
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="font-semibold text-[#1C2B27] text-lg">
+                <h2 className="font-semibold text-[#1C2B27] dark:text-[#E6F4F1] text-lg">
                   {loan.loanTitle}
                 </h2>
-                <span className="text-xs text-[#6B7C75] mt-1 block">
+                <span className="text-xs text-[#6B7C75] dark:text-[#9FB5AD] mt-1 block">
                   #{loan._id.slice(-10)}
                 </span>
               </div>
               <span
                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
                   loan.status === "Approved"
-                    ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
+                    ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:bg-[#6FBF73]/20 dark:text-[#6FBF73]"
                     : loan.status === "Pending"
-                    ? "bg-[#B6E04C]/30 text-[#1C2B27]"
+                    ? "bg-[#B6E04C]/30 text-[#1C2B27] dark:bg-[#B6E04C]/20 dark:text-[#E6F4F1]"
                     : loan.status === "Rejected"
-                    ? "bg-red-200 text-red-700"
+                    ? "bg-red-200 text-red-700 dark:bg-red-500/20 dark:text-red-400"
                     : loan.status === "Cancelled"
-                    ? "bg-gray-200 text-gray-700"
-                    : "bg-gray-100 text-[#1C2B27]"
+                    ? "bg-gray-200 text-gray-700 dark:bg-gray-500/20 dark:text-gray-300"
+                    : "bg-gray-100 text-[#1C2B27] dark:bg-gray-500/10 dark:text-[#E6F4F1]"
                 }`}
               >
                 {loan.status}
@@ -244,7 +244,7 @@ const MyLoans = () => {
             </div>
 
             {/* Loan Info */}
-            <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27]">
+            <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27] dark:text-[#D7E5E0]">
               <p>
                 <strong>Amount:</strong> ${loan.loanAmount}
               </p>
@@ -253,8 +253,8 @@ const MyLoans = () => {
                 <span
                   className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                     loan.applicationFeeStatus === "Paid"
-                      ? "bg-[#6FBF73]/20 text-[#1F4F45] dark:text-[#6FBF73]"
-                      : "bg-[#B6E04C]/30 text-[#1C2B27]"
+                      ? "bg-[#6FBF73]/20 text-[#1F4F45] dark:bg-[#6FBF73]/20 dark:text-[#6FBF73]"
+                      : "bg-[#B6E04C]/30 text-[#1C2B27] dark:bg-[#B6E04C]/20 dark:text-[#E6F4F1]"
                   }`}
                 >
                   {loan.applicationFeeStatus}
@@ -270,30 +270,32 @@ const MyLoans = () => {
             <div className="flex flex-wrap gap-2 mt-2">
               <button
                 onClick={() => setViewLoan(loan)}
-                className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+                className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#F4F7F5] dark:bg-[#132B25] text-[#1C2B27] dark:text-[#E6F4F1] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white dark:hover:bg-[#1F4F45] transition-colors"
               >
                 View
               </button>
+
               {loan.status === "Pending" &&
                 loan.applicationFeeStatus === "Unpaid" && (
                   <button
                     onClick={() => handleCancel(loan._id)}
-                    className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-red-400 text-white text-sm font-semibold hover:bg-red-500 transition-colors"
+                    className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-red-400 dark:bg-red-500/70 text-white text-sm font-semibold hover:bg-red-500 transition-colors"
                   >
                     Cancel
                   </button>
                 )}
+
               {loan.applicationFeeStatus === "Unpaid" ? (
                 <button
                   onClick={() => handlePay(loan)}
-                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#B6E04C] text-[#1C2B27] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
+                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#B6E04C] dark:bg-[#6FBF73] text-[#1C2B27] dark:text-[#0F1F1C] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
                 >
                   Pay
                 </button>
               ) : (
                 <button
                   onClick={() => setPaymentDetails(loan)}
-                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-500/20 text-[#1C2B27] dark:text-[#E6F4F1] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
                 >
                   Paid
                 </button>
