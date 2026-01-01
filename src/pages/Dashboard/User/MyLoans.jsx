@@ -126,7 +126,10 @@ const MyLoans = () => {
             </thead>
             <tbody className="divide-y dark:divide-[#2a5149]">
               {loans.map((loan) => (
-                <tr key={loan._id} className="hover:bg-[#F4F7F5] dark:hover:bg-[#173732] transition">
+                <tr
+                  key={loan._id}
+                  className="hover:bg-[#F4F7F5] dark:hover:bg-[#173732] transition"
+                >
                   <td className="flex flex-col gap-1 px-4 py-3 font-semibold text-[#1C2B27] dark:text-[#E6F2EF]">
                     {loan.loanTitle}
                     <span className="text-sm font-normal dark:text-[#9FB8B2]">
@@ -143,9 +146,8 @@ const MyLoans = () => {
                           ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
                           : loan.status === "Pending"
                           ? "bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#e0efeb]"
-                          : loan.status === "Rejected"
-                          && "bg-red-100 dark:bg-red-100/50 text-red-700 dark:text-[#930f0f]"
-                       
+                          : loan.status === "Rejected" &&
+                            "bg-red-100 dark:bg-red-100/50 text-red-700 dark:text-[#930f0f]"
                       }`}
                     >
                       {loan.status}
@@ -166,10 +168,9 @@ const MyLoans = () => {
                     <div className="flex flex-col sm:flex-row gap-2">
                       <button
                         onClick={() => setViewLoan(loan)}
-                       className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold 
+                        className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold 
            hover:bg-[#1F4F45] hover:text-white transition-colors
            dark:bg-[#1F3B36] dark:text-[#E6F4F1] dark:hover:bg-[#6FBF73] dark:hover:text-[#1C2B27]"
-
                       >
                         View
                       </button>
@@ -192,10 +193,9 @@ const MyLoans = () => {
                       ) : (
                         <button
                           onClick={() => setPaymentDetails(loan)}
-                       className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm
+                          className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm
            hover:bg-[#1F4F45] hover:text-white transition-colors
            dark:bg-[#2c574f] dark:text-[#E6F4F1] dark:hover:bg-[#6FBF73] dark:hover:text-[#1C2B27]"
-
                         >
                           Paid
                         </button>
@@ -266,8 +266,6 @@ const MyLoans = () => {
               </p>
             </div>
 
-           
-
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-2 mt-2">
               <button
@@ -305,14 +303,14 @@ const MyLoans = () => {
         ))}
       </div>
 
-       {/* View Loan Modal */}
+      {/* View Loan Modal */}
       {viewLoan && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 px-4">
+          <div className="bg-white dark:bg-[#0F1F1C] rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
             <button
               onClick={() => setViewLoan(null)}
-              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] hover:text-[#ef4f4f] transition-colors"
+              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] dark:text-[#9FB5AD] hover:text-[#ef4f4f] transition-colors"
             >
               &times;
             </button>
@@ -323,35 +321,38 @@ const MyLoans = () => {
             </h2>
 
             {/* Loan Info Section */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
+            <div className="bg-[#F4F7F5] dark:bg-[#132B25] rounded-xl p-4 mb-4 shadow-inner">
               <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Loan Details
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#D7E5E0] text-sm sm:text-base">
                 <p>
                   <strong>Loan ID:</strong> {viewLoan._id}
                 </p>
                 <p>
                   <strong>Amount:</strong> ${viewLoan.loanAmount}
                 </p>
+
                 <p>
                   <strong>Status:</strong>{" "}
                   <span
                     className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
                       viewLoan.status === "Approved"
-                        ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
+                        ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:bg-[#6FBF73]/20 dark:text-[#6FBF73]"
                         : viewLoan.status === "Pending"
-                        ? "bg-[#B6E04C]/30 text-[#1C2B27]"
+                        ? "bg-[#B6E04C]/30 text-[#1C2B27] dark:bg-[#B6E04C]/20 dark:text-[#EAF5E3]"
                         : viewLoan.status === "Rejected"
-                        ? "bg-red-200 text-red-700"
+                        ? "bg-red-200 text-red-700 dark:bg-red-900/40 dark:text-red-300"
                         : viewLoan.status === "Cancelled"
-                        ? "bg-gray-200 text-gray-700"
-                        : "bg-gray-100 text-[#1C2B27]"
+                        ? "bg-gray-200 text-gray-700 dark:bg-gray-700/40 dark:text-gray-300"
+                        : "bg-gray-100 text-[#1C2B27] dark:bg-gray-700/30 dark:text-[#D7E5E0]"
                     }`}
                   >
                     {viewLoan.status}
                   </span>
                 </p>
+
                 <p>
                   <strong>Fee Status:</strong> {viewLoan.applicationFeeStatus}
                 </p>
@@ -363,11 +364,12 @@ const MyLoans = () => {
             </div>
 
             {/* Income & Personal Info Section */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
+            <div className="bg-[#F4F7F5] dark:bg-[#132B25] rounded-xl p-4 mb-4 shadow-inner">
               <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Personal Info
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#D7E5E0] text-sm sm:text-base">
                 <p>
                   <strong>Income Source:</strong> {viewLoan.incomeSource}
                 </p>
@@ -390,19 +392,21 @@ const MyLoans = () => {
       )}
 
       {paymentDetails && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 px-4">
+          <div className="bg-white dark:bg-[#0F1F1C] rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setPaymentDetails(null)}
-              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] hover:text-[#ef4f4f] transition-colors"
+              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] dark:text-[#9FB5AD] hover:text-[#ef4f4f] transition-colors"
             >
               &times;
             </button>
+
             <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-[#1F4F45] dark:text-[#6FBF73]">
               Payment Details
             </h2>
-            <div className="bg-[#F4F7F5] rounded-xl p-4 shadow-inner space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+
+            <div className="bg-[#F4F7F5] dark:bg-[#132B25] rounded-xl p-4 shadow-inner space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#D7E5E0] text-sm sm:text-base">
                 <p>
                   <strong>Email:</strong> {user.email}
                 </p>
