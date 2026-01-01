@@ -86,15 +86,7 @@ const PendingApplications = () => {
         </div>
 
         <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-            a.status === "Pending"
-              ? "bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#E6F4F1]"
-              : a.status === "Approved"
-              ? "bg-[#6FBF73]/30 text-[#1F4F45] dark:text-[#6FBF73]"
-              : a.status === "Rejected"
-              ? "bg-red-200 text-red-700 dark:bg-red-900/40 dark:text-red-300"
-              : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200"
-          }`}
+          className="px-3 py-1 rounded-full text-xs font-semibold bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#E6F4F1] "
         >
           {a.status}
         </span>
@@ -123,7 +115,14 @@ const PendingApplications = () => {
             text-[#1C2B27] dark:text-[#E6F4F1] 
             text-sm font-semibold 
             hover:bg-[#1F4F45] dark:hover:bg-[#2F6F62] 
-            hover:text-white transition-colors"
+            hover:text-white transition-colors
+            
+           
+            
+            
+            
+            "
+
         >
           View
         </button>
@@ -143,7 +142,11 @@ const PendingApplications = () => {
           className="flex-1 px-3 py-2 rounded-md 
             bg-[#6FBF73] dark:bg-[#2F6F62] 
             hover:bg-[#5fb850] dark:hover:bg-[#255B52] 
-            text-white text-sm font-semibold transition-colors"
+            text-white text-sm font-semibold transition-colors
+            
+            
+           
+            "
         >
           Approve
         </button>

@@ -214,7 +214,7 @@ const MyLoans = () => {
         {loans.map((loan) => (
           <div
             key={loan._id}
-            className="bg-white dark:bg-[#0F1F1C] rounded-2xl shadow-md p-5 space-y-4 border border-gray-100 dark:border-[#1F3B35]"
+            className="bg-white dark:bg-[#162B25] rounded-2xl shadow-md p-5 space-y-4 border border-gray-100 dark:border-[#1F3B35]"
           >
             {/* Header */}
             <div className="flex justify-between items-start">
@@ -270,7 +270,11 @@ const MyLoans = () => {
             <div className="flex flex-wrap gap-2 mt-2">
               <button
                 onClick={() => setViewLoan(loan)}
-                className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#F4F7F5] dark:bg-[#132B25] text-[#1C2B27] dark:text-[#E6F4F1] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white dark:hover:bg-[#1F4F45] transition-colors"
+                className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#F4F7F5] text-[#1C2B27]  text-sm font-semibold hover:bg-[#1F4F45] hover:text-white  transition-colors
+                
+                 dark:bg-[#1F3D36] dark:hover:bg-[#2F6F62] dark:text-[#E6F4F1] 
+                
+                "
               >
                 View
               </button>
@@ -288,14 +292,18 @@ const MyLoans = () => {
               {loan.applicationFeeStatus === "Unpaid" ? (
                 <button
                   onClick={() => handlePay(loan)}
-                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#B6E04C] dark:bg-[#6FBF73] text-[#1C2B27] dark:text-[#0F1F1C] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
+                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-[#B6E04C] dark:bg-[#6FBF73] text-[#1C2B27] dark:text-[#0F1F1C] font-semibold text-sm hover:bg-[#b2d141] transition-colors"
                 >
                   Pay
                 </button>
               ) : (
                 <button
                   onClick={() => setPaymentDetails(loan)}
-                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-500/20 text-[#1C2B27] dark:text-[#E6F4F1] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                  className="flex-1 sm:flex-auto px-3 py-2 rounded-md bg-gray-200 text-[#1C2B27] dark:text-[#E6F4F1] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors
+                  
+                  
+                   dark:hover:bg-[#255B52] dark:bg-[#2F6F62] 
+                  "
                 >
                   Paid
                 </button>
