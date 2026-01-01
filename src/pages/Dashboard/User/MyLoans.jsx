@@ -124,7 +124,7 @@ const MyLoans = () => {
                 <th className="px-4 py-4 text-left">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y dark:divide-[#1E3A35]">
+            <tbody className="divide-y dark:divide-[#2a5149]">
               {loans.map((loan) => (
                 <tr key={loan._id} className="hover:bg-[#F4F7F5] dark:hover:bg-[#173732] transition">
                   <td className="flex flex-col gap-1 px-4 py-3 font-semibold text-[#1C2B27] dark:text-[#E6F2EF]">
@@ -166,7 +166,10 @@ const MyLoans = () => {
                     <div className="flex flex-col sm:flex-row gap-2">
                       <button
                         onClick={() => setViewLoan(loan)}
-                        className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+                       className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] text-sm font-semibold 
+           hover:bg-[#1F4F45] hover:text-white transition-colors
+           dark:bg-[#1F3B36] dark:text-[#E6F4F1] dark:hover:bg-[#6FBF73] dark:hover:text-[#1C2B27]"
+
                       >
                         View
                       </button>
@@ -182,14 +185,17 @@ const MyLoans = () => {
                       {loan.applicationFeeStatus === "Unpaid" ? (
                         <button
                           onClick={() => handlePay(loan)}
-                          className="px-3 py-1 rounded-md bg-[#B6E04C] text-[#1C2B27] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
+                          className="px-3 py-1 rounded-md bg-[#B6E04C] dark:bg-[#8fae41] text-[#1C2B27] font-semibold text-sm hover:bg-[#6FBF73] transition-colors"
                         >
                           Pay
                         </button>
                       ) : (
                         <button
                           onClick={() => setPaymentDetails(loan)}
-                          className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                       className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] font-semibold text-sm
+           hover:bg-[#1F4F45] hover:text-white transition-colors
+           dark:bg-[#2c574f] dark:text-[#E6F4F1] dark:hover:bg-[#6FBF73] dark:hover:text-[#1C2B27]"
+
                         >
                           Paid
                         </button>
