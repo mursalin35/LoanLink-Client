@@ -124,7 +124,7 @@ const MyLoans = () => {
                 <th className="px-4 py-4 text-left">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y dark:divide-[#2a5149]">
+            <tbody className="divide-y divide-[#bbc7c5] dark:divide-[#325f56]">
               {loans.map((loan) => (
                 <tr
                   key={loan._id}

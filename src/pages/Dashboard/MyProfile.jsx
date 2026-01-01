@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { toast } from "react-toastify";
 import Spinner from "../../components/Spinner";
 
 const Profile = () => {
-  const { user, logOut } = useAuth();
+  const { user} = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //  Fixed logOut handler
-  const handleLogout = async () => {
-    try {
-      await logOut(); // sign out user
-      toast.success("Logged out successfully");
-      window.location.href = "/"; // navigate kaj kre na akhane
-    } catch (error) {
-      console.error(error);
-      toast.error("Logout failed, try again");
-    }
-  };
+
 
   useEffect(() => {
     if (!user) return;
@@ -53,7 +42,7 @@ const Profile = () => {
   );
 
   return (
-   <div className="max-w-5xl mx-auto bg-white dark:bg-[#0f1f1c] rounded-2xl shadow-xl overflow-hidden">
+   <div className="max-w-5xl mx-auto bg-white dark:bg-[#132925] rounded-2xl shadow-xl overflow-hidden">
   <title>My Profile</title>
 
   {/* COVER */}
@@ -130,12 +119,7 @@ const Profile = () => {
         Edit Profile
       </button> */}
 
-      <button
-        onClick={handleLogout} // Fixed logOut
-        className="px-6 py-3 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition"
-      >
-        Logout
-      </button>
+     
     </div>
   </div>
 </div>

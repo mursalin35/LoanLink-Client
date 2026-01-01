@@ -175,7 +175,7 @@ const DashboardLayout = () => {
             flex items-center gap-3 w-full p-2 rounded-lg 
             text-[#B6E04C]
             hover:bg-red-100 hover:text-red-600
-            dark:hover:bg-red-500/20 dark:hover:text-red-400
+        dark:hover:bg-red-100/90 cursor-pointer
             transition-all duration-200
           "
             >
@@ -214,31 +214,31 @@ const DashboardLayout = () => {
 
           <div className="flex items-center gap-3">
             <button
-            onClick={toggleTheme}
-            className="text-[1.5rem] p-2 cursor-pointer "
-          >
-            {theme === "dark" ? (
-              <MdLightMode className="text-[#B6E04C]" />
-            ) : (
-              <MdOutlineLightMode />
-            )}
-          </button>
-          <Link to="/">
-            <div className="flex items-center gap-3">
-              <img
-                src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"}
-                alt="User"
-                className="
+              onClick={toggleTheme}
+              className="text-[1.5rem] p-2 cursor-pointer "
+            >
+              {theme === "dark" ? (
+                <MdLightMode className="text-[#B6E04C]" />
+              ) : (
+                <MdOutlineLightMode />
+              )}
+            </button>
+            <Link to="/">
+              <div className="flex items-center gap-3">
+                <img
+                  src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"}
+                  alt="User"
+                  className="
               w-10 h-10 rounded-full border-2 
               border-[#B6E04C] hover:border-[#6FBF73]
               transition-all duration-200
             "
-              />
-              <p className="font-medium text-[#1C2B27] dark:text-[#EAF3F1]">
-                {user?.displayName || "User"}
-              </p>
-            </div>
-          </Link>
+                />
+                <p className="font-medium text-[#1C2B27] dark:text-[#EAF3F1]">
+                  {user?.displayName || "User"}
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
 
