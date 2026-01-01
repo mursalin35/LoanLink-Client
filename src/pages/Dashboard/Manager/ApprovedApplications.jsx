@@ -1,4 +1,3 @@
-// src/pages/Dashboard/Manager/ApprovedApplications.jsx
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -21,21 +20,21 @@ const ApprovedApplications = () => {
     return <p className="p-4">No approved applications yet.</p>;
 
   return (
-    <div className="min-h-screen bg-[#F4F7F5] px-4 sm:px-6 pt-4 pb-10 max-w-7xl mx-auto">
+    <div className="min-h-screen px-4 sm:px-6 pt-4 pb-10 max-w-7xl mx-auto">
       <title>Approved Loans</title>
 
       {/* Header */}
       <div className="mb-6 text-center sm:text-left">
-        <h2 className="text-3xl font-semibold text-[#1C2B27]">
+        <h2 className="text-3xl font-semibold text-[#1C2B27] dark:text-[#E6F4F1] dark:text-[#E6F4F1]">
           Approved Loan Applications
         </h2>
-        <p className="text-sm sm:text-base text-[#6B7C75] mt-2">
+        <p className="text-sm sm:text-base text-[#6B7C75] dark:text-[#9FB3AC] mt-2 dark:text-[#B6E04C]">
           View and manage approved loans
         </p>
       </div>
 
       {/* Table */}
-      <div className="hidden sm:block bg-white rounded-md shadow-lg overflow-hidden">
+      <div className="hidden sm:block bg-white dark:bg-[#132925] rounded-md shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm sm:text-base">
             <thead className="bg-[#1F4F45] text-white">
@@ -47,25 +46,30 @@ const ApprovedApplications = () => {
                 <th className="px-4 py-3 text-left">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody className="divide-y divide-[#bbc7c5] dark:divide-[#325f56]">
               {apps.map((a) => (
-                <tr key={a._id} className="hover:bg-[#F4F7F5] transition">
-                  <td className="px-4 py-3 flex flex-col font-semibold text-[#1C2B27]">
+                <tr
+                  key={a._id}
+                  className="hover:bg-[#F4F7F5] dark:hover:bg-[#142e29] transition"
+                >
+                  <td className="px-4 py-3 flex flex-col font-semibold text-[#1C2B27] dark:text-[#E6F4F1]">
                     {a.loanTitle}
                     <span className="text-sm font-normal">
                       #{a._id.slice(-10)}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <p className="font-semibold text-[#1C2B27]">
+                    <p className="font-semibold text-[#1C2B27] dark:text-[#E6F4F1]">
                       {a.firstName} {a.lastName}
                     </p>
-                    <span className="text-sm text-[#6B7C75]">
+                    <span className="text-sm text-[#6B7C75] dark:text-[#9FB3AC]">
                       {a.userEmail}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-[#1F4F45]">${a.loanAmount}</td>
-                  <td className="px-4 py-3 text-[#1C2B27]">
+                  <td className="px-4 py-3 text-[#1F4F45] dark:text-[#6FBF73]">
+                    ${a.loanAmount}
+                  </td>
+                  <td className="px-4 py-3 text-[#1C2B27] dark:text-[#E6F4F1]">
                     {a.approvedAt
                       ? new Date(a.approvedAt).toLocaleString()
                       : "—"}
@@ -73,7 +77,10 @@ const ApprovedApplications = () => {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => setViewApp(a)}
-                      className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                      className="px-3 py-1 rounded-md bg-[#F4F7F5] text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors cursor-pointer
+                      
+                      dark:bg-[#1F3D36] dark:text-[#E6F4F1] dark:hover:bg-[#2F6F62] 
+                      "
                     >
                       View
                     </button>
@@ -90,30 +97,32 @@ const ApprovedApplications = () => {
         {apps.map((a) => (
           <div
             key={a._id}
-            className="bg-white rounded-2xl shadow-md p-5 space-y-4 border border-gray-100"
+            className="bg-white rounded-2xl dark:bg-[#162B25]  shadow-md p-5 space-y-4 border border-gray-100 dark:border-[#1F3D36]"
           >
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="font-semibold text-[#1C2B27] text-lg">
-                  {a.loanTitle}
+                <h2 className="font-semibold text-[#1C2B27] dark:text-[#E6F4F1] text-xl">
+                  {a.loanTitle.slice(0, 20)}
                 </h2>
-                <span className="text-sm text-[#6B7C75] mt-1 block">
+                <span className="text-sm text-[#6B7C75] dark:text-[#9FB3AC] mt-0.5 block">
                   #{a._id.slice(-10)}
                 </span>
               </div>
 
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#B6E04C]/30 text-[#1C2B27]">
-                Pending
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#B6E04C]/30 text-[#1C2B27] dark:text-[#E6F4F1]">
+               {a.status}
               </span>
             </div>
 
             {/* Info (ONLY what was already there) */}
-            <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27]">
+            <div className="grid grid-cols-1 gap-2 text-sm text-[#1C2B27] dark:text-[#E6F4F1]">
               <p>
                 <strong>User:</strong> {a.firstName} {a.lastName}
               </p>
-              <p className="text-[#6B7C75]">{a.userEmail}</p>
+              <p className="text-[#6B7C75] dark:text-[#9FB3AC]">
+                {a.userEmail}
+              </p>
               <p>
                 <strong>Amount:</strong> ${a.loanAmount}
               </p>
@@ -127,7 +136,9 @@ const ApprovedApplications = () => {
             <div className="flex flex-wrap gap-2 mt-2">
               <button
                 onClick={() => setViewApp(a)}
-                className="flex-1 px-3 py-2 rounded-md bg-[#e7ede9] text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors"
+                className="flex-1 px-3 py-2 rounded-md bg-[#e7ede9] text-[#1C2B27] font-semibold text-sm hover:bg-[#1F4F45] hover:text-white transition-colors
+                
+                     dark:hover:bg-[#2d574d] dark:text-[#E6F4F1] dark:bg-[#2b6559] "
               >
                 View
               </button>
@@ -139,38 +150,34 @@ const ApprovedApplications = () => {
       {/* View Modal */}
       {viewApp && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-[#162B25] rounded-2xl shadow-2xl w-full max-w-2xl p-6 py-8 relative max-h-[90vh] overflow-y-auto border border-[#E2E8E6] dark:border-[#1F3D36]">
             {/* Close Button */}
             <button
               onClick={() => setViewApp(null)}
-              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] hover:text-[#ef4f4f] transition-colors"
+              className="absolute top-4 right-4 text-2xl font-bold text-[#6B7C75] dark:text-[#9FB3AC] hover:text-[#ef4f4f] transition-colors"
             >
               &times;
             </button>
 
             {/* Title */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] text-center">
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[#1F4F45] dark:text-[#B6E04C] text-center">
               {viewApp.loanTitle}
             </h2>
 
             {/* Loan Info Section */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+            <div className="bg-[#F4F7F5] dark:bg-[#1F3D36] rounded-xl p-4 mb-4 shadow-inner border border-[#E2E8E6] dark:border-[#2A4B3D]">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Loan Details
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#E6F4F1] text-sm sm:text-base">
                 <p>
                   <strong>Loan ID:</strong> {viewApp._id}
                 </p>
+
                 <p>
                   <strong>Amount:</strong> ${viewApp.loanAmount}
                 </p>
-                <p>
-                  <strong>Status:</strong>{" "}
-                  <span className="ml-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-[#6FBF73]/30 text-[#1F4F45]">
-                    {viewApp.status}
-                  </span>
-                </p>
+
                 <p>
                   <strong>Application Fee:</strong>{" "}
                   {viewApp.applicationFeeStatus}
@@ -179,6 +186,7 @@ const ApprovedApplications = () => {
                   <strong>Applied At:</strong>{" "}
                   {new Date(viewApp.appliedAt).toLocaleString()}
                 </p>
+
                 <p className="sm:col-span-2">
                   <strong>Approved At:</strong>{" "}
                   {viewApp.approvedAt
@@ -189,11 +197,11 @@ const ApprovedApplications = () => {
             </div>
 
             {/* Borrower Info Section */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 mb-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+            <div className="bg-[#F4F7F5] dark:bg-[#1F3D36] border border-[#E2E8E6] dark:border-[#2A4B3D] rounded-xl p-4 mb-4 shadow-inner">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Borrower Info
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#E6F4F1] text-sm sm:text-base">
                 <p>
                   <strong>Name:</strong> {viewApp.firstName} {viewApp.lastName}
                 </p>
@@ -210,11 +218,11 @@ const ApprovedApplications = () => {
             </div>
 
             {/* Personal & Income Info Section */}
-            <div className="bg-[#F4F7F5] rounded-xl p-4 shadow-inner">
-              <h3 className="text-lg font-semibold text-[#1F4F45] mb-2">
+            <div className="bg-[#F4F7F5] dark:bg-[#1F3D36] border border-[#E2E8E6] dark:border-[#2A4B3D] rounded-xl p-4 shadow-inner">
+              <h3 className="text-lg font-semibold text-[#1F4F45] dark:text-[#6FBF73] mb-2">
                 Personal & Income Info
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] text-sm sm:text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#1C2B27] dark:text-[#E6F4F1] text-sm sm:text-base">
                 <p>
                   <strong>Income Source:</strong> {viewApp.incomeSource}
                 </p>
@@ -237,7 +245,10 @@ const ApprovedApplications = () => {
             <div className="flex justify-end mt-4">
               <button
                 onClick={() => setViewApp(null)}
-                className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors"
+                className="px-3 py-1 rounded-md bg-gray-200 text-[#1C2B27] cursor-pointer font-semibold hover:bg-[#1F4F45] hover:text-white transition-colors
+                
+                dark:bg-[#1F3D36] dark:text-[#E6F4F1] dark:hover:bg-[#2F6F62] 
+                "
               >
                 Close
               </button>
