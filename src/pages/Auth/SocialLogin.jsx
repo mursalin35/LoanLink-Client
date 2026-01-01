@@ -15,7 +15,7 @@ const SocialLogin = () => {
       const result = await signInWithGoogle();
       const user = result.user;
 
-      // 🔥 Save user to DB (first time only)
+      //  Save user to DB (first time only)
       await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
         name: user.displayName,
         email: user.email,

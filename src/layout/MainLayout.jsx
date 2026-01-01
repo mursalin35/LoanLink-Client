@@ -9,9 +9,9 @@ import { Outlet } from "react-router";
 
 
 const MainLayout = () => {
-  const { loading } = useAuth(); // 🔑 real loading
+  const { loading } = useAuth(); 
 
-  // 🔴 loading থাকলে NOTHING else render হবে না
+  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#d9f7ed] to-[#bae6da] dark:from-[#0D0D16] dark:to-[#1A1A2E]">
@@ -20,7 +20,7 @@ const MainLayout = () => {
     );
   }
 
-  // ✅ loading শেষ → পুরো layout
+  
   return (
     <div className="bg-gradient-to-br from-[#d9f7ed] to-[#bae6da] dark:from-[#0D0D16] dark:to-[#1A1A2E] min-h-screen transition-colors">
       <ScrollToTop />

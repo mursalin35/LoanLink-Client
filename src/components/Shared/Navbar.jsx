@@ -3,14 +3,11 @@ import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { TbTransformFilled } from "react-icons/tb";
 import {
   MdLightMode,
-  MdOutlineDashboard,
   MdOutlineLightMode,
-  MdTransferWithinAStation,
 } from "react-icons/md";
-import { BiSolidReport } from "react-icons/bi";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link, NavLink } from "react-router";
-import { FaDashcube, FaInfoCircle, FaPhoneAlt, FaUser } from "react-icons/fa";
+import { FaInfoCircle, FaPhoneAlt, FaUser } from "react-icons/fa";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import { AuthContext } from "../../context/AuthContext";
 import Logo from "../Logo";

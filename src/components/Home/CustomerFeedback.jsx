@@ -85,7 +85,7 @@ const CustomerFeedback = () => {
               {/* Card */}
               <div className="rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 dark:bg-[#1C1C28]/80 backdrop-blur-sm p-6 sm:p-8 flex flex-col items-center text-center min-h-[380px] sm:min-h-[420px] relative">
                 {/* Quote Icon */}
-                <Quote className="absolute top-4 right-4 text-[#B6E04C]/20 dark:text-[#B6E04C]/30 w-8 sm:w-10 h-8 sm:h-10" /> {/* dark mode */}
+                <Quote className="absolute top-4 right-4 text-[#B6E04C]/20 dark:text-[#B6E04C]/30 w-8 sm:w-10 h-8 sm:h-10" /> 
 
                 {/* Avatar */}
                 <img
@@ -95,15 +95,15 @@ const CustomerFeedback = () => {
                 />
 
                 {/* Name & Role */}
-                <h3 className="text-lg sm:text-xl font-semibold text-[#1C2B27] dark:text-[#E6F4F1] mt-4"> {/* dark mode */}
+                <h3 className="text-lg sm:text-xl font-semibold text-[#1C2B27] dark:text-[#E6F4F1] mt-4"> 
                   {item.name}
                 </h3>
-                <p className="text-[#6B7C75] dark:text-gray-300 text-sm sm:text-base"> {/* dark mode */}
+                <p className="text-[#6B7C75] dark:text-gray-300 text-sm sm:text-base"> 
                   {item.role}
                 </p>
 
                 {/* Feedback Text */}
-                <p className="text-[#1C2B27] dark:text-[#E6F4F1] mt-4 leading-relaxed text-center flex-1 text-sm sm:text-base"> {/* dark mode */}
+                <p className="text-[#1C2B27] dark:text-[#E6F4F1] mt-4 leading-relaxed text-center flex-1 text-sm sm:text-base"> 
                   "{item.feedback}"
                 </p>
 

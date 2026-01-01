@@ -38,13 +38,13 @@ const LoanDetails = () => {
 
   return (
 <div className="max-w-6xl mx-auto mt-10">
-  <div className="mx-8 px-6 py-10 bg-[#f0fff4] dark:bg-[#11121A] rounded-xl min-h-screen"> {/* dark mode */}
+  <div className="mx-8 px-6 py-10 bg-[#f0fff4] dark:bg-[#11121A] rounded-xl min-h-screen"> 
     <title>Loan Details</title>
 
     <div className="flex flex-col lg:flex-row gap-10">
       {/* Loan Image */}
       <div className="lg:w-1/2">
-        <div className="overflow-hidden rounded-2xl shadow-2xl border border-[#6B7C75] dark:border-[#333847]"> {/* dark mode */}
+        <div className="overflow-hidden rounded-2xl shadow-2xl border border-[#6B7C75] dark:border-[#333847]"> 
           <img
             src={loan.image}
             alt={loan.title}
@@ -55,8 +55,8 @@ const LoanDetails = () => {
 
       {/* Loan Info */}
       <div className="lg:w-1/2 flex flex-col gap-6">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1C2B27] dark:text-[#E6F4F1]">{loan.title}</h1> {/* dark mode */}
-        <p className="text-[#6B7C75] dark:text-gray-300 text-md md:text-lg leading-relaxed">{loan.description}</p> {/* dark mode */}
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1C2B27] dark:text-[#E6F4F1]">{loan.title}</h1> 
+        <p className="text-[#6B7C75] dark:text-gray-300 text-md md:text-lg leading-relaxed">{loan.description}</p> 
 
         {/* Info Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
