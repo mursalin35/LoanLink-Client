@@ -85,12 +85,12 @@ export default function AvailableLoans() {
               {/* Content */}
               <div className="p-7 flex flex-col flex-1">
                 <h3 className="text-2xl font-bold text-[#1C2B27] dark:text-[#E6F4F1] min-h-[40px]">
-                  {loan.title ? loan.title.slice(0, 26) + ".." : "No Title."}
+                  {loan.title ? loan.title.slice(0, 26) : "No Title."}
                 </h3>
 
                 <p className="text-[#616865] dark:text-gray-300 text-sm leading-relaxed flex-1">
                   {loan.description
-                    ? loan.description.slice(0, 130) + "..."
+                    ? loan.description.slice(0, 80) + "..."
                     : "No description available."}
                 </p>
 
